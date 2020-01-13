@@ -7,8 +7,8 @@ def get_question():
     print(requests.get('https://opentdb.com/api_category.php'))
 
     question = html.unescape(temp['question'])
-    correct_answer = temp['correct_answer']
-    incorrect_answers = temp['incorrect_answers']
+    correct_answer = html.unescape(temp['correct_answer'])
+    incorrect_answers = [html.unescape(i) for i in temp['incorrect_answers']]
     all_answers = [correct_answer] + incorrect_answers
     shuffle(all_answers)
 
