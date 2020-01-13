@@ -1,12 +1,24 @@
-<!--{{ test }}-->
+<html>
+    <body>
+        {{ question }}
+        <br>
 
- {% for item in test %}
-    <tr>
-        <br>
-        <br>
-        <td>{{ item }}</td>
-        <br>
-        <br>
-        {{ item[]}}
-    </tr>
- {% endfor %}
+         <br><button onClick="myFunction('{{ answers[0] }}')" id=0 type="button">{{ answers[0] }}</button><br>
+         <br><button onClick="myFunction('{{ answers[1] }}')" id=1 type="button">{{ answers[1] }}</button><br>
+         <br><button onClick="myFunction('{{ answers[2] }}')" id=2 type="button">{{ answers[2] }}</button><br>
+         <br><button onClick="myFunction('{{ answers[3] }}')" id=3 type="button">{{ answers[3] }}</button><br>
+
+     </body>
+</html>
+
+<script type="text/javascript">
+  function myFunction(answer) {
+      var correct = '{{ correct_answer }}'
+      if (answer == correct) {
+        //   kleurtje dat het goed is of zo
+        location.reload();
+      } else {
+          alert("fout");
+      }
+  }
+</script>
