@@ -17,9 +17,13 @@
       if (answer == correct) {
         //   kleurtje dat het goed is of zo
         document.getElementById(id).style.background = "lime";
+        setTimeout(function(){
         location.reload();
+        }, 1000);
       } else {
-          document.getElementById(id).style.background = "OrangeRed";
+           document.getElementById(id).style.background = "OrangeRed";
+          setTimeout(function(){ location.reload(); }, 1000);
+
       }
   }
 </script>
