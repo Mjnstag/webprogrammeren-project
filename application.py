@@ -18,12 +18,16 @@ def catch_all(path):
 @app.route("/question", methods=["GET", "POST"])
 def disp_question():
     if request.method == 'POST':
+        # render page
         return render_template('question.html')
     else:
+        # import question.py
         from question import get_question
 
+        # get question data
         question, answers, correct_answer = get_question()
 
+        # send question data to page
         return render_template('question.html', question = question, answers = answers, correct_answer = correct_answer)
 
 @app.route("/options")
