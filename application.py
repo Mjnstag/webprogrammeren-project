@@ -30,6 +30,8 @@ def disp_question():
         # send question data to page
         return render_template('question.html', question = question, answers = answers, correct_answer = correct_answer)
 
-@app.route("/options")
-def options():
-    return render_template("options.html")
+
+@app.route("/categories")
+def categories():
+    return render_template("categories.html")
+
