@@ -25,3 +25,7 @@ def disp_question():
         question, answers, correct_answer = get_question()
 
         return render_template('question.html', question = question, answers = answers, correct_answer = correct_answer)
+
+@app.route("/options")
+def options():
+    return render_template("options.html")

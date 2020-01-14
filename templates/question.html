@@ -15,7 +15,6 @@
   function myFunction(answer, id) {
       var correct = '{{ correct_answer }}'
       if (answer == correct) {
-        //   kleurtje dat het goed is of zo
         document.getElementById(id).style.background = "lime";
         setTimeout(function(){
         location.reload();
