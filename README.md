@@ -21,7 +21,7 @@
 * multiplayer-eindpagina: Op deze pagina is te zien welk team/welk persoon heeft gewonnen en de bijbehorende score
 
 ### schets applicatie:
-
+![Schets ideeën van pagina's](/doc/schets.png)
 
 ### helpfuncties en beschrijvingen:
 * question.py: haalt vragen van een gekozen moeilijkheidsgraad en categorie op en returned deze.
