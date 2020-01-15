@@ -1,13 +1,17 @@
 <html>
+    <head>
+        <link href="/static/styles.css" rel="stylesheet">
+    </head>
     <body>
-        {{ question }}
-        <br>
+        <div class=center>
+            <p class=question>{{ question }}</p>
+            <br>
 
-         <br><button onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</button><br>
-         <br><button onClick="myFunction('{{ answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</button><br>
-         <br><button onClick="myFunction('{{ answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</button><br>
-         <br><button onClick="myFunction('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</button><br>
-
+             <br><button class=button onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</button><br>
+             <br><button class=button onClick="myFunction('{{ answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</button><br>
+             <br><button class=button onClick="myFunction('{{ answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</button><br>
+             <br><button class=button onClick="myFunction('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</button><br>
+        </div>
      </body>
 </html>
 
