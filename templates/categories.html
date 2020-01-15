@@ -2,16 +2,16 @@
 
 <html lang="en">
     <head>
-
+        <link href="/static/styles.css" rel="stylesheet">
         <title>Categories</title>
 
     </head>
     <body>
 
-        <h1>Categories</h1><br>
-        <p>Choose the category you want to play</p> <!-- Juiste categorieën toevoegen-->
+        <h1 style="text-align:center">Categories</h1><br>
+        <p style="text-align:center">Choose the category you want to play</p> <!-- Juiste categorieën toevoegen-->
 
-        <form action="/categories" method="post">
+        <form style="text-align:center" action="/categories" method="post">
           <select name="Categories">
             <option value="general">General</option>
             <option value="art">Art</option>
@@ -31,7 +31,7 @@
         <option value="hard">Hard</option>
       </select>
       <br><br><br>
-      <button class="btn btn-primary" type="submit">Start game!</button> <!-- Misschien een uitleg van regels?-->
+      <button class="start-button" type="submit">Start game!</button> <!-- Misschien een uitleg van regels?-->
 
 </form>
 <br><br>

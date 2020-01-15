@@ -19,7 +19,6 @@ def catch_all(path):
 @app.route("/question", methods=["GET", "POST"])
 def disp_question():
 
-
     if request.method == 'POST':
         # render page
         return render_template('question.html')
