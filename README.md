@@ -24,9 +24,9 @@
 ![Schets ideeën van pagina's](/doc/schets.png)
 
 ### helpfuncties en beschrijvingen:
-* question.py: haalt vragen van een gekozen moeilijkheidsgraad en categorie op en returned deze.
-* score(?).py: voegt score toe of vraagt scores op
-* session(?).py: beheerd sessies voor multiplayer games en zorgt dat mensen dezelfde vragen krijgen/dat de scores opgeslaan zijn tot het einde van het spel.
+* question.py: haalt vragen van een gekozen moeilijkheidsgraad en categorie op en returned deze. [post/get]
+* score(?).py: voegt score toe of vraagt scores op [get]
+* session(?).py: beheerd sessies voor multiplayer games en zorgt dat mensen dezelfde vragen krijgen/dat de scores opgeslaan zijn tot het einde van het spel. [post]
 
 ### Plugins en frameworks:
 * flask: https://flask.palletsprojects.com/en/1.1.x/
