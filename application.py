@@ -44,3 +44,18 @@ def categories():
         return redirect('question')
     return render_template("categories.html")
 
+
+@app.route("/question_test")
+def test():
+
+    if request.method == 'POST':
+        # render page
+        return render_template('question_test.html')
+    else:
+        # import question.py
+        from question_test import get_question
+
+        # get question data
+        question_data = get_question("general", "easy")
+        return render_template("question_test.html", list = [i for i in range(10)], data = question_data)
+
