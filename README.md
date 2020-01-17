@@ -22,7 +22,7 @@
 
 ### schets applicatie:
 ![Schets ideeën van pagina's](/doc/schets.png)
-![links tussen pagina's](/doc/template linking.png)
+![links tussen pagina's](/doc/template_linking.png)
 
 ### helpfuncties en beschrijvingen:
 * question.py: haalt vragen van een gekozen moeilijkheidsgraad en categorie op en returned deze. [post/get]
