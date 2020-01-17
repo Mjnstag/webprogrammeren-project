@@ -59,3 +59,18 @@ def test():
         question_data = get_question("general", "easy")
         return render_template("question_test.html", list = [i for i in range(10)], data = question_data)
 
+
+@app.route("/type_game")
+def type_game():
+    return render_template("type_game.html")
+
+
+@app.route("/highscore_sp")
+def highscore_sp():
+    return render_template("highscore_sp.html")
+
+
+@app.route("/highscore_mp")
+def highscore_mp():
+    return render_template("highscore_mp.html")
+
