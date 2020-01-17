@@ -1,0 +1,5 @@
+homepage
+single/multiplayer page
+speloptiepagina
+vragenpagina
+highscorepagina (single/multiplayer)
