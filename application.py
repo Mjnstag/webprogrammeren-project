@@ -41,7 +41,7 @@ def categories():
         session['difficulty'] = request.form["Difficulty"]
         print(session['category'])
         print(session['difficulty'])
-        return redirect('question')
+        return redirect('type_game')
     return render_template("categories.html")
 
 

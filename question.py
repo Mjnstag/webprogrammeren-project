@@ -3,8 +3,8 @@ from random import shuffle
 import html
 
 def get_question(category, difficulty):
-    print(requests.get('https://opentdb.com/api_token.php?command=request').json())
-    token = "d5b81af019cc27eefe99cdc47a362aae96fbe3fd7075116974a8e05b6617c76"
+    # print(requests.get('https://opentdb.com/api_token.php?command=request').json())
+    # token = "d5b81af019cc27eefe99cdc47a362aae96fbe3fd7075116974a8e05b6617c76"
     print(category, difficulty)
 
     # Get question data from api

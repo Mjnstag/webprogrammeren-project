@@ -3,8 +3,16 @@
         <link href="/static/styles.css" rel="stylesheet">
     </head>
     <body>
-        <button class=start-button type="button">singleplayer</button>
+        <button onclick="window.location.href = 'question';" class=start-button type="button">Singleplayer</button>
         <br><br>
-        <button class=start-button type="button">multiplayer</button>
+        <button onclick="window.location.href = 'question';" class=start-button type="button">Create Multiplayer Game</button>
+        <br><br>
+        <form action="/action_page.php">
+          Enter Gamepin:<br>
+          <input type="text" name="gamepin">
+          <br><br>
+          <input type="submit" value="Join Game">
+        </form>
+        <!--<button onclick="window.location.href = 'question';" class=start-button type="button">Join Multiplayer Game</button>-->
     </body>
 </html>
