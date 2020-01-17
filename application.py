@@ -10,7 +10,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 db = SQL("sqlite:///sessions.db")
 
-@app.route('/', defaults={'path': 'index'})
+@app.route('/', defaults={'path': 'homepage'})
 # @app.route('/<path:path>')
 def catch_all(path):
     return render_template(path + '.html')
