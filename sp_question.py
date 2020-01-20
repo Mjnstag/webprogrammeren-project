@@ -2,14 +2,12 @@ import requests
 from random import shuffle
 import html
 from cs50 import SQL
+
 db = SQL("sqlite:///sessions.db")
 
-def get_question(category, difficulty):
-    # print(requests.get('https://opentdb.com/api_token.php?command=request').json())
-    # token = "d5b81af019cc27eefe99cdc47a362aae96fbe3fd7075116974a8e05b6617c76"
-    category = "general"
-    difficulty = "easy"
-    # print(category, difficulty)
+def get_question(user_id, username, category, difficulty):
+    print('test')
+    print(user_id, username, category, difficulty)
 
     # Get question data from api
     if category == 'art':
@@ -32,8 +30,8 @@ def get_question(category, difficulty):
     # print(question_data)
 
     for number, data in enumerate(question_data, 1):
-        db.execute('''INSERT INTO "questions" ("session_id", "question_number", "question","correct", "incorrect1", "incorrect2", "incorrect3") VALUES(?, ?, ?, ?, ?, ?, ?)''',
-                        (3, number,  html.unescape(data['question']),  html.unescape(data['correct_answer']),  html.unescape(data['incorrect_answers'][0]),  html.unescape(data['incorrect_answers'][1]),  html.unescape(data['incorrect_answers'][2])))
+        db.execute('''INSERT INTO "sp_questions" ("uuid", "username", "question_num", "question","correct", "incorrect1", "incorrect2", "incorrect3") VALUES(?, ?, ?, ?, ?, ?, ?, ?)''',
+                        (user_id, username, number,  html.unescape(data['question']),  html.unescape(data['correct_answer']),  html.unescape(data['incorrect_answers'][0]),  html.unescape(data['incorrect_answers'][1]),  html.unescape(data['incorrect_answers'][2])))
 
     # # Get question and decodes keys
     # question = html.unescape(question_data['question'])

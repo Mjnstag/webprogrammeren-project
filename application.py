@@ -4,15 +4,18 @@ from cs50 import SQL
 from flask import Flask
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 import requests
+import uuid
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 db = SQL("sqlite:///sessions.db")
+# session["id"] = str(uuid.uuid4())
 
 @app.route('/', defaults={'path': 'homepage'})
 # @app.route('/<path:path>')
 def catch_all(path):
+    session["id"] = str(uuid.uuid4())
     return render_template(path + '.html')
 
 
@@ -35,12 +38,12 @@ def disp_question():
 
 @app.route("/categories", methods=["GET", "POST"])
 def categories():
-    print(requests.get("https://opentdb.com/api_category.php").json()['trivia_categories'])
+    # print(requests.get("https://opentdb.com/api_category.php").json()['trivia_categories'])
     if request.method == 'POST':
         session['category'] = request.form["Categories"]
         session['difficulty'] = request.form["Difficulty"]
-        print(session['category'])
-        print(session['difficulty'])
+        # print(session['category'])
+        # print(session['difficulty'])
         return redirect('type_game')
     return render_template("categories.html")
 
@@ -72,7 +75,8 @@ def type_game():
 @app.route("/singleplayer", methods=["GET", "POST"])
 def singleplayer():
     if request.method == "POST":
-        return redirect("/question")
+        # return redirect("/question")
+        return render_template("singleplayer.html")
     return render_template("singleplayer.html")
 
 
@@ -102,3 +106,18 @@ def test_page():
     from question_test import get_question
     return render_template("test.html", data = get_question("general", "easy"))
 
+
+@app.route("/sp_question", methods=["GET", "POST"])
+def sp_question():
+    from sp_question import get_question
+
+    username = str(request.args.get("username", ""))
+    print(username)
+
+    user_id = str(session["id"])
+    category = session['category']
+    difficulty = session['difficulty']
+
+    get_question(user_id, username,  category, difficulty)
+
+    return jsonify(True)

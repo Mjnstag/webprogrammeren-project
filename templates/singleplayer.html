@@ -2,9 +2,33 @@
     <head>
         <link href="/static/styles.css" rel="stylesheet">
         <title>Single Player</title>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script type=text/javascript>
+            function doit() {
+
+        		$.ajax({
+        			data : {
+        				username : $('#username').val(),
+        			},
+        			type : 'GET',
+        			url : '/sp_question'
+        		})
+        // 		.done(function(data) {
+        // 			if (!data) {
+        // 				$('#errorAlert').text("Username already exists!").show();
+        // 				event.preventDefault()
+        // 			}
+        // 			if (data) {
+        // 				$('#succesAlert').text("Registration Complete").show();
+        // 				document.getElementById("myForm").submit();
+        // 			}
+        //     		});
+            };
+        </script>
     </head>
     <body>
-         <form action="/singleplayer" method="post">
+         <form onsubmit="doit()" action="/singleplayer" method="post">
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" id="username" required>
         </div>
