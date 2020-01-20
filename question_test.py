@@ -33,7 +33,7 @@ def get_question(category, difficulty):
 
     for number, data in enumerate(question_data, 1):
         db.execute('''INSERT INTO "questions" ("session_id", "question_number", "question","correct", "incorrect1", "incorrect2", "incorrect3") VALUES(?, ?, ?, ?, ?, ?, ?)''',
-                        (3, number, data['question'], data['correct_answer'], data['incorrect_answers'][0], data['incorrect_answers'][1], data['incorrect_answers'][2]))
+                        (3, number,  html.unescape(data['question']),  html.unescape(data['correct_answer']),  html.unescape(data['incorrect_answers'][0]),  html.unescape(data['incorrect_answers'][1]),  html.unescape(data['incorrect_answers'][2])))
 
     # # Get question and decodes keys
     # question = html.unescape(question_data['question'])

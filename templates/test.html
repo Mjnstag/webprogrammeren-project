@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-  $("button").click(function(){
-    $("#div1").load("demo_test.txt");
-  });
-});
-</script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--  $("button").click(function(){-->
+<!--    $("#div1").load("demo_test.txt");-->
+<!--  });-->
+<!--});-->
+<!--</script>-->
 
 
 <script type="text/javascript">
     var clicks = 0;
+    var data_test = '{{ data|tojson }}'
     function sub_question() {
         clicks += 1;
-        document.getElementById("clicks").innerHTML = clicks;
+        // document.getElementById("clicks").innerHTML = clicks;
+        document.getElementById("clicks").innerHTML = data_test[clicks];
     };
 </script>
-
 
 </head>
 <body>
     <button type="button" onClick="sub_question()">Click me</button>
     <p>Clicks: <a id="clicks">0</a></p>
+
+
+{% for test in data %}
+    <p>{{ test }}</p>
+{% endfor %}
+
 
 <div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
 
