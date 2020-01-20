@@ -69,9 +69,24 @@ def type_game():
     return render_template("type_game.html")
 
 
-@app.route("/singleplayer")
+@app.route("/singleplayer", methods=["GET", "POST"])
 def singleplayer():
+    if request.method == "POST":
+        return redirect("/question")
     return render_template("singleplayer.html")
+
+
+@app.route("/joinmp", methods=["GET", "POST"])
+def joinmp():
+    if request.method == "POST":
+        return redirect("/question")
+    return render_template("joinmp.html")
+
+@app.route("/createmp", methods=["GET", "POST"])
+def createmp():
+    if request.method == "POST":
+        return redirect("/question")
+    return render_template("createmp.html")
 
 @app.route("/highscore_sp")
 def highscore_sp():
