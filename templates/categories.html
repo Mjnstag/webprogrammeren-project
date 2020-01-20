@@ -8,10 +8,12 @@
     </head>
     <body>
 
-        <h1 style="text-align:center">Categories</h1><br>
-        <p style="text-align:center">Choose the category you want to play</p> <!-- Juiste categorieën toevoegen-->
+        <h1 class="thick" >Categories</h1><br>
+        <h2 class="thick" >Choose the category you want to play:</h2> <!-- Juiste categorieën toevoegen-->
 
-        <form style="text-align:center" action="/categories" method="post">
+
+      <form style="text-align:center" action="/categories" method="post">
+        <div class="custom-select" style="width:200px;">
           <select name="Categories">
             <option value="general">General</option>
             <option value="art">Art</option>
@@ -19,10 +21,11 @@
             <option value="history">History</option>
             <option value="geography">Geography</option>
             <option value="science_nature">Science & Nature</option>
+        </div>
 
   </select>
   <br>
-  <p>Choose the difficulty</p>
+  <h2 class="thick" >Choose the difficulty:</h2>
 
     <form action="/categories" method="post">
       <select name="Difficulty">
@@ -31,7 +34,7 @@
         <option value="hard">Hard</option>
       </select>
       <br><br><br>
-      <button class="start-button" type="submit">Next!</button> <!-- Misschien een uitleg van regels?-->
+      <button class="button" type="submit">Next!</button>
 
 </form>
 <br><br>

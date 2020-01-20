@@ -17,16 +17,37 @@
 }
 
 .button {
-    border-radius: 10px;
+    display: inline-block;
+    cursor: pointer;
     border-style: solid;
     border-color: black;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     width : 50%;
     font-size: 16px;
     margin: 4px 2px;
+    outline: none;
+    background-color: red;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    font-family: "Times New Roman", Times, serif;
+    color: black;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.button:active {
+    background-color: orange;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    font-size: x-large;
 }
 
 .button:hover {
@@ -41,18 +62,10 @@
     width : 50%;
     font-size: 16px;
     margin: 4px 2px;
-}
-
-.start-button {
-    border-radius: 10px;
-    border-style: solid;
-    border-color: black;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+    background-color: orange;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    font-size: x-large;
 }
 
 .hidden {
@@ -121,11 +134,6 @@ div {
     margin-left: -200px;
 }
 
-
-p3 {
-  color: blue;
-}
-
 h1 {
   text-shadow: 3px 2px red;
 }
@@ -133,3 +141,22 @@ h1 {
 serif {
     font-family: "Times New Roman", Times, serif;
 }
+
+.thick {
+  font-weight: bold; text-align: center;
+}
+
+/* The container must be positioned relative: */
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+  background-color: DodgerBlue;
+}
+
