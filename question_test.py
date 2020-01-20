@@ -31,9 +31,9 @@ def get_question(category, difficulty):
         question['all_answers'] = [html.unescape(i) for i in question["incorrect_answers"]] + [ html.unescape(question['correct_answer'])]
     print(question_data)
 
-    for data in question_data:
-        db.execute('''INSERT INTO "questions" ("session_id", "question","correct", "incorrect1", "incorrect2", "incorrect3") VALUES(?, ?, ?, ?, ?, ?)''',
-                        (3, data['question'], data['correct_answer'], data['incorrect_answers'][0], data['incorrect_answers'][1], data['incorrect_answers'][2]))
+    for number, data in enumerate(question_data, 1):
+        db.execute('''INSERT INTO "questions" ("session_id", "question_number", "question","correct", "incorrect1", "incorrect2", "incorrect3") VALUES(?, ?, ?, ?, ?, ?, ?)''',
+                        (3, number, data['question'], data['correct_answer'], data['incorrect_answers'][0], data['incorrect_answers'][1], data['incorrect_answers'][2]))
 
     # # Get question and decodes keys
     # question = html.unescape(question_data['question'])
