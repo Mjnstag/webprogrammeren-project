@@ -25,7 +25,7 @@ def get_question(category, difficulty):
     elif category == 'science_nature':
         category = '17'
 
-    question_data = requests.get(f"https://opentdb.com/api.php?amount=5&category={category}&difficulty={difficulty}&type=multiple").json()['results']
+    question_data = requests.get(f"https://opentdb.com/api.php?amount=10&category={category}&difficulty={difficulty}&type=multiple").json()['results']
     for question in question_data:
         question['question'] =  html.unescape(question['question'])
         question['all_answers'] = [html.unescape(i) for i in question["incorrect_answers"]] + [ html.unescape(question['correct_answer'])]
@@ -33,7 +33,7 @@ def get_question(category, difficulty):
 
     for data in question_data:
         db.execute('''INSERT INTO "questions" ("session_id", "question","correct", "incorrect1", "incorrect2", "incorrect3") VALUES(?, ?, ?, ?, ?, ?)''',
-                        (2, data['question'], data['correct_answer'], data['incorrect_answers'][0], data['incorrect_answers'][1], data['incorrect_answers'][2]))
+                        (3, data['question'], data['correct_answer'], data['incorrect_answers'][0], data['incorrect_answers'][1], data['incorrect_answers'][2]))
 
     # # Get question and decodes keys
     # question = html.unescape(question_data['question'])
