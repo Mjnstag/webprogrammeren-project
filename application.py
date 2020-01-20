@@ -67,6 +67,11 @@ def type_game():
         return render_template("type_game.html")
     return render_template("type_game.html")
 
+
+@app.route("/singleplayer")
+def singleplayer():
+    return render_template("singleplayer.html")
+
 @app.route("/highscore_sp")
 def highscore_sp():
     return render_template("highscore_sp.html")
