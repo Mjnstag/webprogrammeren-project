@@ -62,8 +62,10 @@ def test():
 
 @app.route("/type_game")
 def type_game():
-    return render_template("type_game.html")
+    if request.method == "POST":
 
+        return render_template("type_game.html")
+    return render_template("type_game.html")
 
 @app.route("/highscore_sp")
 def highscore_sp():
