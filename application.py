@@ -10,7 +10,6 @@ app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 db = SQL("sqlite:///sessions.db")
-# session["id"] = str(uuid.uuid4())
 
 @app.route('/', defaults={'path': 'homepage'})
 # @app.route('/<path:path>')
@@ -77,6 +76,7 @@ def singleplayer():
     if request.method == "POST":
         return redirect("/question")
         # return render_template("singleplayer.html")
+    session["correct answers"] = 0
     return render_template("singleplayer.html")
 
 
@@ -101,6 +101,7 @@ def highscore_sp():
 def highscore_mp():
     return render_template("highscore_mp.html")
 
+
 @app.route("/test")
 def test_page():
     from question_test import get_question
@@ -118,3 +119,10 @@ def sp_question():
 
     get_question(user_id, username,  category, difficulty)
     return jsonify(True)
+
+# met ajax een request sturen als een antwoord goed is en dan een session var aanpassen?
+# @app.route("/correct_answer", methods=["GET"])
+# def correct_answer():
+#     print('test')
+#     session["correct answers"] += 1
+#     return jsonify(succes = True, correct = session["correct answers"])
