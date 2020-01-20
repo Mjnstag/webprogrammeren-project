@@ -63,6 +63,7 @@ def test():
 @app.route("/type_game")
 def type_game():
     if request.method == "POST":
+        print("test")
 
         return render_template("type_game.html")
     return render_template("type_game.html")
