@@ -44,3 +44,78 @@
 .hidden {
     display: none;
 }
+
+#firstname {
+  background-color: yellow;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    animation: bgcolor infinite 20s;
+    background-image: url(achtergrond.png);
+}
+
+#homepage, #categories {
+   margin: 0;
+   padding: 0;
+   font-family: serif;
+   font-size: 5em;
+   color: #fff;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   text-align: center;
+}
+@keyframes bgcolor {
+    0%
+    {
+        background: #12CBC4;
+    }
+    20%
+    {
+        background: #9980FA;
+    }
+    40%
+    {
+        background: #EA2027;
+    }
+    60%
+    {
+        background: #00cec9;
+    }
+    80%
+    {
+        background: #6F1E51;
+    }
+    100%
+    {
+        background: #FFC312;
+    }
+}
+
+
+div {
+    height: 200px;
+    width: 400px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -200px;
+}
+
+
+p3 {
+  color: blue;
+}
+
+h1 {
+  text-shadow: 3px 2px red;
+}
+
+serif {
+    font-family: "Times New Roman", Times, serif;
+}
