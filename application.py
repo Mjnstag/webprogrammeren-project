@@ -89,6 +89,6 @@ def highscore_mp():
 
 @app.route("/test")
 def test_page():
-    from question import get_question
+    from question_test import get_question
     return render_template("test.html", data = get_question("general", "easy"))
 
