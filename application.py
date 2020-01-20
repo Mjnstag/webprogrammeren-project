@@ -73,6 +73,11 @@ def type_game():
 def singleplayer():
     return render_template("singleplayer.html")
 
+
+@app.route("/joinmp")
+def joinmp():
+    return render_template("joinmp.html")
+
 @app.route("/highscore_sp")
 def highscore_sp():
     return render_template("highscore_sp.html")
