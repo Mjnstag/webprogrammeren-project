@@ -68,6 +68,11 @@ def type_game():
         return render_template("type_game.html")
     return render_template("type_game.html")
 
+
+@app.route("/singleplayer")
+def singleplayer():
+    return render_template("singleplayer.html")
+
 @app.route("/highscore_sp")
 def highscore_sp():
     return render_template("highscore_sp.html")
@@ -76,4 +81,9 @@ def highscore_sp():
 @app.route("/highscore_mp")
 def highscore_mp():
     return render_template("highscore_mp.html")
+
+@app.route("/test")
+def test_page():
+    from question import get_question
+    return render_template("test.html", data = get_question("general", "easy"))
 
