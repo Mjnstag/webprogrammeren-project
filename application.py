@@ -75,8 +75,8 @@ def type_game():
 @app.route("/singleplayer", methods=["GET", "POST"])
 def singleplayer():
     if request.method == "POST":
-        # return redirect("/question")
-        return render_template("singleplayer.html")
+        return redirect("/question")
+        # return render_template("singleplayer.html")
     return render_template("singleplayer.html")
 
 
@@ -112,12 +112,9 @@ def sp_question():
     from sp_question import get_question
 
     username = str(request.args.get("username", ""))
-    print(username)
-
     user_id = str(session["id"])
     category = session['category']
     difficulty = session['difficulty']
 
     get_question(user_id, username,  category, difficulty)
-
     return jsonify(True)
