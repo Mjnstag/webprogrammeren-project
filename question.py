@@ -1,5 +1,6 @@
 import requests
 from random import shuffle
+from cs50 import SQL
 import html
 
 def get_question(category, difficulty):
@@ -22,6 +23,7 @@ def get_question(category, difficulty):
         category = '17'
 
     question_data = requests.get(f"https://opentdb.com/api.php?amount=1&category={category}&difficulty={difficulty}&type=multiple").json()['results'][0]
+    print(question_data)
 
     # Get question and decodes keys
     question = html.unescape(question_data['question'])

@@ -7,6 +7,8 @@ db = SQL("sqlite:///sessions.db")
 def get_question(category, difficulty):
     print(requests.get('https://opentdb.com/api_token.php?command=request').json())
     token = "d5b81af019cc27eefe99cdc47a362aae96fbe3fd7075116974a8e05b6617c76"
+    category = "general"
+    difficulty = "easy"
     print(category, difficulty)
 
     # Get question data from api
@@ -29,8 +31,9 @@ def get_question(category, difficulty):
         question['all_answers'] = [html.unescape(i) for i in question["incorrect_answers"]] + [ html.unescape(question['correct_answer'])]
     print(question_data)
 
-    # db.execute('''INSERT INTO "sessions" ("questions","answers") VALUES(?, ?)''',
-    #                 (question_data, dict()))
+    for data in question_data:
+        db.execute('''INSERT INTO "questions" ("session_id", "question","correct", "incorrect1", "incorrect2", "incorrect3") VALUES(?, ?, ?, ?, ?, ?)''',
+                        (2, data['question'], data['correct_answer'], data['incorrect_answers'][0], data['incorrect_answers'][1], data['incorrect_answers'][2]))
 
     # # Get question and decodes keys
     # question = html.unescape(question_data['question'])
