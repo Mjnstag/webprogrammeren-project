@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="/static/styles.css" rel="stylesheet">
+        <!--<link href="/static/styles.css" rel="stylesheet">-->
         <style>
             serif {
               font-family: "Times New Roman", Times, serif;
@@ -20,16 +20,31 @@
               padding: 20px 0;
               font-size: 30px;
             }
+            #myProgress {
+              width: 100%;
+              background-color: #ddd;
+            }
+
+            #myBar {
+              width: 1%;
+              height: 30px;
+              background-color: #4CAF50;
+            }
         </style>
     </head>
     <body>
         <button onclick="window.location.href = '/';">Return to homepage!</button>
+        <br>
+        <div id="myProgress">
+          <div id="myBar"></div>
+        </div>
+
 
         <br>
         <p align="center">{{ question[0]["question"] }}</p>
         <br><br><br><br>
         <div class="grid-container">
-          <div onClick="myFunction('{{ answers[0]['''correct'''] }}', 0)" id=0 type="button">{{ answers[0]["correct"] }}</div>
+          <div onClick="myFunction('{{ answers[0]['correct'] }}', 0)" id=0 type="button">{{ answers[0]["correct"] }}</div>
           <div onClick="myFunction('{{  answers[0]['incorrect1'] }}', 1)" id=1 type="button">{{ answers[0]["incorrect1"] }}</div>
           <div onClick="myFunction('{{  answers[0]['incorrect2'] }}', 2)" id=2 type="button">{{ answers[0]["incorrect2"] }}</div>
           <div onClick="myFunction('{{ answers[0]['incorrect3'] }}', 3)" id=3 type="button">{{ answers[0]["incorrect3"] }}</div>
@@ -61,7 +76,7 @@
           type : 'GET',
           url : "/correct",
           contentType: 'application/json;charset=UTF-8',
-          data : {'data': '{{ answers[0]["correct"] }}', 'answer': answer}
+          data : {'data': '{{ answers[0]["correct"] }}', 'answer': answer, 'on_time': true}
         });
 
 
@@ -70,4 +85,37 @@
         }, 1000);
 
       };
+</script>
+
+<script>
+var i = 0;
+window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+  if (i == 0) {
+    i = 1;
+    var elem = document.getElementById("myBar");
+    var width = 100;
+    var id = setInterval(frame, 50);
+    function frame() {
+      if (width == 0) {
+        clearInterval(id);
+        console.log('timer ended');
+        i = 0;
+
+
+        $.ajax({
+            type : 'GET',
+            url : "/correct",
+            contentType: 'application/json;charset=UTF-8',
+            data : {'data': "{{ answers[0]['correct'] }}", 'on_time': false}
+          });
+
+          location.reload();
+      } else {
+        width = width - 0.5;
+        elem.style.width = width + "%";
+      }
+    }
+  }
+});
 </script>
