@@ -61,7 +61,7 @@
           type : 'GET',
           url : "/correct",
           contentType: 'application/json;charset=UTF-8',
-          data : {'data': '{{ answers[0]["correct"] }}'}
+          data : {'data': '{{ answers[0]["correct"] }}', 'answer': answer}
         });
 
 

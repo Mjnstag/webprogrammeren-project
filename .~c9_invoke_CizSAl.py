@@ -83,7 +83,6 @@ def type_game():
 @app.route("/singleplayer", methods=["GET", "POST"])
 def singleplayer():
     if request.method == "POST":
-        session["correct"] = 0
         return redirect("/question")
         # return render_template("singleplayer.html")
     session["correct answers"] = 0
@@ -104,7 +103,6 @@ def createmp():
 
 @app.route("/highscore_sp")
 def highscore_sp():
-    print(session["correct"])
     return render_template("highscore_sp.html")
 
 
@@ -130,18 +128,6 @@ def sp_question():
 
     get_question(user_id, username,  category, difficulty)
     return jsonify(True)
-
-
-@app.route("/correct", methods=["GET", "POST"])
-def correct():
-    print("test")
-    print(str(request.args.get("data", "")))
-    if request.args.get("data", "") == request.args.get("answer", ""):
-        session["correct"] += 1
-    db.execute("DELETE FROM sp_questions WHERE correct = :correct",
-    correct = str(request.args.get("data", "")))
-    return jsonify(True)
-
 
 # met ajax een request sturen als een antwoord goed is en dan een session var aanpassen?
 # @app.route("/correct_answer", methods=["GET"])
