@@ -29,8 +29,8 @@ def get_question(user_id, username, category, difficulty):
 
     for number, data in enumerate(question_data, 1):
         db.execute('''INSERT INTO "sp_questions" ("uuid", "username", "question_num", "question","correct", "incorrect1", "incorrect2", "incorrect3") VALUES(?, ?, ?, ?, ?, ?, ?, ?)''',
-                        (user_id, username, number,  html.unescape(data['question']),  html.unescape(data['correct_answer']),
-                        html.unescape(data['incorrect_answers'][0]),  html.unescape(data['incorrect_answers'][1]),  html.unescape(data['incorrect_answers'][2])))
+                        (user_id, username, number,  html.unescape(data['question']),  html.unescape(data['correct_answer']).replace("'", ''),
+                        html.unescape(data['incorrect_answers'][0]).replace("'", ''),  html.unescape(data['incorrect_answers'][1]).replace("'", ''),  html.unescape(data['incorrect_answers'][2]).replace("'", '')))
 
     # return question data to page
     return question_data

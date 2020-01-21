@@ -29,7 +29,7 @@
         <p align="center">{{ question[0]["question"] }}</p>
         <br><br><br><br>
         <div class="grid-container">
-          <div onClick="myFunction('{{ answers[0]['correct'] }}', 0)" id=0 type="button">{{ answers[0]["correct"] }}</div>
+          <div onClick="myFunction('{{ answers[0]['''correct'''] }}', 0)" id=0 type="button">{{ answers[0]["correct"] }}</div>
           <div onClick="myFunction('{{  answers[0]['incorrect1'] }}', 1)" id=1 type="button">{{ answers[0]["incorrect1"] }}</div>
           <div onClick="myFunction('{{  answers[0]['incorrect2'] }}', 2)" id=2 type="button">{{ answers[0]["incorrect2"] }}</div>
           <div onClick="myFunction('{{ answers[0]['incorrect3'] }}', 3)" id=3 type="button">{{ answers[0]["incorrect3"] }}</div>
