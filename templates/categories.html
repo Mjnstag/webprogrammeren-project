@@ -7,13 +7,11 @@
 
     </head>
     <body>
-
         <h1 class="thick" >Categories</h1><br>
         <h2 class="thick" >Choose the category you want to play:</h2> <!-- Juiste categorieën toevoegen-->
 
-
       <form style="text-align:center" action="/categories" method="post">
-        <div class="select" style="width:200px;">
+        <div class="box">
           <select name="Categories">
             <option value="general">General</option>
             <option value="art">Art</option>
@@ -21,20 +19,25 @@
             <option value="history">History</option>
             <option value="geography">Geography</option>
             <option value="science_nature">Science & Nature</option>
+          </select>
         </div>
-
-  </select>
+      </form>
   <br>
   <h2 class="thick" >Choose the difficulty:</h2>
 
+  <form style="text-align:center" action="/categories" method="post">
     <form action="/categories" method="post">
-      <select name="Difficulty">
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-      </select>
+        <div class="box">
+          <select name="Difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+  </form>
       <br><br><br>
+      <div class="box">
       <button class="button" type="submit">Next!</button>
-
+      </div>
 </form>
 <br><br>
