@@ -167,9 +167,14 @@ def sp_question():
     return jsonify(True)
 
 
+# checks and handles answers and time-outs for questions
 @app.route("/correct", methods=["GET", "POST"])
 def correct():
+    # if answer is correct, add score point
     if request.args.get("data", "") == request.args.get("answer", ""):
         session["correct"] += 1
-    db.execute("DELETE FROM sp_questions WHERE correct = :correct",
+
+    # delete question from sp_question db
+    db.execute("DELETE FROM sp_questions WHERE correct = :correct AND uuid = :session_id", correct = request.args.get("data", ""), session_id = session['id'])
+    # db.execute("DELETE FROM sp_questions WHERE correct = :correct", correct = request.args.get("data", ""))
     return jsonify(True)
