@@ -73,7 +73,7 @@ def test():
 
         # get question data
         question_data = get_question("general", "easy")
-        return render_template("question_test.html", list = [i for i in range(10)], data = question_data)
+        return render_template("question_test.html", list = [i for i in range(1)], data = question_data)
 
 
 @app.route("/type_game")
@@ -113,8 +113,34 @@ def highscore_sp():
     # insert user data
     # select top for highscores
     # send top to page
-    return render_template("highscore_sp.html", score = session['correct'], username = session['username'], category = session['category'])
 
+
+    # Checks if user is already in database, and only updates when the new score is higher than the existing score
+    # hij checkt nu ook de username, kunnen we nog aanpassen
+    scoreindatabase = db.execute("SELECT score from sp_highscore WHERE username = :username",
+    username =  session['username'])
+    print(scoreindatabase)
+    highscoretext = "Congratulations! You made it into the high scores!"
+    # Adds user to high score database
+    if not scoreindatabase:
+        db.execute("INSERT INTO sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
+        uuid = session["id"],
+        username =  session['username'],
+        score = session['correct'],
+        category = session['category'])
+        return render_template("highscore_sp.html", score = session['correct'], username = session['username'], category = session['category'], highscoretext = highscoretext)
+
+    # Else updates highscore
+    else:
+        if session['correct'] > scoreindatabase[0]["score"]:
+            db.execute("UPDATE sp_highscore SET score = :score, category = :category WHERE username = :username",
+            score = session['correct'],
+            category = session['category'],
+            username = session['username'])
+
+            return render_template("highscore_sp.html")
+
+        return render_template("highscore_sp.html")
 
 @app.route("/highscore_mp")
 def highscore_mp():
