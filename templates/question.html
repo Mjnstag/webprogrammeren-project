@@ -1,26 +1,47 @@
+<!DOCTYPE html>
 <html>
     <head>
         <link href="/static/styles.css" rel="stylesheet">
         <style>
-            body  {
-              background-color: #cccccc;
-            }
             serif {
               font-family: "Times New Roman", Times, serif;
+            }
+            .grid-container {
+              display: grid;
+              grid-template-columns: auto auto;
+              grid-gap: 10px;
+              background-color: #2196F3;
+              padding: 10px;
+            }
+
+            .grid-container > div {
+              background-color: rgba(255, 255, 255, 0.8);
+              text-align: center;
+              padding: 20px 0;
+              font-size: 30px;
             }
         </style>
     </head>
     <body>
         <button onclick="window.location.href = '/';">Return to homepage!</button>
-        <div class=center>
-            <p class=question>{{ question[0]["question"] }}</p>
-            <br>
 
-             <br><button class=button onClick="myFunction('{{ answers[0]['correct'] }}', 0)" id=0 type="button">{{ answers[0]["correct"] }}</button><br>
-             <br><button class=button onClick="myFunction('{{ answers[0]['incorrect1'] }}', 1)" id=1 type="button">{{ answers[0]["incorrect1"] }}</button><br>
-             <br><button class=button onClick="myFunction('{{ answers[0]['incorrect2'] }}', 2)" id=2 type="button">{{ answers[0]["incorrect2"] }}</button><br>
-             <br><button class=button onClick="myFunction('{{ answers[0]['incorrect3'] }}', 3)" id=3 type="button">{{ answers[0]["incorrect3"] }}</button><br>
+        <br>
+        <p align="center">{{ question }}</p>
+        <br><br><br><br>
+        <div class="grid-container">
+          <div onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</div>
+          <div onClick="myFunction('{{ answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</div>
+          <div onClick="myFunction('{{ answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</div>
+          <div onClick="myFunction('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</div>
+
         </div>
+        <!--<div class=center>-->
+        <!--    <p class=question>{{ question }}</p>-->
+        <!--     <br><button class=button onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</button><br>-->
+        <!--     <br><button class=button onClick="myFunction('{{ answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</button><br>-->
+        <!--     <br><button class=button onClick="myFunction('{{ answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</button><br>-->
+        <!--     <br><button class=button onClick="myFunction('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</button><br>-->
+        <!--</div>-->
         <p>Correct_answers: <a id="correctly">0</a></p>
      </body>
 </html>
