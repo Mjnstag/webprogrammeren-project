@@ -32,6 +32,15 @@ def disp_question():
         question, answers, correct_answer = get_question(session['category'], session['difficulty'])
 
         # send question data to page
+        question = db.execute("SELECT question FROM sp_questions")
+        print(question)
+
+        answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM sp_questions")
+        print(answers)
+        correct_answer = db.execute("SELECT correct FROM sp_questions")
+        correct_answer = correct_answer[0]["correct"]
+        print(correct_answer)
+        #db.execute("DELETE FROM sp_questions WHERE question_num = 1")
         return render_template('question.html', question = question, answers = answers, correct_answer = correct_answer)
 
 
