@@ -39,7 +39,6 @@
           <div id="myBar"></div>
         </div>
 
-
         <br>
         <p align="center">{{ question[0]["question"] }}</p>
         <br><br><br><br>
@@ -66,12 +65,9 @@
         correct_answers += 1;
         document.getElementById("correctly").innerHTML = correct_answers;
 
-
       } else {
           document.getElementById(id).style.background = "OrangeRed";
       }
-
-
         $.ajax({
           type : 'GET',
           url : "/correct",
@@ -79,10 +75,9 @@
           data : {'data': '{{ answers[0]["correct"] }}', 'answer': answer, 'on_time': true}
         });
 
-
         setTimeout(function(){
         location.reload();
-        }, 1000);
+        }, 500);
 
       };
 </script>
@@ -101,7 +96,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
         clearInterval(id);
         console.log('timer ended');
         i = 0;
-
 
         $.ajax({
             type : 'GET',
