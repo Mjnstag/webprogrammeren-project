@@ -110,8 +110,10 @@ def createmp():
 @app.route("/highscore_sp")
 def highscore_sp():
     print(session["correct"])
-
-    return render_template("highscore_sp.html", score = session['correct'])
+    # insert user data
+    # select top for highscores
+    # send top to page
+    return render_template("highscore_sp.html", score = session['correct'], username = session['username'], category = session['category'])
 
 
 @app.route("/highscore_mp")
@@ -129,12 +131,13 @@ def test_page():
 def sp_question():
     from sp_question import get_question
 
-    username = str(request.args.get("username", ""))
+
+    session['username'] = str(request.args.get("username", ""))
     user_id = str(session["id"])
     category = session['category']
     difficulty = session['difficulty']
 
-    get_question(user_id, username,  category, difficulty)
+    get_question(user_id, session['username'],  category, difficulty)
     return jsonify(True)
 
 
