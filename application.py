@@ -169,18 +169,7 @@ def sp_question():
 
 @app.route("/correct", methods=["GET", "POST"])
 def correct():
-    print("test")
-    print(str(request.args.get("data", "")))
     if request.args.get("data", "") == request.args.get("answer", ""):
         session["correct"] += 1
     db.execute("DELETE FROM sp_questions WHERE correct = :correct",
-    correct = str(request.args.get("data", "")))
     return jsonify(True)
-
-
-# met ajax een request sturen als een antwoord goed is en dan een session var aanpassen?
-# @app.route("/correct_answer", methods=["GET"])
-# def correct_answer():
-#     print('test')
-#     session["correct answers"] += 1
-#     return jsonify(succes = True, correct = session["correct answers"])
