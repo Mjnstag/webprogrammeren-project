@@ -44,6 +44,7 @@ def disp_question():
         uuid = session["id"])
         correct_answer = correct_answer[0]["correct"]
         print(correct_answer)
+        #print(db.execute("SELECT correct, incorrect1, incorrect2, incorrect3, question_num FROM sp_questions WHERE uuid = :uuid ORDER BY question_num DESC", uuid = session["id"]))
         #db.execute("DELETE FROM sp_questions WHERE question_num = 1")
         return render_template('question.html', question = question, answers = answers, correct_answer = correct_answer)
 
