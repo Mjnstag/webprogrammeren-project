@@ -98,25 +98,29 @@ body {
     {
         background: #12CBC4;
     }
-    20%
+    10%
     {
         background: #9980FA;
     }
-    40%
+    30%
     {
         background: #EA2027;
     }
-    60%
+    50%
     {
         background: #00cec9;
     }
-    80%
+    70%
     {
         background: #6F1E51;
     }
-    100%
+    90%
     {
         background: #FFC312;
+    }
+    100%
+    {
+        background: #12CBC4;
     }
 }
 
