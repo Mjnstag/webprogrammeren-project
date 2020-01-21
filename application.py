@@ -34,7 +34,8 @@ def disp_question():
         # send question data to page
         question = db.execute("SELECT question FROM sp_questions")
         print(question)
-
+        if not question:
+            return redirect("/highscore_sp")
         answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM sp_questions")
         print(answers)
         correct_answer = db.execute("SELECT correct FROM sp_questions")
