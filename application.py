@@ -106,7 +106,8 @@ def createmp():
 @app.route("/highscore_sp")
 def highscore_sp():
     print(session["correct"])
-    return render_template("highscore_sp.html")
+
+    return render_template("highscore_sp.html", score = session['correct'])
 
 
 @app.route("/highscore_mp")
