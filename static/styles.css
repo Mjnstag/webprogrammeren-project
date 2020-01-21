@@ -25,10 +25,9 @@
     text-align: center;
     text-decoration: none;
     width : 50%;
-    font-size: 16px;
     margin: 4px 2px;
     outline: none;
-    background-color: red;
+    background-color: #F0FFFF;
     border-radius: 10px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     font-family: "Times New Roman", Times, serif;
@@ -38,13 +37,12 @@
 }
 
 .button:active {
-    background-color: orange;
+    background-color: black;
     border-radius: 10px;
     border-style: solid;
     border-color: black;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     font-family: "Times New Roman", Times, serif;
     font-weight: bold;
     font-size: x-large;
@@ -62,7 +60,7 @@
     width : 50%;
     font-size: 16px;
     margin: 4px 2px;
-    background-color: orange;
+    background-color: #FF8C00;
     font-family: "Times New Roman", Times, serif;
     font-weight: bold;
     font-size: x-large;
@@ -135,7 +133,7 @@ body {
 /*}*/
 
 h1 {
-  text-shadow: 3px 2px red;
+  text-shadow: 3px 2px #FF8C00;
 }
 
 serif {
@@ -146,20 +144,18 @@ serif {
   font-weight: bold; text-align: center;
 }
 
-/* The container must be positioned relative: */
-.custom-select {
-  position: relative;
-  font-family: Arial;
+.box {
+    text-align: center;
 }
 
-.custom-select select {
-  display: none; /*hide original SELECT element: */
-}
-
-.select-selected {
-  background-color: DodgerBlue;
-}
-
-.parent {
-    display: grid;
+.box select {
+    background: #FF8C00;
+    color: black;
+    padding: 10px;
+    width: 250px;
+    height: 50px;
+    border: none;
+    font-family: serif;
+    font-size: 20px;
+    font-weight: bold;
 }
