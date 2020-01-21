@@ -91,7 +91,7 @@ def singleplayer():
         session["correct"] = 0
         return redirect("/question")
         # return render_template("singleplayer.html")
-    session["correct answers"] = 0
+    session["correct"] = 0
     return render_template("singleplayer.html")
 
 
@@ -119,18 +119,14 @@ def highscore_sp():
     # hij checkt nu ook de username, kunnen we nog aanpassen
     scoreindatabase = db.execute("SELECT score from sp_highscore WHERE username = :username",
     username =  session['username'])
-    print(scoreindatabase)
-
 
     highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
-
+    highscoretext = "Congratulations! You made it into the high scores!"
     highscores = db.execute("SELECT score FROM sp_highscore ORDER BY score ASC")
-
-
 
     # Checks if highscore list is empty
     if not highscoredata:
-        highscoretext = "Congratulations! You made it into the high scores!"
+
 
         # Adds user to high score database
         if not scoreindatabase:
@@ -142,8 +138,18 @@ def highscore_sp():
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
+    # If number of high scores is less than 10, add high score
+    elif len(highscoredata) < 10:
+        if not scoreindatabase:
+            db.execute("INSERT INTO sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
+            uuid = session["id"],
+            username =  session['username'],
+            score = session['correct'],
+            category = session['category'])
+            return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
+            category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
-
+    # If score is higher than lowest high score, add score to high score
     if session['correct'] > highscores[0]["score"]:
         highscoretext = "Congratulations! You made it into the high scores!"
 
@@ -156,6 +162,8 @@ def highscore_sp():
             category = session['category'])
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+
+            # Laagste score nog weghalen
 
         # Else updates highscore
         else:
