@@ -32,16 +32,12 @@ def disp_question():
         question, answers, correct_answer = get_question(session['category'], session['difficulty'])
 
         # send question data to page
-        question = db.execute("SELECT question FROM sp_questions WHERE uuid = :uuid",
-        uuid = session["id"])
+        question = db.execute("SELECT question FROM sp_questions")
         print(question)
-        if not question:
-            return redirect("/highscore_sp")
-        answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM sp_questions WHERE uuid = :uuid",
-        uuid = session["id"])
+
+        answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM sp_questions")
         print(answers)
-        correct_answer = db.execute("SELECT correct FROM sp_questions WHERE uuid = :uuid",
-        uuid = session["id"])
+        correct_answer = db.execute("SELECT correct FROM sp_questions")
         correct_answer = correct_answer[0]["correct"]
         print(correct_answer)
         #db.execute("DELETE FROM sp_questions WHERE question_num = 1")
@@ -87,7 +83,6 @@ def type_game():
 @app.route("/singleplayer", methods=["GET", "POST"])
 def singleplayer():
     if request.method == "POST":
-        session["correct"] = 0
         return redirect("/question")
         # return render_template("singleplayer.html")
     session["correct answers"] = 0
@@ -108,9 +103,7 @@ def createmp():
 
 @app.route("/highscore_sp")
 def highscore_sp():
-    print(session["correct"])
-
-    return render_template("highscore_sp.html", score = session['correct'])
+    return render_template("highscore_sp.html")
 
 
 @app.route("/highscore_mp")
@@ -135,18 +128,6 @@ def sp_question():
 
     get_question(user_id, username,  category, difficulty)
     return jsonify(True)
-
-
-@app.route("/correct", methods=["GET", "POST"])
-def correct():
-    print("test")
-    print(str(request.args.get("data", "")))
-    if request.args.get("data", "") == request.args.get("answer", ""):
-        session["correct"] += 1
-    db.execute("DELETE FROM sp_questions WHERE correct = :correct",
-    correct = str(request.args.get("data", "")))
-    return jsonify(True)
-
 
 # met ajax een request sturen als een antwoord goed is en dan een session var aanpassen?
 # @app.route("/correct_answer", methods=["GET"])
