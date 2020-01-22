@@ -1,24 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quoted
+{% endblock %}
+
+{% block main %}
 <html>
     <head>
         <title>High scores</title>
         <link href="/static/styles.css" rel="stylesheet">
     </head>
     <body>
-
-        <h1>High scores</h1>
-        <h2 class="center", "serif">{{ highscoretext }}<br>
+        <div class="center">
+            <h1>High scores</h1>
+        </div>
+        <h2 class="center", class="serif">{{ highscoretext }}<br>
         Your score is: {{ score }}!</h2>
 
 
 {% for scores in highscoredata %}
 
-        <h2 class="center", "serif">{{ scores.username }} : {{ scores.score }} : {{ scores.category }}<br></h2>
+        <h2 class="center", class="serif">{{ scores.username }} : {{ scores.score }} : {{ scores.category }}<br></h2>
 
 
 {% endfor %}
 
         <div class="box">
-        <button class="button" onclick="window.location.href = '/';">Return to homepage!</button>
+        <button class="button2" onclick="window.location.href = '/';">Return to homepage!</button>
         </div>
     </body>
 </html>
+{% endblock %}
