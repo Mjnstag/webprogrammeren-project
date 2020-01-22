@@ -1,16 +1,29 @@
 #  Trivia Project
 ## Features van de website:
-* Multiplayer
-* verschillende triviacategoriën
-* kahootstyle player/player, team/team
-* verschillende speelcategoriën
+* Multiplayer (WIP)
+* Verschillende trivia categoriën
 * Geen inlog nodig
 * Verschillende moeilijkheidsniveaus
 
 ## Doorloop website:
-1. Beginscherm waarop de gamemode gekozen kan worden
-2. Scherm waarop mensen de game kunnen joinen en startknop
-3. [Op scherm] een vraag met 4 mogelijke antwoorden.
+1. Scherm met de naam, een start knop en speluitleg.
+2. Pagina waar de categorie en moeilijkheid gekozen kan worden.
+3. Pagina waar gekozen kan worden of het single- of multiplayer is en de vraag of je een multiplayer game wilt joinen/maken.
+
+### Singleplayer:
+1. Pagina waar de user een naam kan invullen die gebruikt kan worden voor de highscores.
+2. Vragenpagina met de vraag, 4 antwoorden, een countdown en een scorecounter.
+3. Highscorepagina waar de top 10 scores staan.
+
+### Multiplayer:
+#### Room aanmaken
+1. Scherm waarop de host een roomnaam kan opgeven en een username kan opgeven.
+2. Vragenpagina met de vraag, 4 antwoorden, een countdown, een roomcode en een scorecounter.
+3. Highscorepagina waar de top 3 scores staan.
+
+#### Room joinen:
+1. Pagina waar je een roomcode op kan geven en een username.
+2. Highscorepagina waar de top 3 scores staan.
 
 ## Technisch ontwerp:
 ### lijst routes:
@@ -25,10 +38,11 @@
 ![links tussen pagina's](/doc/template_linking.png)
 
 ### helpfuncties en beschrijvingen:
-* question.py: haalt vragen van een gekozen moeilijkheidsgraad en categorie op en returned deze. [post/get]
+* sp_question.py: haalt vragen van een gekozen moeilijkheidsgraad en categorie op en returned deze. [post/get]
 * score(?).py: voegt score toe of vraagt scores op [get]
 * session(?).py: beheerd sessies voor multiplayer games en zorgt dat mensen dezelfde vragen krijgen/dat de scores opgeslaan zijn tot het einde van het spel. [post]
 
 ### Plugins en frameworks:
 * flask: https://flask.palletsprojects.com/en/1.1.x/
 * boodstrap: https://getbootstrap.com/docs/4.4/getting-started/introduction/
+* AJAX: https://developer.wordpress.org/plugins/javascript/ajax/
