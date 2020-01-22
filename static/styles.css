@@ -197,8 +197,7 @@ serif {
     border-color: black;
     text-align: center;
     text-decoration: none;
-    width : 50%;
-    margin: 4px 2px;
+    margin: 10px 2px;
     outline: none;
     background-color: #87CEFA;
     border-radius: 10px;
@@ -222,6 +221,7 @@ serif {
 }
 
 .button2:hover {
+    display: inline-block;
     border-radius: 10px;
     border-style: solid;
     border-color: black;
@@ -229,7 +229,6 @@ serif {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    width : 70%;
     margin: 4px 2px;
     background-color: #00BFFF;
     font-family: "Times New Roman", Times, serif;
