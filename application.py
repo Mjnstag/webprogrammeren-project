@@ -5,6 +5,8 @@ from flask import Flask
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 import requests
 import uuid
+import time
+import random
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -39,14 +41,20 @@ def disp_question():
             return redirect("/highscore_sp")
         answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM sp_questions WHERE uuid = :uuid",
         uuid = session["id"])
-        print(answers)
+
+        answerlist = []
+        answerlist.append(answers[0]["correct"])
+        answerlist.append(answers[0]["incorrect1"])
+        answerlist.append(answers[0]["incorrect2"])
+        answerlist.append(answers[0]["incorrect3"])
+        random.shuffle(answerlist)
         correct_answer = db.execute("SELECT correct FROM sp_questions WHERE uuid = :uuid",
         uuid = session["id"])
         correct_answer = correct_answer[0]["correct"]
-        print(correct_answer)
+
 
         #db.execute("DELETE FROM sp_questions WHERE question_num = 1")
-        return render_template('question.html', question = question, answers = answers, correct_answer = correct_answer)
+        return render_template('question.html', answered = session["correct"], question = question, answers = answerlist, correct_answer = correct_answer)
 
 
 @app.route("/categories", methods=["GET", "POST"])
@@ -59,21 +67,6 @@ def categories():
         # print(session['difficulty'])
         return redirect('type_game')
     return render_template("categories.html")
-
-
-@app.route("/question_test")
-def test():
-
-    if request.method == 'POST':
-        # render page
-        return render_template('question_test.html')
-    else:
-        # import question.py
-        from question_test import get_question
-
-        # get question data
-        question_data = get_question("general", "easy")
-        return render_template("question_test.html", list = [i for i in range(10)], data = question_data)
 
 
 @app.route("/type_game")
@@ -123,7 +116,8 @@ def highscore_sp():
     highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
     highscoretext = "Congratulations! You made it into the high scores!"
     highscores = db.execute("SELECT score FROM sp_highscore ORDER BY score ASC")
-
+    highscoresnames = db.execute("SELECT username FROM sp_highscore ORDER BY score ASC")
+    print(highscoresnames)
     # Checks if highscore list is empty
     if not highscoredata:
 
@@ -135,6 +129,7 @@ def highscore_sp():
             username =  session['username'],
             score = session['correct'],
             category = session['category'])
+            highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -146,6 +141,7 @@ def highscore_sp():
             username =  session['username'],
             score = session['correct'],
             category = session['category'])
+            highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -160,10 +156,17 @@ def highscore_sp():
             username =  session['username'],
             score = session['correct'],
             category = session['category'])
+
+
+            db.execute("DELETE FROM sp_highscore WHERE score = :score AND username = :username",
+            score = highscores[0]["score"],
+            username = highscoresnames[0]["username"])
+
+
+            highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
+
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
-
-            # Laagste score nog weghalen
 
         # Else updates highscore
         else:
@@ -172,23 +175,17 @@ def highscore_sp():
                 score = session['correct'],
                 category = session['category'],
                 username = session['username'])
-
+                highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
                 return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
-            category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+                category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
-            return render_template("highscore_sp.html", highscoredata = highscoredata)
+            return render_template("highscore_sp.html", highscoredata = highscoredata, score = session['correct'])
 
-    return render_template("highscore_sp.html", highscoredata = highscoredata)
+    return render_template("highscore_sp.html", highscoredata = highscoredata, score = session['correct'])
 
 @app.route("/highscore_mp")
 def highscore_mp():
     return render_template("highscore_mp.html")
-
-
-@app.route("/test")
-def test_page():
-    from question_test import get_question
-    return render_template("test.html", data = get_question("general", "easy"))
 
 
 @app.route("/sp_question", methods=["GET", "POST"])
