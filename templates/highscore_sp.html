@@ -6,18 +6,19 @@
     <body>
 
         <h1>High scores</h1>
-        <h2>{{ highscoretext }}<br>
+        <h2 class="center", "serif">{{ highscoretext }}<br>
         Your score is: {{ score }}!</h2>
 
 
 {% for scores in highscoredata %}
 
-        <h2>{{ scores.username }} : {{ scores.score }} : {{ scores.category }}<br><h2>
+        <h2 class="center", "serif">{{ scores.username }} : {{ scores.score }} : {{ scores.category }}<br></h2>
 
 
 {% endfor %}
 
-
+        <div class="box">
         <button class="button" onclick="window.location.href = '/';">Return to homepage!</button>
+        </div>
     </body>
 </html>

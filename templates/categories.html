@@ -1,10 +1,16 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
+
+{% block title %}
+    Quoted
+{% endblock %}
+
+{% block main %}
 
 <html lang="en">
     <head>
         <link href="/static/styles.css" rel="stylesheet">
         <title>Categories</title>
-
+        <link href="/templates/layout.html" rel="layout">
     </head>
     <body>
         <h1 class="thick" >Categories</h1><br>
@@ -39,6 +45,7 @@
       <div class="box">
       <button class="button" type="submit">Next!</button>
       </div>
-</form>
-<br><br>
-</body>
+  </form>
+  <br><br>
+  </body>
+{% endblock %}

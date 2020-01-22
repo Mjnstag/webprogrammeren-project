@@ -1,20 +1,24 @@
-<html>
+<!DOCTYPE html>
+
+<html lang="en">
     <head>
         <link href="/static/styles.css" rel="stylesheet">
+        <link href="/templates/layout.html" rel="layout">
     </head>
     <body>
-        <div class="wrapper">
-        <button onclick="window.location.href = 'singleplayer';" type="button" class="button2">Singleplayer</button>
+        <div class="container">
+            <div class="wrapper">
+                <button onclick="window.location.href = 'singleplayer';" type="button" class="button2">Singleplayer</button>
+            </div>
+                <br><br>
+            <div class="wrapper">
+                <button onclick="window.location.href = 'createmp';" type="button" class="button2">Create Multiplayer Game</button>
+            </div>
+                <br><br>
+            <div class="wrapper">
+                <button onclick="window.location.href = 'joinmp';" type="button" class="button2">Join Multiplayer Game</button>
+            </div>
         </div>
-        <br><br>
-        <div class="wrapper">
-        <button onclick="window.location.href = 'createmp';" type="button" class="button2">Create Multiplayer Game</button>
-        </div>
-        <br><br>
-        <div class="wrapper">
-        <button onclick="window.location.href = 'joinmp';" type="button" class="button2">Join Multiplayer Game</button>
-        </div>
-
         <!--<button onclick="window.location.href = 'question';" class=start-button type="button">Join Multiplayer Game</button>-->
     </body>
 </html>
