@@ -54,7 +54,7 @@ def disp_question():
 
 
         #db.execute("DELETE FROM sp_questions WHERE question_num = 1")
-        return render_template('question.html', question = question, answers = answerlist, correct_answer = correct_answer)
+        return render_template('question.html', answered = session["correct"], question = question, answers = answerlist, correct_answer = correct_answer)
 
 
 @app.route("/categories", methods=["GET", "POST"])
