@@ -8,7 +8,7 @@
             }
             .grid-container {
               display: grid;
-              grid-template-columns: auto auto;
+              grid-template-columns: auto;
               grid-gap: 10px;
               background-color: #2196F3;
               padding: 10px;
@@ -43,31 +43,31 @@
         <p align="center">{{ question[0]["question"] }}</p>
         <br><br><br><br>
         <div class="grid-container">
-          <div onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</div>
-          <div onClick="myFunction('{{  answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</div>
-          <div onClick="myFunction('{{  answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</div>
-          <div onClick="myFunction('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</div>
+          <div class=answer onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</div>
+          <div class=answer onClick="myFunction('{{ answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</div>
+          <div class=answer onClick="myFunction('{{ answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</div>
+          <div class=answer onClick="myFunction('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</div>
 
         </div>
 
-        <p>Correct_answers: <a id="correctly">0</a></p>
+        <p>Correct_answers: <a id="correctly">{{ answered }}</a></p>
      </body>
 </html>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
-    var correct_answers = 0;
     function myFunction(answer, id) {
       var correct = '{{ correct_answer }}'
-      if (answer == correct) {
-        document.getElementById(id).style.background = "lime";
 
-        correct_answers += 1;
-        document.getElementById("correctly").innerHTML = correct_answers;
+      $( ".answer" ).each( function( index, element ){
+         if ($( this ).text() == '{{ correct_answer }}') {
+           this.style.background = "lime";
+         } else {
+           this.style.background = "OrangeRed";
+         }
 
-      } else {
-          document.getElementById(id).style.background = "OrangeRed";
-      }
+      });
+
         $.ajax({
           type : 'GET',
           url : "/correct",
@@ -83,33 +83,31 @@
 </script>
 
 <script>
-var i = 0;
-window.addEventListener('DOMContentLoaded', (event) => {
-    console.log('DOM fully loaded and parsed');
-  if (i == 0) {
-    i = 1;
-    var elem = document.getElementById("myBar");
-    var width = 100;
-    var id = setInterval(frame, 50);
-    function frame() {
-      if (width == 0) {
-        clearInterval(id);
-        console.log('timer ended');
-        i = 0;
+  var i = 0;
+  window.addEventListener('DOMContentLoaded', (event) => {
+    if (i == 0) {
+      i = 1;
+      var elem = document.getElementById("myBar");
+      var width = 100;
+      var id = setInterval(frame, 50);
+      function frame() {
+        if (width == 0) {
+          clearInterval(id);
+          i = 0;
 
-        $.ajax({
-            type : 'GET',
-            url : "/correct",
-            contentType: 'application/json;charset=UTF-8',
-            data : {'data': "{{ correct_answer }}", 'on_time': false}
-          });
+          $.ajax({
+              type : 'GET',
+              url : "/correct",
+              contentType: 'application/json;charset=UTF-8',
+              data : {'data': "{{ correct_answer }}", 'on_time': false}
+            });
 
-          location.reload();
-      } else {
-        width = width - 0.5;
-        elem.style.width = width + "%";
+            location.reload();
+        } else {
+          width = width - 0.5;
+          elem.style.width = width + "%";
+        }
       }
     }
-  }
-});
+  });
 </script>
