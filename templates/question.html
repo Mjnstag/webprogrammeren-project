@@ -41,73 +41,83 @@
 
         <br>
         <p align="center"><h2 class="center", "serif">{{ question[0]["question"] }}</h2></p>
+
         <br><br><br><br>
+
         <div class="grid-container">
           <div class=answer onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</div>
           <div class=answer onClick="myFunction('{{ answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</div>
           <div class=answer onClick="myFunction('{{ answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</div>
           <div class=answer onClick="myFunction('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</div>
-
         </div>
 
         <p><h2 class="serif">Correct answers: <a id="correctly">{{ answered }}</a></h2></p>
-     </body>
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>
+            function myFunction(answer, id) {
+              var correct = '{{ correct_answer }}'
+
+              $( ".answer" ).each( function( index, element ){
+                 if ($( this ).text() == '{{ correct_answer }}') {
+                   this.style.background = "lime";
+                 } else {
+                   this.style.background = "OrangeRed";
+                 }
+
+              });
+
+                $.ajax({
+                  type : 'GET',
+                  url : "/correct",
+                  contentType: 'application/json;charset=UTF-8',
+                  data : {'data': '{{ correct_answer }}', 'answer': answer}
+                });
+
+                setTimeout(function(){
+                location.reload();
+                }, 500);
+
+              };
+        </script>
+
+        <script>
+          var i = 0;
+          window.addEventListener('DOMContentLoaded', (event) => {
+            if (i == 0) {
+              i = 1;
+              var elem = document.getElementById("myBar");
+              var width = 100;
+              var id = setInterval(frame, 50);
+              function frame() {
+                if (width == 0) {
+                  clearInterval(id);
+                  i = 0;
+
+                  $( ".answer" ).each( function( index, element ){
+                     if ($( this ).text() == '{{ correct_answer }}') {
+                       this.style.background = "lime";
+                     } else {
+                       this.style.background = "OrangeRed";
+                     }
+                  });
+
+                  $.ajax({
+                      type : 'GET',
+                      url : "/correct",
+                      contentType: 'application/json;charset=UTF-8',
+                      data : {'data': "{{ correct_answer }}"}
+                    });
+
+                    location.reload();
+                } else {
+                  width = width - 0.5;
+                  elem.style.width = width + "%";
+                }
+              }
+            }
+          });
+        </script>
+    </body>
 </html>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript">
-    function myFunction(answer, id) {
-      var correct = '{{ correct_answer }}'
-
-      $( ".answer" ).each( function( index, element ){
-         if ($( this ).text() == '{{ correct_answer }}') {
-           this.style.background = "lime";
-         } else {
-           this.style.background = "OrangeRed";
-         }
-
-      });
-
-        $.ajax({
-          type : 'GET',
-          url : "/correct",
-          contentType: 'application/json;charset=UTF-8',
-          data : {'data': '{{ correct_answer }}', 'answer': answer, 'on_time': true}
-        });
-
-        setTimeout(function(){
-        location.reload();
-        }, 500);
-
-      };
-</script>
-
-<script>
-  var i = 0;
-  window.addEventListener('DOMContentLoaded', (event) => {
-    if (i == 0) {
-      i = 1;
-      var elem = document.getElementById("myBar");
-      var width = 100;
-      var id = setInterval(frame, 50);
-      function frame() {
-        if (width == 0) {
-          clearInterval(id);
-          i = 0;
-
-          $.ajax({
-              type : 'GET',
-              url : "/correct",
-              contentType: 'application/json;charset=UTF-8',
-              data : {'data': "{{ correct_answer }}", 'on_time': false}
-            });
-
-            location.reload();
-        } else {
-          width = width - 0.5;
-          elem.style.width = width + "%";
-        }
-      }
-    }
-  });
-</script>

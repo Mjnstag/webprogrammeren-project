@@ -91,13 +91,13 @@ def singleplayer():
 @app.route("/joinmp", methods=["GET", "POST"])
 def joinmp():
     if request.method == "POST":
-        return redirect("/question")
+        return redirect("/highscore_mp")
     return render_template("joinmp.html")
 
 @app.route("/createmp", methods=["GET", "POST"])
 def createmp():
     if request.method == "POST":
-        return redirect("/question")
+        return redirect("/highscore_mp")
     return render_template("createmp.html")
 
 @app.route("/highscore_sp")
