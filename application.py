@@ -62,21 +62,6 @@ def categories():
     return render_template("categories.html")
 
 
-@app.route("/question_test")
-def test():
-
-    if request.method == 'POST':
-        # render page
-        return render_template('question_test.html')
-    else:
-        # import question.py
-        from question_test import get_question
-
-        # get question data
-        question_data = get_question("general", "easy")
-        return render_template("question_test.html", list = [i for i in range(10)], data = question_data)
-
-
 @app.route("/type_game")
 def type_game():
     if request.method == "POST":
@@ -203,12 +188,6 @@ def highscore_sp():
 @app.route("/highscore_mp")
 def highscore_mp():
     return render_template("highscore_mp.html")
-
-
-@app.route("/test")
-def test_page():
-    from question_test import get_question
-    return render_template("test.html", data = get_question("general", "easy"))
 
 
 @app.route("/sp_question", methods=["GET", "POST"])
