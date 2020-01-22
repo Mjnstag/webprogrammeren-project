@@ -76,7 +76,6 @@ body {
     margin: 0;
     padding: 0;
     animation: bgcolor infinite 20s;
-    background-image: url(achtergrond.png);
 }
 
 #homepage, #categories {
@@ -151,6 +150,26 @@ serif {
 }
 
 .box select {
+    background: #FF8C00;
+    color: black;
+    padding: 10px;
+    width: 250px;
+    height: 50px;
+    border: none;
+    font-family: serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.box2 {
+    text-align: center;
+    border-color: black;
+    border-style: solid;
+    padding: 25px;
+
+}
+
+.box2 select {
     background: #FF8C00;
     color: black;
     padding: 10px;
@@ -247,4 +266,52 @@ main img
     /* constrain images on small screens */
     max-width: 100%;
 }
+
+.button3 {
+    display: inline-block;
+    cursor: pointer;
+    border-style: solid;
+    border-color: black;
+    text-align: center;
+    text-decoration: none;
+    width : 20%;
+    margin: 4px 2px;
+    outline: none;
+    background-color: #FFDEAD;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    font-family: "Times New Roman", Times, serif;
+    color: black;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.button3:active {
+    background-color: black;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.button3:hover {
+    border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    padding: 10px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width : 25%;
+    margin: 4px 2px;
+    background-color: #FA8072;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    font-size: x-large;
+}
+
 
