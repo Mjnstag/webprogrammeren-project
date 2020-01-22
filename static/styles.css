@@ -181,7 +181,7 @@ serif {
     width : 50%;
     margin: 4px 2px;
     outline: none;
-    background-color: #F0FFFF;
+    background-color: #87CEFA;
     border-radius: 10px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     font-family: "Times New Roman", Times, serif;
@@ -212,7 +212,7 @@ serif {
     display: inline-block;
     width : 70%;
     margin: 4px 2px;
-    background-color: #FF8C00;
+    background-color: #00BFFF;
     font-family: "Times New Roman", Times, serif;
     font-weight: bold;
     font-size: x-large;
