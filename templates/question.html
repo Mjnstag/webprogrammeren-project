@@ -43,10 +43,10 @@
         <p align="center">{{ question[0]["question"] }}</p>
         <br><br><br><br>
         <div class="grid-container">
-          <div onClick="myFunction('{{ answers[0]['correct'] }}', 0)" id=0 type="button">{{ answers[0]["correct"] }}</div>
-          <div onClick="myFunction('{{  answers[0]['incorrect1'] }}', 1)" id=1 type="button">{{ answers[0]["incorrect1"] }}</div>
-          <div onClick="myFunction('{{  answers[0]['incorrect2'] }}', 2)" id=2 type="button">{{ answers[0]["incorrect2"] }}</div>
-          <div onClick="myFunction('{{ answers[0]['incorrect3'] }}', 3)" id=3 type="button">{{ answers[0]["incorrect3"] }}</div>
+          <div onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</div>
+          <div onClick="myFunction('{{  answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</div>
+          <div onClick="myFunction('{{  answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</div>
+          <div onClick="myFunction('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</div>
 
         </div>
 
@@ -72,7 +72,7 @@
           type : 'GET',
           url : "/correct",
           contentType: 'application/json;charset=UTF-8',
-          data : {'data': '{{ answers[0]["correct"] }}', 'answer': answer, 'on_time': true}
+          data : {'data': '{{ correct_answer }}', 'answer': answer, 'on_time': true}
         });
 
         setTimeout(function(){
@@ -101,7 +101,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
             type : 'GET',
             url : "/correct",
             contentType: 'application/json;charset=UTF-8',
-            data : {'data': "{{ answers[0]['correct'] }}", 'on_time': false}
+            data : {'data': "{{ correct_answer }}", 'on_time': false}
           });
 
           location.reload();

@@ -6,6 +6,7 @@ from flask import Flask, flash, jsonify, redirect, render_template, request, ses
 import requests
 import uuid
 import time
+import random
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -40,14 +41,20 @@ def disp_question():
             return redirect("/highscore_sp")
         answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM sp_questions WHERE uuid = :uuid",
         uuid = session["id"])
-        print(answers)
+
+        answerlist = []
+        answerlist.append(answers[0]["correct"])
+        answerlist.append(answers[0]["incorrect1"])
+        answerlist.append(answers[0]["incorrect2"])
+        answerlist.append(answers[0]["incorrect3"])
+        random.shuffle(answerlist)
         correct_answer = db.execute("SELECT correct FROM sp_questions WHERE uuid = :uuid",
         uuid = session["id"])
         correct_answer = correct_answer[0]["correct"]
-        print(correct_answer)
+
 
         #db.execute("DELETE FROM sp_questions WHERE question_num = 1")
-        return render_template('question.html', question = question, answers = answers, correct_answer = correct_answer)
+        return render_template('question.html', question = question, answers = answerlist, correct_answer = correct_answer)
 
 
 @app.route("/categories", methods=["GET", "POST"])
@@ -160,15 +167,6 @@ def highscore_sp():
 
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
-
-            # Laagste score nog weghalen
-            # db.execute("DELETE FROM sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
-            # uuid = session["id"],
-            # username =  session['username'],
-            # score = session['correct'],
-            # category = session['category'])
-
-
 
         # Else updates highscore
         else:
