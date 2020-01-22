@@ -5,6 +5,7 @@ from flask import Flask
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 import requests
 import uuid
+import time
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -123,7 +124,8 @@ def highscore_sp():
     highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
     highscoretext = "Congratulations! You made it into the high scores!"
     highscores = db.execute("SELECT score FROM sp_highscore ORDER BY score ASC")
-
+    highscoresnames = db.execute("SELECT username FROM sp_highscore ORDER BY score ASC")
+    print(highscoresnames)
     # Checks if highscore list is empty
     if not highscoredata:
 
@@ -135,6 +137,7 @@ def highscore_sp():
             username =  session['username'],
             score = session['correct'],
             category = session['category'])
+            highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -146,6 +149,7 @@ def highscore_sp():
             username =  session['username'],
             score = session['correct'],
             category = session['category'])
+            highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -160,10 +164,26 @@ def highscore_sp():
             username =  session['username'],
             score = session['correct'],
             category = session['category'])
+
+
+            db.execute("DELETE FROM sp_highscore WHERE score = :score AND username = :username",
+            score = highscores[0]["score"],
+            username = highscoresnames[0]["username"])
+
+
+            highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
+
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
             # Laagste score nog weghalen
+            # db.execute("DELETE FROM sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
+            # uuid = session["id"],
+            # username =  session['username'],
+            # score = session['correct'],
+            # category = session['category'])
+
+
 
         # Else updates highscore
         else:
@@ -172,13 +192,13 @@ def highscore_sp():
                 score = session['correct'],
                 category = session['category'],
                 username = session['username'])
-
+                highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
                 return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
-            category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+                category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
-            return render_template("highscore_sp.html", highscoredata = highscoredata)
+            return render_template("highscore_sp.html", highscoredata = highscoredata, score = session['correct'])
 
-    return render_template("highscore_sp.html", highscoredata = highscoredata)
+    return render_template("highscore_sp.html", highscoredata = highscoredata, score = session['correct'])
 
 @app.route("/highscore_mp")
 def highscore_mp():
