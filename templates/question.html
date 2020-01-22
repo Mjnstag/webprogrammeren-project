@@ -20,10 +20,24 @@
               padding: 20px 0;
               font-size: 30px;
             }
+            #myProgress {
+              width: 100%;
+              background-color: #ddd;
+            }
+
+            #myBar {
+              width: 1%;
+              height: 30px;
+              background-color: #4CAF50;
+            }
         </style>
     </head>
     <body>
         <button onclick="window.location.href = '/';">Return to homepage!</button>
+        <br>
+        <div id="myProgress">
+          <div id="myBar"></div>
+        </div>
 
         <br>
         <p align="center">{{ question[0]["question"] }}</p>
@@ -51,23 +65,51 @@
         correct_answers += 1;
         document.getElementById("correctly").innerHTML = correct_answers;
 
-
       } else {
           document.getElementById(id).style.background = "OrangeRed";
       }
-
-
         $.ajax({
           type : 'GET',
           url : "/correct",
           contentType: 'application/json;charset=UTF-8',
-          data : {'data': '{{ answers[0]["correct"] }}'}
+          data : {'data': '{{ answers[0]["correct"] }}', 'answer': answer, 'on_time': true}
         });
-
 
         setTimeout(function(){
         location.reload();
-        }, 1000);
+        }, 500);
 
       };
+</script>
+
+<script>
+var i = 0;
+window.addEventListener('DOMContentLoaded', (event) => {
+    console.log('DOM fully loaded and parsed');
+  if (i == 0) {
+    i = 1;
+    var elem = document.getElementById("myBar");
+    var width = 100;
+    var id = setInterval(frame, 50);
+    function frame() {
+      if (width == 0) {
+        clearInterval(id);
+        console.log('timer ended');
+        i = 0;
+
+        $.ajax({
+            type : 'GET',
+            url : "/correct",
+            contentType: 'application/json;charset=UTF-8',
+            data : {'data': "{{ answers[0]['correct'] }}", 'on_time': false}
+          });
+
+          location.reload();
+      } else {
+        width = width - 0.5;
+        elem.style.width = width + "%";
+      }
+    }
+  }
+});
 </script>

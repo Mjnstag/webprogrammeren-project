@@ -32,14 +32,19 @@ def disp_question():
         question, answers, correct_answer = get_question(session['category'], session['difficulty'])
 
         # send question data to page
-        question = db.execute("SELECT question FROM sp_questions")
+        question = db.execute("SELECT question FROM sp_questions WHERE uuid = :uuid",
+        uuid = session["id"])
         print(question)
-
-        answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM sp_questions")
+        if not question:
+            return redirect("/highscore_sp")
+        answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM sp_questions WHERE uuid = :uuid",
+        uuid = session["id"])
         print(answers)
-        correct_answer = db.execute("SELECT correct FROM sp_questions")
+        correct_answer = db.execute("SELECT correct FROM sp_questions WHERE uuid = :uuid",
+        uuid = session["id"])
         correct_answer = correct_answer[0]["correct"]
         print(correct_answer)
+
         #db.execute("DELETE FROM sp_questions WHERE question_num = 1")
         return render_template('question.html', question = question, answers = answers, correct_answer = correct_answer)
 
@@ -83,9 +88,10 @@ def type_game():
 @app.route("/singleplayer", methods=["GET", "POST"])
 def singleplayer():
     if request.method == "POST":
+        session["correct"] = 0
         return redirect("/question")
         # return render_template("singleplayer.html")
-    session["correct answers"] = 0
+    session["correct"] = 0
     return render_template("singleplayer.html")
 
 
@@ -103,8 +109,76 @@ def createmp():
 
 @app.route("/highscore_sp")
 def highscore_sp():
-    return render_template("highscore_sp.html")
+    print(session["correct"])
+    # insert user data
+    # select top for highscores
+    # send top to page
 
+
+    # Checks if user is already in database, and only updates when the new score is higher than the existing score
+    # hij checkt nu ook de username, kunnen we nog aanpassen
+    scoreindatabase = db.execute("SELECT score from sp_highscore WHERE username = :username",
+    username =  session['username'])
+
+    highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
+    highscoretext = "Congratulations! You made it into the high scores!"
+    highscores = db.execute("SELECT score FROM sp_highscore ORDER BY score ASC")
+
+    # Checks if highscore list is empty
+    if not highscoredata:
+
+
+        # Adds user to high score database
+        if not scoreindatabase:
+            db.execute("INSERT INTO sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
+            uuid = session["id"],
+            username =  session['username'],
+            score = session['correct'],
+            category = session['category'])
+            return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
+            category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+
+    # If number of high scores is less than 10, add high score
+    elif len(highscoredata) < 10:
+        if not scoreindatabase:
+            db.execute("INSERT INTO sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
+            uuid = session["id"],
+            username =  session['username'],
+            score = session['correct'],
+            category = session['category'])
+            return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
+            category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+
+    # If score is higher than lowest high score, add score to high score
+    if session['correct'] > highscores[0]["score"]:
+        highscoretext = "Congratulations! You made it into the high scores!"
+
+        # Adds user to high score database
+        if not scoreindatabase:
+            db.execute("INSERT INTO sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
+            uuid = session["id"],
+            username =  session['username'],
+            score = session['correct'],
+            category = session['category'])
+            return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
+            category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+
+            # Laagste score nog weghalen
+
+        # Else updates highscore
+        else:
+            if session['correct'] > scoreindatabase[0]["score"]:
+                db.execute("UPDATE sp_highscore SET score = :score, category = :category WHERE username = :username",
+                score = session['correct'],
+                category = session['category'],
+                username = session['username'])
+
+                return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
+            category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+
+            return render_template("highscore_sp.html", highscoredata = highscoredata)
+
+    return render_template("highscore_sp.html", highscoredata = highscoredata)
 
 @app.route("/highscore_mp")
 def highscore_mp():
@@ -121,27 +195,24 @@ def test_page():
 def sp_question():
     from sp_question import get_question
 
-    username = str(request.args.get("username", ""))
+
+    session['username'] = str(request.args.get("username", ""))
     user_id = str(session["id"])
     category = session['category']
     difficulty = session['difficulty']
 
-    get_question(user_id, username,  category, difficulty)
+    get_question(user_id, session['username'],  category, difficulty)
     return jsonify(True)
 
 
+# checks and handles answers and time-outs for questions
 @app.route("/correct", methods=["GET", "POST"])
 def correct():
-    print("test")
-    print(str(request.args.get("data", "")))
-    db.execute("DELETE FROM sp_questions WHERE correct = :correct",
-    correct = str(request.args.get("data", "")))
+    # if answer is correct, add score point
+    if request.args.get("data", "") == request.args.get("answer", ""):
+        session["correct"] += 1
+
+    # delete question from sp_question db
+    db.execute("DELETE FROM sp_questions WHERE correct = :correct AND uuid = :session_id", correct = request.args.get("data", ""), session_id = session['id'])
+    # db.execute("DELETE FROM sp_questions WHERE correct = :correct", correct = request.args.get("data", ""))
     return jsonify(True)
-
-
-# met ajax een request sturen als een antwoord goed is en dan een session var aanpassen?
-# @app.route("/correct_answer", methods=["GET"])
-# def correct_answer():
-#     print('test')
-#     session["correct answers"] += 1
-#     return jsonify(succes = True, correct = session["correct answers"])

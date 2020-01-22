@@ -1,8 +1,23 @@
 <html>
     <head>
+        <title>High scores</title>
         <link href="/static/styles.css" rel="stylesheet">
     </head>
     <body>
-        <button onclick="window.location.href = '/';">Return to homepage!</button>
+
+        <h1>High scores</h1>
+        <h2>{{ highscoretext }}
+        your score is: {{ score }}!</h2>
+
+
+{% for scores in highscoredata %}
+
+        <h2>{{ scores.username }} : {{ scores.score }} : {{ scores.category }}<br><h2>
+
+
+{% endfor %}
+
+
+        <button class="button" onclick="window.location.href = '/';">Return to homepage!</button>
     </body>
 </html>
