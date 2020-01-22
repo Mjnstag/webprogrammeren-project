@@ -145,6 +145,18 @@ def highscore_sp():
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
+        else:
+            if session['correct'] > scoreindatabase[0]["score"]:
+                db.execute("UPDATE sp_highscore SET score = :score, category = :category WHERE username = :username",
+                score = session['correct'],
+                category = session['category'],
+                username = session['username'])
+                highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
+                return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
+                category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+
+            return render_template("highscore_sp.html", highscoredata = highscoredata, score = session['correct'])
+
     # If score is higher than lowest high score, add score to high score
     if session['correct'] > highscores[0]["score"]:
         highscoretext = "Congratulations! You made it into the high scores!"
