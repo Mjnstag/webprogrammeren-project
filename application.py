@@ -19,6 +19,10 @@ def catch_all(path):
     session["id"] = str(uuid.uuid4())
     return render_template(path + '.html')
 
+@app.route("/gamerules", methods=["GET", "POST"])
+def show_rules():
+    return render_template("gamerules.html")
+
 
 @app.route("/question", methods=["GET", "POST"])
 def disp_question():
