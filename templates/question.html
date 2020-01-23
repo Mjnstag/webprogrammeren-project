@@ -57,15 +57,16 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>
             function myFunction(answer, id) {
-              var correct = '{{ correct_answer }}'
+              // var correct = '{{ correct_answer }}'
+
+              if (answer != '{{ correct_answer }}') {
+                document.getElementById(id).style.background = "OrangeRed";
+              }
 
               $( ".answer" ).each( function( index, element ){
                  if ($( this ).text() == '{{ correct_answer }}') {
                    this.style.background = "lime";
-                 } else {
-                   this.style.background = "OrangeRed";
                  }
-
               });
 
                 $.ajax({
