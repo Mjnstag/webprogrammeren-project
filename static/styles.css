@@ -21,7 +21,6 @@
     cursor: pointer;
     border-style: solid;
     border-color: black;
-    padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     width : 50%;
@@ -52,7 +51,6 @@
     border-radius: 10px;
     border-style: solid;
     border-color: black;
-    padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -155,10 +153,13 @@ serif {
     padding: 10px;
     width: 250px;
     height: 50px;
-    border: none;
+    cursor: pointer;
+    border-style: solid;
+    border-color: black;
     font-family: serif;
     font-size: 20px;
     font-weight: bold;
+    border-radius: 10px;
 }
 
 .box2 {
@@ -166,6 +167,9 @@ serif {
     border-color: black;
     border-style: solid;
     padding: 25px;
+    font-family: serif;
+    font-size: 25px;
+    font-weight: bold;
 
 }
 
@@ -177,7 +181,7 @@ serif {
     height: 50px;
     border: none;
     font-family: serif;
-    font-size: 20px;
+    font-size: 50px;
     font-weight: bold;
 }
 
@@ -225,7 +229,6 @@ serif {
     border-radius: 10px;
     border-style: solid;
     border-color: black;
-    padding: 10px 22px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -301,7 +304,6 @@ main img
     border-radius: 10px;
     border-style: solid;
     border-color: black;
-    padding: 10px 22px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
