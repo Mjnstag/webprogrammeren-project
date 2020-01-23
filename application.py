@@ -262,3 +262,20 @@ def correct():
     db.execute("DELETE FROM sp_questions WHERE correct = :correct AND uuid = :session_id", correct = request.args.get("data", ""), session_id = session['id'])
     # db.execute("DELETE FROM sp_questions WHERE correct = :correct", correct = request.args.get("data", ""))
     return jsonify(True)
+
+@app.route("/lobby", methods=["GET", "POST"])
+def lobby():
+    if request.method == 'GET':
+        data = db.execute("SELECT username FROM mp_players")
+        # temp = data[0]['username']
+
+        # for username in data:
+
+        print(data)
+
+
+        # data = data[0]['username'] +  data[1]['username']
+    return render_template("lobby.html", data = data)
+        # return render_template("lobby.html", data = data)
+    # if request.method == 'GET':
+    #     return render_template("lobby.html")
