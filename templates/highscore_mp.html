@@ -4,5 +4,18 @@
     </head>
     <body>
         <button onclick="window.location.href = '/';">Return to homepage!</button>
+        {% for scores in data %}
+
+                <h2 class="center", class="serif">{{ scores.username }} : {{ scores.score }}<br></h2>
+
+        {% endfor %}
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+      setTimeout(function(){
+		location.reload();
+      }, 10000);
+  });
+</script>
     </body>
 </html>

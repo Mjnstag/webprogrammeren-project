@@ -97,6 +97,7 @@ def joinmp():
     if request.method == "POST":
 
         room_id = request.form["roomid"]
+        session['room_id'] = room_id
         username = request.form["username"]
 
         if not db.execute("SELECT room_id FROM mp_question WHERE room_id = :room_id", room_id = room_id):
@@ -121,6 +122,7 @@ def createmp():
     if request.method == "POST":
         from mp_question import get_question
         room_id = request.form["room_id"]
+        session['room_id'] = room_id
 
         if db.execute("SELECT question FROM mp_question WHERE room_id = :room_id", room_id = room_id):
             return render_template("createmp.html", error = "Room already exists")
@@ -234,7 +236,9 @@ def highscore_sp():
 
 @app.route("/highscore_mp")
 def highscore_mp():
-    return render_template("highscore_mp.html")
+    data = db.execute("SELECT * FROM mp_players WHERE room_id = :room_id", room_id=session['room_id'])
+
+    return render_template("highscore_mp.html", data = data)
 
 
 @app.route("/sp_question", methods=["GET", "POST"])
