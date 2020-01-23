@@ -91,8 +91,6 @@ def singleplayer():
 @app.route("/joinmp", methods=["GET", "POST"])
 def joinmp():
     if request.method == "POST":
-
-        print(session['id'])
         db.execute("INSERT INTO mp_players (uuid, room_id, username, score, host) VALUES (:uuid, :room_id, :username, :score, :host)",
         uuid = session['id'],
         room_id = request.form.get("roomid"),
@@ -111,6 +109,14 @@ def createmp():
 
         if db.execute("SELECT question FROM mp_question WHERE room_id = :room_id", room_id = room_id):
             return render_template("createmp.html", error = "Room already exists")
+
+
+        db.execute("INSERT INTO mp_players (uuid, room_id, username, score, host) VALUES (:uuid, :room_id, :username, :score, :host)",
+        uuid = session['id'],
+        room_id = request.form.get("room_id"),
+        username = request.form.get("username"),
+        score = 0,
+        host = 1)
 
         get_question(room_id, session['category'], session['difficulty'])
         return redirect("/highscore_mp")
