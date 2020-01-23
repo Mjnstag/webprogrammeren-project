@@ -91,6 +91,15 @@ def singleplayer():
 @app.route("/joinmp", methods=["GET", "POST"])
 def joinmp():
     if request.method == "POST":
+
+        print(session['id'])
+        db.execute("INSERT INTO mp_players (uuid, room_id, username, score, host) VALUES (:uuid, :room_id, :username, :score, :host)",
+        uuid = session['id'],
+        room_id = request.form.get("roomid"),
+        username = request.form.get("username"),
+        score = 0,
+        host = 0)
+
         return redirect("/highscore_mp")
     return render_template("joinmp.html")
 
