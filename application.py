@@ -97,6 +97,9 @@ def joinmp():
 @app.route("/createmp", methods=["GET", "POST"])
 def createmp():
     if request.method == "POST":
+        from mp_question import get_question
+        room_id = request.form["room_id"]
+        get_question(room_id, session['category'], session['difficulty'])
         return redirect("/highscore_mp")
     return render_template("createmp.html")
 
