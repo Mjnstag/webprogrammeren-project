@@ -31,11 +31,7 @@ def disp_question():
         # render page
         return render_template('question.html')
     else:
-        # import question.py
-        from question import get_question
-
-        # get question data
-        question, answers, correct_answer = get_question(session['category'], session['difficulty'])
+        time.sleep(3)
 
         # send question data to page
         question = db.execute("SELECT question FROM sp_questions WHERE uuid = :uuid",
