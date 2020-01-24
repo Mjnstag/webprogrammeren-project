@@ -1,11 +1,7 @@
+ <!--make sure game works on mobile phone-->
 {% extends "layout.html" %}
-
-{% block title %}
-    Quoted
-{% endblock %}
-
 {% block main %}
-
+<!--define html page-->
 <html lang="en">
     <head>
         <link href="/static/styles.css" rel="stylesheet">
@@ -13,9 +9,9 @@
         <link href="/templates/layout.html" rel="layout">
     </head>
     <body>
-        <h1 class="thick" >Categories</h1><br>
+        <h1 class="funtext" class="thick" >Categories</h1><br>
         <h2 class="thick" >Choose the category you want to play:</h2> <!-- Juiste categorieën toevoegen-->
-
+      <!--list of different cateogries-->
       <form style="text-align:center" action="/categories" method="post">
         <div class="box">
           <select name="Categories">
@@ -30,7 +26,7 @@
 
   <br>
   <h2 class="thick" >Choose the difficulty:</h2>
-
+  <!--list of difficulties-->
   <form style="text-align:center" action="/categories" method="post">
     <form action="/categories" method="post">
         <div class="box">
@@ -42,6 +38,7 @@
         </div>
 
       <br><br><br>
+      <!--button to submit choice-->
       <div class="box">
       <button class="button" type="submit">Next!</button>
       </div>

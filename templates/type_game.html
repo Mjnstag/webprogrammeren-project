@@ -1,10 +1,7 @@
+ <!--make sure game works on mobile phone-->
 {% extends "layout.html" %}
-
-{% block title %}
-    Quoted
-{% endblock %}
-
 {% block main %}
+<!--define html page-->
 <html lang="en">
     <head>
         <link href="/static/styles.css" rel="stylesheet">
@@ -12,7 +9,8 @@
     </head>
     <body>
         <div class="container">
-        <div class="midden">
+        <div class="middle">
+            <!--choose game type-->
             <button onclick="window.location.href = 'singleplayer';" type="button" class="button2">Singleplayer</button>
             <br><br>
             <button onclick="window.location.href = 'createmp';" type="button" class="button2">Create Multiplayer Game</button>
