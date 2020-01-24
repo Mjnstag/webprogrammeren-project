@@ -1,5 +1,6 @@
 /*css style file*/
 
+/*center text*/
 .center {
     text-align: center;
 }
@@ -16,21 +17,19 @@
     cursor: pointer;
 }
 
+/* style of button*/
 .button {
     display: inline-block;
     cursor: pointer;
     border-style: solid;
     border-color: black;
-    text-align: center;
-    text-decoration: none;
     width : 50%;
     margin: 4px 2px;
-    outline: none;
     background-color: #F0FFFF;
     border-radius: 10px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     font-family: "Times New Roman", Times, serif;
-    color: black;
+    /*color: black;*/
     font-weight: bold;
     font-size: x-large;
 }
@@ -41,7 +40,6 @@
     border-style: solid;
     border-color: black;
     box-shadow: 0 5px #666;
-    transform: translateY(4px);
     font-family: "Times New Roman", Times, serif;
     font-weight: bold;
     font-size: x-large;
@@ -52,7 +50,6 @@
     border-style: solid;
     border-color: black;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
     width : 50%;
     margin: 4px 2px;
@@ -62,14 +59,15 @@
     font-size: x-large;
 }
 
-.hidden {
-    display: none;
-}
+/*.hidden {*/
+/*    display: none;*/
+/*}*/
 
-#firstname {
-  background-color: yellow;
-}
+/*#firstname {*/
+/*  background-color: yellow;*/
+/*}*/
 
+/* background */
 body {
     margin: 0;
     padding: 0;
@@ -120,34 +118,28 @@ body {
 }
 
 
-/*div {*/
-/*    height: 200px;*/
-/*    width: 400px;*/
-
-/*    position: fixed;*/
-/*    top: 50%;*/
-/*    left: 50%;*/
-/*    margin-top: -100px;*/
-/*    margin-left: -200px;*/
-/*}*/
-
+/* text decoration page titles*/
 h1 {
   text-shadow: 3px 2px #FF8C00;
 }
 
+/* font of the game*/
 serif {
     font-family: "Times New Roman", Times, serif;
 }
 
+/* make text bold*/
 .thick {
   font-weight: bold; text-align: center;
 }
 
+/* style of the box in the game*/
 .box {
     text-align: center;
 }
 
 .box select {
+    text-align: center;
     background: #FF8C00;
     color: black;
     padding: 10px;
@@ -170,7 +162,6 @@ serif {
     font-family: serif;
     font-size: 25px;
     font-weight: bold;
-
 }
 
 .box2 select {
@@ -185,7 +176,8 @@ serif {
     font-weight: bold;
 }
 
-.midden {
+/* put text to the center of the page*/
+.middle {
     text-align: center;
     position: fixed;
     top: 50%;
@@ -193,16 +185,14 @@ serif {
     transform: translate(-50%, -50%);
 }
 
-
+/* style of other button in the game*/
 .button2 {
     display: inline-block;
     cursor: pointer;
     border-style: solid;
     border-color: black;
     text-align: center;
-    text-decoration: none;
     margin: 10px 2px;
-    outline: none;
     background-color: #87CEFA;
     border-radius: 10px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
@@ -230,8 +220,6 @@ serif {
     border-style: solid;
     border-color: black;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
     margin: 4px 2px;
     background-color: #00BFFF;
     font-family: "Times New Roman", Times, serif;
@@ -239,10 +227,11 @@ serif {
     font-size: x-large;
 }
 
-.wrapper {
-    text-align: center;
-}
+/*.wrapper {*/
+/*    text-align: center;*/
+/*}*/
 
+/* class for bootstrap, make text fit in mobile screen*/
 .container {
     flex-direction: column;
     display: inline-block;
@@ -263,22 +252,15 @@ main
     text-align: center;
 }
 
-main img
-{
-    /* constrain images on small screens */
-    max-width: 100%;
-}
-
+/*style of other button in game*/
 .button3 {
     display: inline-block;
     cursor: pointer;
     border-style: solid;
     border-color: black;
     text-align: center;
-    text-decoration: none;
     width : 20%;
     margin: 4px 2px;
-    outline: none;
     background-color: #FFDEAD;
     border-radius: 10px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
@@ -305,7 +287,6 @@ main img
     border-style: solid;
     border-color: black;
     text-align: center;
-    text-decoration: none;
     display: inline-block;
     width : 25%;
     margin: 4px 2px;
