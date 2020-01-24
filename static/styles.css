@@ -5,6 +5,11 @@
     text-align: center;
 }
 
+/*make cursor hand when you can click on it*/
+.pointer {
+    cursor: pointer;
+}
+
 .question {
     border-style: solid;
     border-color: black;
