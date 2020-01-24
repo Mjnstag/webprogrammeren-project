@@ -145,13 +145,17 @@ def highscore_sp():
 
     # Checks if user is already in database, and only updates when the new score is higher than the existing score
     # hij checkt nu ook de username, kunnen we nog aanpassen
-    scoreindatabase = db.execute("SELECT score from sp_highscore WHERE username = :username",
-    username =  session['username'])
+    scoreindatabase = db.execute("SELECT score from sp_highscore WHERE username = :username AND category = :category",
+    username =  session['username'],
+    category = session['category'])
 
-    highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
+    highscoredata = db.execute("SELECT * FROM sp_highscore  WHERE category = :category ORDER BY score DESC",
+    category = session['category'])
     highscoretext = "Congratulations! You made it into the high scores!"
-    highscores = db.execute("SELECT score FROM sp_highscore ORDER BY score ASC")
-    highscoresnames = db.execute("SELECT username FROM sp_highscore ORDER BY score ASC")
+    highscores = db.execute("SELECT score FROM sp_highscore WHERE category = :category ORDER BY score ASC",
+    category = session['category'])
+    highscoresnames = db.execute("SELECT username FROM sp_highscore WHERE category = :category ORDER BY score ASC",
+    category = session['category'])
     print(highscoresnames)
     # Checks if highscore list is empty
     if not highscoredata:
@@ -164,7 +168,8 @@ def highscore_sp():
             username =  session['username'],
             score = session['correct'],
             category = session['category'])
-            highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
+            highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
+            category = session['category'])
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -176,7 +181,8 @@ def highscore_sp():
             username =  session['username'],
             score = session['correct'],
             category = session['category'])
-            highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
+            highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
+            category = session['category'])
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -186,7 +192,8 @@ def highscore_sp():
                 score = session['correct'],
                 category = session['category'],
                 username = session['username'])
-                highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
+                highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
+                category = session['category'])
                 return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
                 category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -210,7 +217,8 @@ def highscore_sp():
             username = highscoresnames[0]["username"])
 
 
-            highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
+            highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
+            category = session['category'])
 
             return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
             category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
@@ -225,7 +233,8 @@ def highscore_sp():
                 highscoredata = db.execute("SELECT * FROM sp_highscore ORDER BY score DESC")
                 return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
                 category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
-
+                highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
+                category = session['category'])
             return render_template("highscore_sp.html", highscoredata = highscoredata, score = session['correct'])
 
     return render_template("highscore_sp.html", highscoredata = highscoredata, score = session['correct'])
