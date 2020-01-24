@@ -124,13 +124,15 @@ body {
 
 
 /* text decoration page titles*/
-h1 {
+.funtext {
   text-shadow: 3px 2px #FF8C00;
+  text-align: center;
 }
 
 /* font of the game*/
-serif {
+.serif {
     font-family: "Times New Roman", Times, serif;
+    text-align: center;
 }
 
 /* make text bold*/
