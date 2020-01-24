@@ -9,15 +9,15 @@
     </head>
     <body>
         <div class="center">
-            <h1>High scores</h1>
+            <h1 class="funtext" >High scores</h1>
         </div>
-        <h2 class="center", class="serif">{{ highscoretext }}<br>
-        Your score is: {{ score }}!</h2>
+        <h2 class="thick" class="serif">{{ highscoretext }}<br>
+         Your score is: {{ score }}!</h2>
 
 
 {% for scores in highscoredata %}
 
-        <h2 class="center", class="serif">{{ scores.username }} : {{ scores.score }} : {{ scores.category }}<br></h2>
+        <h2 class="serif" class="center">{{ scores.username }} : {{ scores.score }} : {{ scores.category }}<br></h2>
 
 
 {% endfor %}
