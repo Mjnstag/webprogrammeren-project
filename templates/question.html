@@ -33,7 +33,6 @@
         </style>
     </head>
     <body>
-        <button onclick="window.location.href = '/';" class="button3">Return to homepage!</button>
         <br>
         <div id="myProgress">
           <div id="myBar"></div>
@@ -57,8 +56,6 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script>
             function myFunction(answer, id) {
-              // var correct = '{{ correct_answer }}'
-
               if (answer != '{{ correct_answer }}') {
                 document.getElementById(id).style.background = "OrangeRed";
               }
