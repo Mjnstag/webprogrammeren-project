@@ -17,6 +17,5 @@
 * Vragennummer bij vragenscherm, ranking number bij highscore
 * jinga sorting bij highscore?
 * 'return to homepage' knop weg bij vragen
-*
 
 
