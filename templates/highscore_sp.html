@@ -12,10 +12,12 @@
             <h1 class="funtext" >High scores
             <br>
             {{ highscoredata[0]["category"] }}
+
             </h1>
         </div>
         <h2 class="thick" class="serif">{{ highscoretext }}<br>
-         Your score is: {{ score }}!</h2>
+         Your score is: {{ score }}!<br>
+         Amount of questions: {{ amount }}</h2>
 
 
 {% for scores in highscoredata %}

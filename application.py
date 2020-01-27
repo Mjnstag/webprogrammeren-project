@@ -36,6 +36,30 @@ def disp_question():
         # render page
         return render_template('question.html')
     else:
+        if session["gamemode"] == "custom":
+            time.sleep(1)
+
+            # send question data to page
+            question = db.execute("SELECT question FROM customgame WHERE uuid = :uuid",
+            uuid = session["id"])
+            if not question:
+                return redirect("/highscore_sp")
+            answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM customgame WHERE uuid = :uuid",
+            uuid = session["id"])
+
+            answerlist = []
+            answerlist.append(answers[0]["correct"])
+            answerlist.append(answers[0]["incorrect1"])
+            answerlist.append(answers[0]["incorrect2"])
+            answerlist.append(answers[0]["incorrect3"])
+            random.shuffle(answerlist)
+            correct_answer = db.execute("SELECT correct FROM customgame WHERE uuid = :uuid",
+            uuid = session["id"])
+
+            progress = db.execute("SELECT question_num FROM customgame WHERE uuid = :uuid",
+            uuid = session["id"])
+            correct_answer = correct_answer[0]["correct"]
+            return render_template('question.html', progress = progress,  answered = session["correct"], question = question, answers = answerlist, correct_answer = correct_answer)
         time.sleep(1)
 
         # send question data to page
@@ -54,9 +78,6 @@ def disp_question():
         random.shuffle(answerlist)
         correct_answer = db.execute("SELECT correct FROM sp_questions WHERE uuid = :uuid",
         uuid = session["id"])
-
-        print(db.execute("SELECT question_num FROM sp_questions WHERE uuid = :uuid",
-        uuid = session["id"]))
 
         progress = db.execute("SELECT question_num FROM sp_questions WHERE uuid = :uuid",
         uuid = session["id"])
@@ -121,29 +142,6 @@ def joinmp():
 
         return redirect("/highscore_mp")
     return render_template("joinmp.html")
-
-@app.route("/createmp", methods=["GET", "POST"])
-def createmp():
-    if request.method == "POST":
-        from mp_question import get_question
-        room_id = request.form["room_id"]
-        session['room_id'] = room_id
-
-        if db.execute("SELECT question FROM mp_question WHERE room_id = :room_id", room_id = room_id):
-            return render_template("createmp.html", error = "Room already exists")
-
-
-        db.execute("INSERT INTO mp_players (uuid, room_id, username, score, host) VALUES (:uuid, :room_id, :username, :score, :host)",
-        uuid = session['id'],
-        room_id = request.form.get("room_id"),
-        username = request.form.get("username"),
-        score = 0,
-        host = 1)
-
-        get_question(room_id, session['category'], session['difficulty'])
-        return redirect("/highscore_mp")
-    return render_template("createmp.html")
-
 
 
 @app.route("/customgame", methods=["GET", "POST"])
