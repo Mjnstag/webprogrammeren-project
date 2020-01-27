@@ -292,7 +292,7 @@ def highscore_sp():
     highscoretext = "Congratulations! You made it into the high scores!"
     highscores = db.execute("SELECT score FROM sp_highscore WHERE category = :category ORDER BY score ASC",
     category = category)
-    highscoresnames = db.execute("SELECT username FROM custom_highscore WHERE category = :category ORDER BY score ASC",
+    highscoresnames = db.execute("SELECT username FROM sp_highscore WHERE category = :category ORDER BY score ASC",
     category = category)
 
     # checks if highscore list is empty
