@@ -8,17 +8,19 @@ import uuid
 import time
 import random
 
+# configure flask
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 db = SQL("sqlite:///sessions.db")
 
+# set default route
 @app.route('/', defaults={'path': 'homepage'})
-# @app.route('/<path:path>')
 def catch_all(path):
     session["id"] = str(uuid.uuid4())
     return render_template(path + '.html')
 
+# renders gamerules page
 @app.route("/gamerules", methods=["GET", "POST"])
 def show_rules():
     return render_template("gamerules.html")
@@ -54,6 +56,7 @@ def disp_question():
         return render_template('question.html', answered = session["correct"], question = question, answers = answerlist, correct_answer = correct_answer)
 
 
+# renders categories page or redirects to next page
 @app.route("/categories", methods=["GET", "POST"])
 def categories():
     if request.method == 'POST':
@@ -63,13 +66,13 @@ def categories():
     return render_template("categories.html")
 
 
+# renders game type page
 @app.route("/type_game")
 def type_game():
-    if request.method == "POST":
-        return render_template("type_game.html")
     return render_template("type_game.html")
 
 
+# resets correct score, renders singleplayer page, redirect to question
 @app.route("/singleplayer", methods=["GET", "POST"])
 def singleplayer():
     if request.method == "POST":
@@ -243,21 +246,24 @@ def highscore_sp():
 @app.route("/highscore_mp")
 def highscore_mp():
     data = db.execute("SELECT * FROM mp_players WHERE room_id = :room_id", room_id=session['room_id'])
-
     return render_template("highscore_mp.html", data = data)
 
-
+# calls on function to put questions in database
 @app.route("/sp_question", methods=["GET", "POST"])
 def sp_question():
+    # import function from .py file
     from sp_question import get_question
 
-
+    # get needed variables
     session['username'] = str(request.args.get("username", ""))
     user_id = str(session["id"])
     category = session['category']
     difficulty = session['difficulty']
 
+    # call function to add questions in database
     get_question(user_id, session['username'],  category, difficulty)
+
+    # return
     return jsonify(True)
 
 
@@ -270,5 +276,4 @@ def correct():
 
     # delete question from sp_question db
     db.execute("DELETE FROM sp_questions WHERE correct = :correct AND uuid = :session_id", correct = request.args.get("data", ""), session_id = session['id'])
-    # db.execute("DELETE FROM sp_questions WHERE correct = :correct", correct = request.args.get("data", ""))
     return jsonify(True)
