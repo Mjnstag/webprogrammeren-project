@@ -132,11 +132,27 @@ def createmp():
 
 
 @app.route("/customgame", methods=["GET", "POST"])
-def customgame():
+def rendercustomgame():
 
+
+    if request.method == "POST":
+        session["correct"] = 0
+        return redirect("/question")
+    session["correct"] = 0
     return render_template("customgame.html")
 
+@app.route("/test", methods=["GET", "POST"])
+def customgame():
+    from customgame import get_question
 
+    session['username'] = str(request.args.get("username", ""))
+    user_id = str(session["id"])
+    category = session['category']
+    difficulty = session['difficulty']
+    amount = str(request.args.get("amount", ""))
+
+    get_question(user_id, session['username'], category, difficulty, amount)
+    return jsonify(True)
 @app.route("/highscore_sp")
 def highscore_sp():
 
