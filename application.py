@@ -148,6 +148,12 @@ def highscore_sp():
     category = session['category'])
     highscoresnames = db.execute("SELECT username FROM sp_highscore WHERE category = :category ORDER BY score ASC",
     category = session['category'])
+
+    uuid = session["id"]
+    username =  session['username']
+    score = session['correct']
+    category = session['category']
+
     # checks if highscore list is empty
     if not highscoredata:
 
@@ -155,49 +161,50 @@ def highscore_sp():
         # adds user to high score database
         if not scoreindatabase:
             db.execute("INSERT INTO sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
-            uuid = session["id"],
-            username =  session['username'],
-            score = session['correct'],
-            category = session['category'])
+            uuid = uuid,
+            username = username,
+            score = score,
+            category = category)
             highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
             category = session['category'])
-            return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
-            category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+            return render_template("highscore_sp.html", score = score, username = username,
+                category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
     # if number of high scores is less than 10, add high score
     elif len(highscoredata) < 10:
         if not scoreindatabase:
             db.execute("INSERT INTO sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
-            uuid = session["id"],
-            username =  session['username'],
-            score = session['correct'],
-            category = session['category'])
+            uuid = uuid,
+            username = username,
+            score = score,
+            category = category)
             highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
             category = session['category'])
-            return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
-            category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+            return render_template("highscore_sp.html", score = score, username = username,
+                category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
         else:
             if session['correct'] > scoreindatabase[0]["score"]:
                 db.execute("UPDATE sp_highscore SET score = :score, category = :category WHERE username = :username",
-                score = session['correct'],
-                category = session['category'],
-                username = session['username'])
-                highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
-                category = session['category'])
-                return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
-                category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+                score = score,
+                category = category,
+                username = username)
 
-            return render_template("highscore_sp.html", highscoredata = highscoredata, score = session['correct'])
+                highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
+                category = category)
+                return render_template("highscore_sp.html", score = score, username = username,
+                category = category, highscoretext = highscoretext, highscoredata = highscoredata)
+
+            return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
     else:
 
         # adds user to high score database
         if not scoreindatabase:
             db.execute("INSERT INTO sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
-            uuid = session["id"],
-            username =  session['username'],
-            score = session['correct'],
-            category = session['category'])
+            uuid = uuid,
+            username = username,
+            score = score,
+            category = category)
 
 
             db.execute("DELETE FROM sp_highscore WHERE score = :score AND username = :username",
@@ -206,26 +213,26 @@ def highscore_sp():
 
 
             highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
-            category = session['category'])
+            category = category)
 
-            return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
-            category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+            return render_template("highscore_sp.html", score = score, username = username,
+                category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
         # else updates highscore
         else:
             if session['correct'] > scoreindatabase[0]["score"]:
                 db.execute("UPDATE sp_highscore SET score = :score, category = :category WHERE username = :username",
-                score = session['correct'],
-                category = session['category'],
-                username = session['username'])
+                score = score,
+                category = category,
+                username = username)
                 highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
-                category = session['category'])
-                return render_template("highscore_sp.html", score = session['correct'], username = session['username'],
-                category = session['category'], highscoretext = highscoretext, highscoredata = highscoredata)
+                category = category)
+                return render_template("highscore_sp.html", score = score, username = username,
+                category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
-            return render_template("highscore_sp.html", highscoredata = highscoredata, score = session['correct'])
+            return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
 
-    return render_template("highscore_sp.html", highscoredata = highscoredata, score = session['correct'])
+    return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
 
 @app.route("/highscore_mp")
 def highscore_mp():
