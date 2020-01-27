@@ -37,7 +37,6 @@ def disp_question():
         # send question data to page
         question = db.execute("SELECT question FROM sp_questions WHERE uuid = :uuid",
         uuid = session["id"])
-        print(question)
         if not question:
             return redirect("/highscore_sp")
         answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM sp_questions WHERE uuid = :uuid",
@@ -67,8 +66,6 @@ def categories():
 @app.route("/type_game")
 def type_game():
     if request.method == "POST":
-        print("test")
-
         return render_template("type_game.html")
     return render_template("type_game.html")
 
@@ -131,7 +128,6 @@ def createmp():
 
 @app.route("/highscore_sp")
 def highscore_sp():
-    print(session["correct"])
     # insert user data
     # select top for highscores
     # send top to page
@@ -149,7 +145,6 @@ def highscore_sp():
     category = session['category'])
     highscoresnames = db.execute("SELECT username FROM sp_highscore WHERE category = :category ORDER BY score ASC",
     category = session['category'])
-    print(highscoresnames)
     # checks if highscore list is empty
     if not highscoredata:
 
@@ -261,20 +256,3 @@ def correct():
     db.execute("DELETE FROM sp_questions WHERE correct = :correct AND uuid = :session_id", correct = request.args.get("data", ""), session_id = session['id'])
     # db.execute("DELETE FROM sp_questions WHERE correct = :correct", correct = request.args.get("data", ""))
     return jsonify(True)
-
-@app.route("/lobby", methods=["GET", "POST"])
-def lobby():
-    if request.method == 'GET':
-        data = db.execute("SELECT username FROM mp_players")
-        # temp = data[0]['username']
-
-        # for username in data:
-
-        print(data)
-
-
-        # data = data[0]['username'] +  data[1]['username']
-    return render_template("lobby.html", data = data)
-        # return render_template("lobby.html", data = data)
-    # if request.method == 'GET':
-    #     return render_template("lobby.html")
