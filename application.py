@@ -17,6 +17,8 @@ db = SQL("sqlite:///sessions.db")
 # set default route
 @app.route('/', defaults={'path': 'homepage'})
 def catch_all(path):
+
+    session["correct"] = None
     session["id"] = str(uuid.uuid4())
     return render_template(path + '.html')
 
@@ -83,8 +85,15 @@ def type_game():
 def singleplayer():
     if request.method == "POST":
         session["correct"] = 0
+
+        # makes sure to redirect to right high score database later
+        session["gamemode"] = "standard"
         return redirect("/question")
     session["correct"] = 0
+    session["gamemode"] = "standard"
+
+
+
     return render_template("singleplayer.html")
 
 
@@ -143,11 +152,13 @@ def rendercustomgame():
 
     if request.method == "POST":
         session["correct"] = 0
+        session["gamemode"] = "custom"
         return redirect("/question")
     session["correct"] = 0
+    session["gamemode"] = "custom"
     return render_template("customgame.html")
 
-@app.route("/test", methods=["GET", "POST"])
+@app.route("/customgamequestions", methods=["GET", "POST"])
 def customgame():
     from customgame import get_question
 
@@ -155,51 +166,149 @@ def customgame():
     user_id = str(session["id"])
     category = session['category']
     difficulty = session['difficulty']
-    amount = str(request.args.get("amount", ""))
+    session["amount"] = str(request.args.get("amount", ""))
 
-    get_question(user_id, session['username'], category, difficulty, amount)
+    get_question(user_id, session['username'], category, difficulty, session["amount"])
     return jsonify(True)
 @app.route("/highscore_sp")
 def highscore_sp():
 
-    # insert user data
-    # select top for highscores
-    # send top to page
 
 
-    # checks if user is already in database, and only updates when the new score is higher than the existing score
-    scoreindatabase = db.execute("SELECT score from sp_highscore WHERE username = :username AND category = :category",
-    username =  session['username'],
-    category = session['category'])
-
-    highscoredata = db.execute("SELECT * FROM sp_highscore  WHERE category = :category ORDER BY score DESC",
-    category = session['category'])
-    highscoretext = "Congratulations! You made it into the high scores!"
-    highscores = db.execute("SELECT score FROM sp_highscore WHERE category = :category ORDER BY score ASC",
-    category = session['category'])
-    highscoresnames = db.execute("SELECT username FROM sp_highscore WHERE category = :category ORDER BY score ASC",
-    category = session['category'])
-
+    amount = session["amount"]
     uuid = session["id"]
     username =  session['username']
     score = session['correct']
     category = session['category']
 
-    # checks if highscore list is empty
-    if not highscoredata:
 
+    # checks if user is already in database, and only updates when the new score is higher than the existing score
 
-        # adds user to high score database
-        if not scoreindatabase:
-            db.execute("INSERT INTO sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
+    print("gamemode")
+    if session["gamemode"] == "custom":
+
+        scoreindatabase = db.execute("SELECT score from custom_highscore WHERE username = :username AND amount = :amount",
+        username =  username,
+        amount = amount)
+
+        highscoredata = db.execute("SELECT * FROM custom_highscore  WHERE amount = :amount ORDER BY score DESC",
+        amount = amount)
+        highscoretext = "Congratulations! You made it into the high scores!"
+        highscores = db.execute("SELECT score FROM custom_highscore WHERE amount = :amount ORDER BY score ASC",
+        amount = amount)
+        highscoresnames = db.execute("SELECT username FROM custom_highscore WHERE amount = :amount ORDER BY score ASC",
+        amount = amount)
+
+        if not highscoredata:
+
+            db.execute("INSERT INTO custom_highscore (uuid, username, score, category, amount) VALUES (:uuid, :username, :score, :category, :amount)",
             uuid = uuid,
             username = username,
             score = score,
-            category = category)
-            highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
-            category = session['category'])
+            category = category,
+            amount = amount)
+            highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
+            amount = amount)
             return render_template("highscore_sp.html", score = score, username = username,
-                category = category, highscoretext = highscoretext, highscoredata = highscoredata)
+                category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+
+            # if number of high scores is less than 10, add high score
+        elif len(highscoredata) < 10:
+            if not scoreindatabase:
+                db.execute("INSERT INTO custom_highscore (uuid, username, score, category, amount) VALUES (:uuid, :username, :score, :category, :amount)",
+                uuid = uuid,
+                username = username,
+                score = score,
+                category = category,
+                amount = amount)
+                highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
+                amount = amount)
+                return render_template("highscore_sp.html", score = score, username = username,
+                        category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+
+            else:
+                if session['correct'] > scoreindatabase[0]["score"]:
+                    db.execute("UPDATE custom_highscore SET score = :score, category = :category, amount = :amount WHERE username = :username",
+                    score = score,
+                    category = category,
+                    username = username,
+                    amount = amount)
+
+                    highscoredata = db.execute("SELECT * FROM sp_highscore WHERE amount = :amount ORDER BY score DESC",
+                    category = category)
+                    return render_template("highscore_sp.html", score = score, username = username,
+                    category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+
+                return render_template("highscore_sp.html", highscoredata = highscoredata, score = score, amount = amount)
+        else:
+
+            # adds user to high score database
+            if not scoreindatabase:
+                db.execute("INSERT INTO custom_highscore (uuid, username, score, category, amount) VALUES (:uuid, :username, :score, :category, :amount)",
+                uuid = uuid,
+                username = username,
+                score = score,
+                category = category,
+                amount = amount)
+
+
+                db.execute("DELETE FROM custom_highscore WHERE score = :score AND username = :username",
+                score = highscores[0]["score"],
+                username = highscoresnames[0]["username"],
+                amount = amount)
+
+
+
+                highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
+                category = category,
+                amount = amount)
+
+                return render_template("highscore_sp.html", score = score, username = username,
+                    category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+
+                # else updates highscore
+            else:
+                if session['correct'] > scoreindatabase[0]["score"]:
+                    db.execute("UPDATE custom_highscore SET score = :score, category = :category WHERE username = :username",
+                    score = score,
+                    category = category,
+                    username = username,
+                    amount = amount)
+                    highscoredata = db.execute("SELECT * FROM sp_highscore WHERE amount = :amount ORDER BY score DESC",
+                    category = category)
+                    return render_template("highscore_sp.html", score = score, username = username,
+                    category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+
+                return render_template("highscore_sp.html", amount = amount, highscoredata = highscoredata, score = score)
+
+        return render_template("custom_highscore", amount = amount, highscoredata = highscoredata, score = score)
+
+
+
+    scoreindatabase = db.execute("SELECT score from sp_highscore WHERE username = :username AND category = :category",
+    username =  username,
+    category = category)
+
+    highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
+    category = category)
+    highscoretext = "Congratulations! You made it into the high scores!"
+    highscores = db.execute("SELECT score FROM sp_highscore WHERE category = :category ORDER BY score ASC",
+    category = category)
+    highscoresnames = db.execute("SELECT username FROM custom_highscore WHERE category = :category ORDER BY score ASC",
+    category = category)
+
+    # checks if highscore list is empty
+    if not highscoredata:
+
+        db.execute("INSERT INTO sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
+        uuid = uuid,
+        username = username,
+        score = score,
+        category = category)
+        highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
+        category = session['category'])
+        return render_template("highscore_sp.html", score = score, username = username,
+            category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
     # if number of high scores is less than 10, add high score
     elif len(highscoredata) < 10:
