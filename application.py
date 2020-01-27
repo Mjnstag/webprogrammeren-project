@@ -126,8 +126,17 @@ def createmp():
         return redirect("/highscore_mp")
     return render_template("createmp.html")
 
+
+
+@app.route("/customgame", methods=["GET", "POST"])
+def customgame():
+
+    return render_template("customgame.html")
+
+
 @app.route("/highscore_sp")
 def highscore_sp():
+
     # insert user data
     # select top for highscores
     # send top to page
