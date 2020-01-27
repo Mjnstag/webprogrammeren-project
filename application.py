@@ -405,6 +405,10 @@ def correct():
     if request.args.get("data", "") == request.args.get("answer", ""):
         session["correct"] += 1
 
-    # delete question from sp_question db
-    db.execute("DELETE FROM sp_questions WHERE correct = :correct AND uuid = :session_id", correct = request.args.get("data", ""), session_id = session['id'])
+    if session["gametype"] == "default":
+        # delete question from sp_question db
+        db.execute("DELETE FROM sp_questions WHERE correct = :correct AND uuid = :session_id", correct = request.args.get("data", ""), session_id = session['id'])
+
+    else:
+        db.execute("DELETE FROM customgame WHERE correct = :correct AND uuid = :session_id", correct = request.args.get("data", ""), session_id = session['id'])
     return jsonify(True)
