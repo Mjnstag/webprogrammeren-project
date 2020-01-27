@@ -53,7 +53,7 @@
         </div>
 
         <p><h2 class="serif">Correct answers: <a id="correctly">{{ answered }}</a></h2></p>
-        <p><h2 align="center">Question {{ progress }} out of 10!</h2></p>
+        <p><h2 align="center">Question {{ progress[0]['question_num'] }} out of {{ progress[-1]['question_num'] }}!</h2></p>
 
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

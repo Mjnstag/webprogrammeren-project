@@ -52,8 +52,12 @@ def disp_question():
         random.shuffle(answerlist)
         correct_answer = db.execute("SELECT correct FROM sp_questions WHERE uuid = :uuid",
         uuid = session["id"])
+
+        print(db.execute("SELECT question_num FROM sp_questions WHERE uuid = :uuid",
+        uuid = session["id"]))
+
         progress = db.execute("SELECT question_num FROM sp_questions WHERE uuid = :uuid",
-        uuid = session["id"])[0]['question_num']
+        uuid = session["id"])
         correct_answer = correct_answer[0]["correct"]
         return render_template('question.html', progress = progress,  answered = session["correct"], question = question, answers = answerlist, correct_answer = correct_answer)
 
