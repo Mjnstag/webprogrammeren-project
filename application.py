@@ -168,22 +168,19 @@ def customgame():
 
     get_question(user_id, session['username'], category, difficulty, session["amount"])
     return jsonify(True)
+
+
 @app.route("/highscore_sp")
 def highscore_sp():
-
-
-
-    amount = session["amount"]
     uuid = session["id"]
     username =  session['username']
     score = session['correct']
     category = session['category']
 
-
     # checks if user is already in database, and only updates when the new score is higher than the existing score
-
     print("gamemode")
     if session["gamemode"] == "custom":
+        amount = session['amount']
 
         scoreindatabase = db.execute("SELECT score from custom_highscore WHERE username = :username AND amount = :amount",
         username =  username,
