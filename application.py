@@ -145,6 +145,9 @@ def highscore_sp():
             amount = amount)
             highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
             amount = amount)
+            for place, player in enumerate(highscoredata, 1):
+                player['placement'] = place
+
             return render_template("highscore_sp.html", score = score, username = username,
                 category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -159,6 +162,9 @@ def highscore_sp():
                 amount = amount)
                 highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
                 amount = amount)
+                for place, player in enumerate(highscoredata, 1):
+                    player['placement'] = place
+
                 return render_template("highscore_sp.html", score = score, username = username,
                         category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -172,9 +178,13 @@ def highscore_sp():
 
                     highscoredata = db.execute("SELECT * FROM sp_highscore WHERE amount = :amount ORDER BY score DESC",
                     category = category)
+                    for place, player in enumerate(highscoredata, 1):
+                        player['placement'] = place
                     return render_template("highscore_sp.html", score = score, username = username,
                     category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
 
+                for place, player in enumerate(highscoredata, 1):
+                    player['placement'] = place
                 return render_template("highscore_sp.html", highscoredata = highscoredata, score = score, amount = amount)
         else:
 
@@ -199,6 +209,9 @@ def highscore_sp():
                 category = category,
                 amount = amount)
 
+                for place, player in enumerate(highscoredata, 1):
+                    player['placement'] = place
+
                 return render_template("highscore_sp.html", score = score, username = username,
                     category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -212,11 +225,19 @@ def highscore_sp():
                     amount = amount)
                     highscoredata = db.execute("SELECT * FROM sp_highscore WHERE amount = :amount ORDER BY score DESC",
                     category = category)
+
+                    for place, player in enumerate(highscoredata, 1):
+                        player['placement'] = place
+
                     return render_template("highscore_sp.html", score = score, username = username,
                     category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
 
+                for place, player in enumerate(highscoredata, 1):
+                    player['placement'] = place
                 return render_template("highscore_sp.html", amount = amount, highscoredata = highscoredata, score = score)
 
+        for place, player in enumerate(highscoredata, 1):
+            player['placement'] = place
         return render_template("custom_highscore", amount = amount, highscoredata = highscoredata, score = score)
 
 
@@ -227,6 +248,7 @@ def highscore_sp():
 
     highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
     category = category)
+
     highscoretext = "Congratulations! You made it into the High Scores!"
     highscores = db.execute("SELECT score FROM sp_highscore WHERE category = :category ORDER BY score ASC",
     category = category)
@@ -243,6 +265,10 @@ def highscore_sp():
         category = category)
         highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
         category = session['category'])
+
+        for place, player in enumerate(highscoredata, 1):
+            player['placement'] = place
+
         return render_template("highscore_sp.html", score = score, username = username,
             category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -256,6 +282,10 @@ def highscore_sp():
             category = category)
             highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
             category = session['category'])
+
+            for place, player in enumerate(highscoredata, 1):
+                player['placement'] = place
+
             return render_template("highscore_sp.html", score = score, username = username,
                 category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -268,9 +298,18 @@ def highscore_sp():
 
                 highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
                 category = category)
+
+                for place, player in enumerate(highscoredata, 1):
+                    player['placement'] = place
+
                 return render_template("highscore_sp.html", score = score, username = username,
                 category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
+            for place, player in enumerate(highscoredata, 1):
+                player['placement'] = place
+
+            for place, player in enumerate(highscoredata, 1):
+                player['placement'] = place
             return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
     else:
 
@@ -291,6 +330,9 @@ def highscore_sp():
             highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
             category = category)
 
+            for place, player in enumerate(highscoredata, 1):
+                player['placement'] = place
+
             return render_template("highscore_sp.html", score = score, username = username,
                 category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
@@ -303,11 +345,20 @@ def highscore_sp():
                 username = username)
                 highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
                 category = category)
+
+                for place, player in enumerate(highscoredata, 1):
+                    player['placement'] = place
+
                 return render_template("highscore_sp.html", score = score, username = username,
                 category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
+            for place, player in enumerate(highscoredata, 1):
+                player['placement'] = place
+
             return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
 
+    for place, player in enumerate(highscoredata, 1):
+        player['placement'] = place
     return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
 
 
