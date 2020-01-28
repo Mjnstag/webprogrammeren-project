@@ -71,6 +71,7 @@ def type_game():
 def singleplayer():
     if request.method == "POST":
         session["correct"] = 0
+        session["username"] = request.form.get('username')
 
         # makes sure to redirect to right high score database later
         session["gamemode"] = "standard"
@@ -90,6 +91,7 @@ def rendercustomgame():
     if request.method == "POST":
         session["correct"] = 0
         session["gamemode"] = "custom"
+        session["username"] = request.form.get('username')
         return redirect("/question")
     session["correct"] = 0
     session["gamemode"] = "custom"
