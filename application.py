@@ -1,12 +1,10 @@
 import os
 
 from cs50 import SQL
-from flask import Flask
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 import requests
 import uuid
-import time
-import random
+
 
 # configure flask
 app = Flask(__name__)
@@ -38,53 +36,18 @@ def disp_question():
         # render page
         return render_template('question.html')
     else:
-        if session["gamemode"] == "custom":
-            time.sleep(1)
+        from disp_question import question
 
-            # send question data to page
-            question = db.execute("SELECT question FROM customgame WHERE uuid = :uuid",
-            uuid = session["id"])
-            if not question:
-                return redirect("/highscore_sp")
-            answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM customgame WHERE uuid = :uuid",
-            uuid = session["id"])
+        gamemode = session["gamemode"]
+        uuid = session["id"]
+        correct_answered = session["correct"]
 
-            answerlist = []
-            answerlist.append(answers[0]["correct"])
-            answerlist.append(answers[0]["incorrect1"])
-            answerlist.append(answers[0]["incorrect2"])
-            answerlist.append(answers[0]["incorrect3"])
-            random.shuffle(answerlist)
-            correct_answer = db.execute("SELECT correct FROM customgame WHERE uuid = :uuid",
-            uuid = session["id"])
+        test = question(gamemode, uuid, correct_answered)
 
-            progress = db.execute("SELECT question_num FROM customgame WHERE uuid = :uuid",
-            uuid = session["id"])
-            correct_answer = correct_answer[0]["correct"]
-            return render_template('question.html', progress = progress,  answered = session["correct"], question = question, answers = answerlist, correct_answer = correct_answer)
-        time.sleep(1)
-
-        # send question data to page
-        question = db.execute("SELECT question FROM sp_questions WHERE uuid = :uuid",
-        uuid = session["id"])
-        if not question:
+        if not test:
             return redirect("/highscore_sp")
-        answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM sp_questions WHERE uuid = :uuid",
-        uuid = session["id"])
 
-        answerlist = []
-        answerlist.append(answers[0]["correct"])
-        answerlist.append(answers[0]["incorrect1"])
-        answerlist.append(answers[0]["incorrect2"])
-        answerlist.append(answers[0]["incorrect3"])
-        random.shuffle(answerlist)
-        correct_answer = db.execute("SELECT correct FROM sp_questions WHERE uuid = :uuid",
-        uuid = session["id"])
-
-        progress = db.execute("SELECT question_num FROM sp_questions WHERE uuid = :uuid",
-        uuid = session["id"])
-        correct_answer = correct_answer[0]["correct"]
-        return render_template('question.html', progress = progress,  answered = session["correct"], question = question, answers = answerlist, correct_answer = correct_answer)
+        return render_template('question.html', progress = test[0],  answered = test[1], question = test[2], answers = test[3], correct_answer = test[4])
 
 
 # renders categories page or redirects to next page
