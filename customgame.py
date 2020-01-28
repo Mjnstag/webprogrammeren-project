@@ -8,17 +8,17 @@ db = SQL("sqlite:///sessions.db")
 def get_question(user_id, username, category, difficulty, num_of_questions):
 
     # format variables
-    if category == 'art':
+    if category == 'Art':
         category = '25'
-    elif category == 'general':
+    elif category == 'General':
         category = '9'
-    elif category == 'geography':
+    elif category == 'Geography':
         category = '22'
-    elif category == 'history':
+    elif category == 'History':
         category = '23'
-    elif category == 'sports':
+    elif category == 'Sports':
         category = '21'
-    elif category == 'science_nature':
+    elif category == 'Science & Nature':
         category = '17'
 
     # get questions based on difficulty and category
