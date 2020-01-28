@@ -29,22 +29,27 @@ def show_rules():
 @app.route("/question", methods=["GET", "POST"])
 def disp_question():
 
+    # if method is post, render page
     if request.method == 'POST':
-
-        # render page
         return render_template('question.html')
+
     else:
+        # import function
         from disp_question import question
 
+        # save relevant data
         gamemode = session["gamemode"]
         uuid = session["id"]
         correct_answered = session["correct"]
 
+        # call function and save returns
         data = question(gamemode, uuid, correct_answered)
 
+        # if no remainging question, redirect to highscores
         if data == False:
             return redirect("/highscore_sp")
 
+        # if question, renedr question with relevant data
         return render_template('question.html', progress = data[0],  answered = data[1], question = data[2], answers = data[3], correct_answer = data[4])
 
 
@@ -82,7 +87,6 @@ def singleplayer():
 
 @app.route("/customgame", methods=["GET", "POST"])
 def rendercustomgame():
-
 
     if request.method == "POST":
         session["correct"] = 0
