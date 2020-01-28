@@ -42,12 +42,12 @@ def disp_question():
         uuid = session["id"]
         correct_answered = session["correct"]
 
-        test = question(gamemode, uuid, correct_answered)
+        data = question(gamemode, uuid, correct_answered)
 
-        if test == False:
+        if data == False:
             return redirect("/highscore_sp")
 
-        return render_template('question.html', progress = test[0],  answered = test[1], question = test[2], answers = test[3], correct_answer = test[4])
+        return render_template('question.html', progress = data[0],  answered = data[1], question = data[2], answers = data[3], correct_answer = data[4])
 
 
 # renders categories page or redirects to next page
