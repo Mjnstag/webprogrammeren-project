@@ -9,15 +9,15 @@
     </head>
     <body>
         <div class="center">
-            <h1 class="funtext" >High scores
+            <h1 class="funtext" >High Scores
             <br>
             {{ highscoredata[0]["category"] }}
 
             </h1>
         </div>
         <h2 class="thick" class="serif">{{ highscoretext }}<br>
-         Your score is: {{ score }}!<br>
-         Amount of questions: {{ amount }}</h2>
+         Your Score is: {{ score }}!<br>
+         Amount of Questions: {{ amount }}</h2>
 
 
 {% for scores in highscoredata %}
@@ -28,7 +28,7 @@
 {% endfor %}
 
         <div class="box">
-        <button class="button2" onclick="window.location.href = '/';">Return to homepage!</button>
+        <button class="button2" onclick="window.location.href = '/';">Return to Homepage!</button>
         </div>
     </body>
 </html>
