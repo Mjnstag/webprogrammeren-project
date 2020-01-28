@@ -7,7 +7,7 @@ import requests
 import uuid
 
 db = SQL("sqlite:///sessions.db")
-def highscore_sp(uuid, username, score, category):
+def highscore_sp(uuid, username, score, category, amount):
 
 
     # checks if user is already in database, and only updates when the new score is higher than the existing score
@@ -43,7 +43,7 @@ def highscore_sp(uuid, username, score, category):
             return render_template("highscore_sp.html", score = score, username = username,
                 category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
 
-            # if number of high scores is less than 10, add high score
+            # if number of high scores is less than 3, add high score
         elif len(highscoredata) < 3:
             if not scoreindatabase:
                 db.execute("INSERT INTO custom_highscore (uuid, username, score, category, amount) VALUES (:uuid, :username, :score, :category, :amount)",
@@ -60,25 +60,25 @@ def highscore_sp(uuid, username, score, category):
                 return render_template("highscore_sp.html", score = score, username = username,
                         category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
 
-            else:
-                if session['correct'] > scoreindatabase[0]["score"]:
-                    db.execute("UPDATE custom_highscore SET score = :score, category = :category, amount = :amount WHERE username = :username",
-                    score = score,
-                    category = category,
-                    username = username,
-                    amount = amount)
+            elif session['correct'] > scoreindatabase[0]["score"]:
 
-                    highscoredata = db.execute("SELECT * FROM sp_highscore WHERE amount = :amount ORDER BY score DESC",
-                    category = category)
-                    for place, player in enumerate(highscoredata, 1):
-                        player['placement'] = place
-                    return render_template("highscore_sp.html", score = score, username = username,
-                    category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+                db.execute("UPDATE custom_highscore SET score = :score, category = :category, amount = :amount WHERE username = :username",
+                score = score,
+                category = category,
+                username = username,
+                amount = amount)
 
+                highscoredata = db.execute("SELECT * FROM sp_highscore WHERE amount = :amount ORDER BY score DESC",
+                category = category)
                 for place, player in enumerate(highscoredata, 1):
                     player['placement'] = place
-                return render_template("highscore_sp.html", highscoredata = highscoredata, score = score, amount = amount)
-        else:
+                return render_template("highscore_sp.html", score = score, username = username,
+                category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+
+            for place, player in enumerate(highscoredata, 1):
+                player['placement'] = place
+            return render_template("highscore_sp.html", highscoredata = highscoredata, score = score, amount = amount)
+        elif session['correct'] > highscores[0]["score"]:
 
             # adds user to high score database
             if not scoreindatabase:
@@ -95,8 +95,6 @@ def highscore_sp(uuid, username, score, category):
                 username = highscoresnames[0]["username"],
                 amount = amount)
 
-
-
                 highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
                 category = category,
                 amount = amount)
@@ -108,29 +106,29 @@ def highscore_sp(uuid, username, score, category):
                     category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
 
                 # else updates highscore
-            else:
-                if session['correct'] > scoreindatabase[0]["score"]:
-                    db.execute("UPDATE custom_highscore SET score = :score, category = :category WHERE username = :username",
-                    score = score,
-                    category = category,
-                    username = username,
-                    amount = amount)
-                    highscoredata = db.execute("SELECT * FROM sp_highscore WHERE amount = :amount ORDER BY score DESC",
-                    category = category)
+            elif session['correct'] > scoreindatabase[0]["score"]:
 
-                    for place, player in enumerate(highscoredata, 1):
-                        player['placement'] = place
-
-                    return render_template("highscore_sp.html", score = score, username = username,
-                    category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+                db.execute("UPDATE custom_highscore SET score = :score, category = :category WHERE username = :username",
+                score = score,
+                category = category,
+                username = username,
+                amount = amount)
+                highscoredata = db.execute("SELECT * FROM sp_highscore WHERE amount = :amount ORDER BY score DESC",
+                category = category)
 
                 for place, player in enumerate(highscoredata, 1):
                     player['placement'] = place
-                return render_template("highscore_sp.html", amount = amount, highscoredata = highscoredata, score = score)
+
+                return render_template("highscore_sp.html", score = score, username = username,
+                category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+
+            for place, player in enumerate(highscoredata, 1):
+                player['placement'] = place
+            return render_template("highscore_sp.html", amount = amount, highscoredata = highscoredata, score = score)
 
         for place, player in enumerate(highscoredata, 1):
             player['placement'] = place
-        return render_template("custom_highscore", amount = amount, highscoredata = highscoredata, score = score)
+        return render_template("highscore_sp.html", amount = amount, highscoredata = highscoredata, score = score)
 
 
 
@@ -181,31 +179,30 @@ def highscore_sp(uuid, username, score, category):
             return render_template("highscore_sp.html", score = score, username = username,
                 category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
-        else:
-            if session['correct'] > scoreindatabase[0]["score"]:
-                db.execute("UPDATE sp_highscore SET score = :score, category = :category WHERE username = :username",
-                score = score,
-                category = category,
-                username = username)
+        elif session['correct'] > scoreindatabase[0]["score"]:
 
-                highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
-                category = category)
+            db.execute("UPDATE sp_highscore SET score = :score, category = :category WHERE username = :username",
+            score = score,
+            category = category,
+            username = username)
 
-                for place, player in enumerate(highscoredata, 1):
-                    player['placement'] = place
-
-                return render_template("highscore_sp.html", score = score, username = username,
-                category = category, highscoretext = highscoretext, highscoredata = highscoredata)
-
+            highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
+            category = category)
             for place, player in enumerate(highscoredata, 1):
                 player['placement'] = place
 
-            for place, player in enumerate(highscoredata, 1):
-                player['placement'] = place
-            return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
-    else:
+            return render_template("highscore_sp.html", score = score, username = username,
+            category = category, highscoretext = highscoretext, highscoredata = highscoredata)
+
+        for place, player in enumerate(highscoredata, 1):
+            player['placement'] = place
+        return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
+
+
+    elif session['correct'] > highscores[0]["score"]:
 
         # adds user to high score database
+
         if not scoreindatabase:
             db.execute("INSERT INTO sp_highscore (uuid, username, score, category) VALUES (:uuid, :username, :score, :category)",
             uuid = uuid,
@@ -229,25 +226,25 @@ def highscore_sp(uuid, username, score, category):
                 category = category, highscoretext = highscoretext, highscoredata = highscoredata)
 
         # else updates highscore
-        else:
-            if session['correct'] > scoreindatabase[0]["score"]:
-                db.execute("UPDATE sp_highscore SET score = :score, category = :category WHERE username = :username",
-                score = score,
-                category = category,
-                username = username)
-                highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
-                category = category)
+        elif session['correct'] > scoreindatabase[0]["score"]:
 
-                for place, player in enumerate(highscoredata, 1):
-                    player['placement'] = place
-
-                return render_template("highscore_sp.html", score = score, username = username,
-                category = category, highscoretext = highscoretext, highscoredata = highscoredata)
+            db.execute("UPDATE sp_highscore SET score = :score, category = :category WHERE username = :username",
+            score = score,
+            category = category,
+            username = username)
+            highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
+            category = category)
 
             for place, player in enumerate(highscoredata, 1):
                 player['placement'] = place
 
-            return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
+            return render_template("highscore_sp.html", score = score, username = username,
+            category = category, highscoretext = highscoretext, highscoredata = highscoredata)
+
+        for place, player in enumerate(highscoredata, 1):
+            player['placement'] = place
+
+        return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
 
     for place, player in enumerate(highscoredata, 1):
         player['placement'] = place
