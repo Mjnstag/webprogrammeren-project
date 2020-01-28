@@ -77,8 +77,6 @@ def singleplayer():
     session["correct"] = 0
     session["gamemode"] = "standard"
 
-
-
     return render_template("singleplayer.html")
 
 
@@ -114,7 +112,7 @@ def highscores():
 
     from highscore import highscore_sp
     uuid = session["id"]
-    username =  session['username']
+    username = session['username']
     score = session['correct']
     category = session['category']
 
