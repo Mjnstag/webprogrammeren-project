@@ -127,7 +127,7 @@ def highscore_sp():
 
         highscoredata = db.execute("SELECT * FROM custom_highscore  WHERE amount = :amount ORDER BY score DESC",
         amount = amount)
-        highscoretext = "Congratulations! You made it into the high scores!"
+        highscoretext = "Congratulations! You made it into the High Scores!"
         highscores = db.execute("SELECT score FROM custom_highscore WHERE amount = :amount ORDER BY score ASC",
         amount = amount)
         highscoresnames = db.execute("SELECT username FROM custom_highscore WHERE amount = :amount ORDER BY score ASC",
@@ -225,7 +225,7 @@ def highscore_sp():
 
     highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
     category = category)
-    highscoretext = "Congratulations! You made it into the high scores!"
+    highscoretext = "Congratulations! You made it into the High Scores!"
     highscores = db.execute("SELECT score FROM sp_highscore WHERE category = :category ORDER BY score ASC",
     category = category)
     highscoresnames = db.execute("SELECT username FROM sp_highscore WHERE category = :category ORDER BY score ASC",
