@@ -16,7 +16,10 @@
             {% endif %}
             </h1>
         </div>
-        <h2 class="thick" class="serif">{{ highscoretext }}<br>
+        <h2 class="thick" class="serif">
+            {% if highscoretext == 1 %}
+            Congratulations! You made it into the High Scores!
+            {% endif %}<br>
          Your Score is: {{ score }}!<br></h2>
          {% if gamemode == 1 %}
          <h2 class="thick" class="serif">Amount of Questions: {{ amount }}</h2>
