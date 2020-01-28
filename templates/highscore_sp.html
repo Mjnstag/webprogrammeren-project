@@ -11,18 +11,26 @@
         <div class="center">
             <h1 class="funtext" >High Scores
             <br>
+            {% if gamemode == 0 %}
             {{ highscoredata[0]["category"] }}
-
+            {% endif %}
             </h1>
         </div>
         <h2 class="thick" class="serif">{{ highscoretext }}<br>
-         Your Score is: {{ score }}!<br>
-         Amount of Questions: {{ amount }}</h2>
-
+         Your Score is: {{ score }}!<br></h2>
+         {% if gamemode == 1 %}
+         <h2 class="thick" class="serif">Amount of Questions: {{ amount }}</h2>
+         {% endif %}
 
 {% for scores in highscoredata %}
 
-        <h2 class="serif" class="center">{{ scores.placement }}.  <b>{{ scores.username }}</b> - {{ scores.score }} Points <b>{{ scores.category }}</b><br></h2>
+        <h2 class="serif" class="center">{{ scores.placement }}.  <b>{{ scores.username }}</b> - {{ scores.score }} Points
+        {% if gamemode == 1 %}
+        - {{ scores.category }}
+        {% endif %}
+        </h2>
+
+
 
 
 {% endfor %}

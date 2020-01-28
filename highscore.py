@@ -41,7 +41,7 @@ def highscore_sp(uuid, username, score, category, amount):
                 player['placement'] = place
 
             return render_template("highscore_sp.html", score = score, username = username,
-                category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+                category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata, gamemode = 1)
 
             # if number of high scores is less than 3, add high score
         elif len(highscoredata) < 3:
@@ -58,7 +58,7 @@ def highscore_sp(uuid, username, score, category, amount):
                     player['placement'] = place
 
                 return render_template("highscore_sp.html", score = score, username = username,
-                        category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+                        category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata, gamemode = 1)
 
             elif session['correct'] > scoreindatabase[0]["score"]:
 
@@ -73,11 +73,11 @@ def highscore_sp(uuid, username, score, category, amount):
                 for place, player in enumerate(highscoredata, 1):
                     player['placement'] = place
                 return render_template("highscore_sp.html", score = score, username = username,
-                category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+                category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata, gamemode = 1)
 
             for place, player in enumerate(highscoredata, 1):
                 player['placement'] = place
-            return render_template("highscore_sp.html", highscoredata = highscoredata, score = score, amount = amount)
+            return render_template("highscore_sp.html", highscoredata = highscoredata, score = score, amount = amount, gamemode = 1)
         elif session['correct'] > highscores[0]["score"]:
 
             # adds user to high score database
@@ -103,7 +103,7 @@ def highscore_sp(uuid, username, score, category, amount):
                     player['placement'] = place
 
                 return render_template("highscore_sp.html", score = score, username = username,
-                    category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+                    category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata, gamemode = 1)
 
                 # else updates highscore
             elif session['correct'] > scoreindatabase[0]["score"]:
@@ -120,15 +120,15 @@ def highscore_sp(uuid, username, score, category, amount):
                     player['placement'] = place
 
                 return render_template("highscore_sp.html", score = score, username = username,
-                category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
+                category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata, gamemode = 1)
 
             for place, player in enumerate(highscoredata, 1):
                 player['placement'] = place
-            return render_template("highscore_sp.html", amount = amount, highscoredata = highscoredata, score = score)
+            return render_template("highscore_sp.html", amount = amount, highscoredata = highscoredata, score = score, gamemode = 1)
 
         for place, player in enumerate(highscoredata, 1):
             player['placement'] = place
-        return render_template("highscore_sp.html", amount = amount, highscoredata = highscoredata, score = score)
+        return render_template("highscore_sp.html", amount = amount, highscoredata = highscoredata, score = score, gamemode = 1)
 
 
 
@@ -160,7 +160,7 @@ def highscore_sp(uuid, username, score, category, amount):
             player['placement'] = place
 
         return render_template("highscore_sp.html", score = score, username = username,
-            category = category, highscoretext = highscoretext, highscoredata = highscoredata)
+            category = category, highscoretext = highscoretext, highscoredata = highscoredata, gamemode = 0)
 
     # if number of high scores is less than 10, add high score
     elif len(highscoredata) < 10:
@@ -177,7 +177,7 @@ def highscore_sp(uuid, username, score, category, amount):
                 player['placement'] = place
 
             return render_template("highscore_sp.html", score = score, username = username,
-                category = category, highscoretext = highscoretext, highscoredata = highscoredata)
+                category = category, highscoretext = highscoretext, highscoredata = highscoredata, gamemode = 0)
 
         elif session['correct'] > scoreindatabase[0]["score"]:
 
@@ -192,11 +192,11 @@ def highscore_sp(uuid, username, score, category, amount):
                 player['placement'] = place
 
             return render_template("highscore_sp.html", score = score, username = username,
-            category = category, highscoretext = highscoretext, highscoredata = highscoredata)
+            category = category, highscoretext = highscoretext, highscoredata = highscoredata, gamemode = 0)
 
         for place, player in enumerate(highscoredata, 1):
             player['placement'] = place
-        return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
+        return render_template("highscore_sp.html", highscoredata = highscoredata, score = score, gamemode = 0)
 
 
     elif session['correct'] > highscores[0]["score"]:
@@ -223,7 +223,7 @@ def highscore_sp(uuid, username, score, category, amount):
                 player['placement'] = place
 
             return render_template("highscore_sp.html", score = score, username = username,
-                category = category, highscoretext = highscoretext, highscoredata = highscoredata)
+                category = category, highscoretext = highscoretext, highscoredata = highscoredata, gamemode = 0)
 
         # else updates highscore
         elif session['correct'] > scoreindatabase[0]["score"]:
@@ -239,13 +239,13 @@ def highscore_sp(uuid, username, score, category, amount):
                 player['placement'] = place
 
             return render_template("highscore_sp.html", score = score, username = username,
-            category = category, highscoretext = highscoretext, highscoredata = highscoredata)
+            category = category, highscoretext = highscoretext, highscoredata = highscoredata, gamemode = 0)
 
         for place, player in enumerate(highscoredata, 1):
             player['placement'] = place
 
-        return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
+        return render_template("highscore_sp.html", highscoredata = highscoredata, score = score, gamemode = 0)
 
     for place, player in enumerate(highscoredata, 1):
         player['placement'] = place
-    return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
+    return render_template("highscore_sp.html", highscoredata = highscoredata, score = score, gamemode = 0)
