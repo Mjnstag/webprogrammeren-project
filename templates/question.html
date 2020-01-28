@@ -73,7 +73,7 @@
                   type : 'GET',
                   url : "/correct",
                   contentType: 'application/json;charset=UTF-8',
-                  data : {'data': '{{ correct_answer }}', 'answer': answer}
+                  data : {'correct': '{{ correct_answer }}', 'answer': answer}
                 });
 
                 setTimeout(function(){

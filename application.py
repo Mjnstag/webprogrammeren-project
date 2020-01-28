@@ -12,6 +12,8 @@ import random
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+# configure database
 db = SQL("sqlite:///sessions.db")
 
 # set default route
@@ -208,7 +210,7 @@ def highscore_sp():
                 category = category, amount = amount, highscoretext = highscoretext, highscoredata = highscoredata)
 
             # if number of high scores is less than 10, add high score
-        elif len(highscoredata) < 10:
+        elif len(highscoredata) < 3:
             if not scoreindatabase:
                 db.execute("INSERT INTO custom_highscore (uuid, username, score, category, amount) VALUES (:uuid, :username, :score, :category, :amount)",
                 uuid = uuid,
@@ -396,15 +398,10 @@ def sp_question():
 # checks and handles answers and time-outs for questions
 @app.route("/correct", methods=["GET", "POST"])
 def correct():
+    from correct import check_correct
     # if answer is correct, add score point
-    if request.args.get("data", "") == request.args.get("answer", ""):
+    if request.args.get("correct", "") == request.args.get("answer", ""):
         session["correct"] += 1
 
-    if session["gamemode"] == "standard":
-        print("default")
-        # delete question from sp_question db
-        db.execute("DELETE FROM sp_questions WHERE correct = :correct AND uuid = :session_id", correct = request.args.get("data", ""), session_id = session['id'])
-
-    elif session["gamemode"] == "custom":
-        db.execute("DELETE FROM customgame WHERE correct = :correct AND uuid = :session_id", correct = request.args.get("data", ""), session_id = session['id'])
+    check_correct(session["gamemode"], request.args.get("correct", ""), session['id'])
     return jsonify(True)
