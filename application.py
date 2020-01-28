@@ -120,32 +120,6 @@ def singleplayer():
     return render_template("singleplayer.html")
 
 
-@app.route("/joinmp", methods=["GET", "POST"])
-def joinmp():
-    if request.method == "POST":
-
-        room_id = request.form["roomid"]
-        session['room_id'] = room_id
-        username = request.form["username"]
-
-        if not db.execute("SELECT room_id FROM mp_question WHERE room_id = :room_id", room_id = room_id):
-            return render_template("joinmp.html", error = "Room does not exists")
-
-        elif db.execute("SELECT username FROM mp_players WHERE username = :username", username = username):
-            return render_template("joinmp.html", error = "Username is already being used in this room")
-
-
-        db.execute("INSERT INTO mp_players (uuid, room_id, username, score, host) VALUES (:uuid, :room_id, :username, :score, :host)",
-        uuid = session['id'],
-        room_id = request.form.get("roomid"),
-        username = request.form.get("username"),
-        score = 0,
-        host = 0)
-
-        return redirect("/highscore_mp")
-    return render_template("joinmp.html")
-
-
 @app.route("/customgame", methods=["GET", "POST"])
 def rendercustomgame():
 
@@ -371,10 +345,6 @@ def highscore_sp():
 
     return render_template("highscore_sp.html", highscoredata = highscoredata, score = score)
 
-@app.route("/highscore_mp")
-def highscore_mp():
-    data = db.execute("SELECT * FROM mp_players WHERE room_id = :room_id", room_id=session['room_id'])
-    return render_template("highscore_mp.html", data = data)
 
 # calls on function to put questions in database
 @app.route("/sp_question", methods=["GET", "POST"])
