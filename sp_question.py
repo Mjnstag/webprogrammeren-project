@@ -1,5 +1,6 @@
 import requests
 import html
+import time
 from cs50 import SQL
 
 db = SQL("sqlite:///sessions.db")
@@ -30,6 +31,9 @@ def get_question(user_id, username, category, difficulty):
         db.execute('''INSERT INTO "sp_questions" ("uuid", "username", "question_num", "question","correct", "incorrect1", "incorrect2", "incorrect3") VALUES(?, ?, ?, ?, ?, ?, ?, ?)''',
                     (user_id, username, number,  html.unescape(data['question']),  html.unescape(data['correct_answer']).replace("'", ''),
                     html.unescape(data['incorrect_answers'][0]).replace("'", ''),  html.unescape(data['incorrect_answers'][1]).replace("'", ''),  html.unescape(data['incorrect_answers'][2]).replace("'", '')))
+
+    # make sure db has finished
+    time.sleep(1)
 
     # return to application.py
     return None

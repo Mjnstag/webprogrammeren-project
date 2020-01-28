@@ -44,7 +44,7 @@ def disp_question():
 
         test = question(gamemode, uuid, correct_answered)
 
-        if not test:
+        if test == False:
             return redirect("/highscore_sp")
 
         return render_template('question.html', progress = test[0],  answered = test[1], question = test[2], answers = test[3], correct_answer = test[4])
