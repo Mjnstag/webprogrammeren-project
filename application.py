@@ -115,9 +115,13 @@ def highscores():
     username = session['username']
     score = session['correct']
     category = session['category']
-    amount = session["amount"]
 
+    if session["gamemode"] == "custom":
+        amount = session["amount"]
+    else:
+        amount = 10
     return highscore_sp(uuid, username, score, category, amount)
+
 
 # calls on function to put questions in database
 @app.route("/sp_question", methods=["GET", "POST"])

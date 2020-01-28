@@ -90,13 +90,13 @@ def highscore_sp(uuid, username, score, category, amount):
                 amount = amount)
 
 
-                db.execute("DELETE FROM custom_highscore WHERE score = :score AND username = :username",
+                db.execute("DELETE FROM custom_highscore WHERE score = :score AND username = :username AND amount = :amount",
                 score = highscores[0]["score"],
                 username = highscoresnames[0]["username"],
                 amount = amount)
 
                 highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
-                category = category,
+
                 amount = amount)
 
                 for place, player in enumerate(highscoredata, 1):
