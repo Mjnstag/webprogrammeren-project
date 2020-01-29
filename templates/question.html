@@ -1,124 +1,95 @@
-<!DOCTYPE html>
-<!--define html page-->
-<html>
-    <head>
-        <link href="/static/styles.css" rel="stylesheet">
-        <style>
-            serif {
-              font-family: "Times New Roman", Times, serif;
-            }
-            .grid-container {
-              display: grid;
-              grid-template-columns: auto;
-              grid-gap: 10px;
-              animation: bgcolor infinite 20s;
-              padding: 10px;
-            }
+ <!--make sure game works on mobile phone-->
+{% extends "layout.html" %}
+{% block title %}Question{% endblock%}
 
-            .grid-container > div {
-              background-color: rgba(255, 255, 255, 0.8);
-              text-align: center;
-              padding: 20px 0;
-              font-size: 30px;
-            }
-            #myProgress {
-              width: 100%;
-              background-color: #ddd;
-            }
+{% block main %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-9 my-auto">
+            <br>
+            <div id="myProgress">
+              <div id="myBar"></div>
+            </div>
 
-            #myBar {
-              width: 1%;
-              height: 30px;
-              background-color: #4CAF50;
-            }
-        </style>
-    </head>
-    <body>
-        <br>
-        <div id="myProgress">
-          <div id="myBar"></div>
-        </div>
+            <p align="center"><h1 class="center", "serif">{{ question[0]["question"] }}</h1></p>
 
-        <br>
-        <p align="center"><h1 class="center", "serif">{{ question[0]["question"] }}</h1></p>
+            <div class="grid-container" class="serif">
+              <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</span></div>
+              <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</span></div>
+              <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</span></div>
+              <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</span></div>
 
-        <br><br><br><br>
+            </div>
 
-        <div class="grid-container" class="serif">
-          <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</span></div>
-          <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</span></div>
-          <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</span></div>
-          <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</span></div>
-
-        </div>
-
-        <p><h2 class="serif">Correct answers: <a id="correctly">{{ answered }}</a></h2></p>
-        <p><h2 align="center">Question {{ progress[0]['question_num'] }} out of {{ progress[-1]['question_num'] }}!</h2></p>
+            <p><h2 class="serif">Correct answers: <a id="correctly">{{ answered }}</a></h2></p>
+            <p><h2 align="center">Question {{ progress[0]['question_num'] }} out of {{ progress[-1]['question_num'] }}!</h2></p>
 
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>
-            function myFunction(answer, id) {
-              if (answer != '{{ correct_answer }}') {
-                document.getElementById(id).style.background = "OrangeRed";
-              }
-
-              $( ".answer" ).each( function( index, element ){
-                 if ($( this ).text() == '{{ correct_answer }}') {
-                   this.style.background = "lime";
-                 }
-              });
-
-                $.ajax({
-                  type : 'GET',
-                  url : "/correct",
-                  contentType: 'application/json;charset=UTF-8',
-                  data : {'correct': '{{ correct_answer }}', 'answer': answer}
-                });
-
-                setTimeout(function(){
-                location.reload();
-                }, 500);
-
-              };
-        </script>
-
-        <script>
-          var i = 0;
-          window.addEventListener('DOMContentLoaded', (event) => {
-            if (i == 0) {
-              i = 1;
-              var elem = document.getElementById("myBar");
-              var width = 100;
-              var id = setInterval(frame, 50);
-              function frame() {
-                if (width == 0) {
-                  clearInterval(id);
-                  i = 0;
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+            <script>
+                function myFunction(answer, id) {
+                  if (answer != '{{ correct_answer }}') {
+                    document.getElementById(id).style.background = "OrangeRed";
+                  }
 
                   $( ".answer" ).each( function( index, element ){
                      if ($( this ).text() == '{{ correct_answer }}') {
                        this.style.background = "lime";
-                     } else {
-                       this.style.background = "OrangeRed";
                      }
                   });
 
-                  $.ajax({
+                    $.ajax({
                       type : 'GET',
                       url : "/correct",
                       contentType: 'application/json;charset=UTF-8',
-                      data : {'correct': "{{ correct_answer }}"}
+                      data : {'correct': '{{ correct_answer }}', 'answer': answer}
                     });
 
+                    setTimeout(function(){
                     location.reload();
-                } else {
-                  width = width - 0.5;
-                  elem.style.width = width + "%";
+                    }, 500);
+
+                  };
+            </script>
+
+            <script>
+              var i = 0;
+              window.addEventListener('DOMContentLoaded', (event) => {
+                if (i == 0) {
+                  i = 1;
+                  var elem = document.getElementById("myBar");
+                  var width = 100;
+                  var id = setInterval(frame, 50);
+                  function frame() {
+                    if (width == 0) {
+                      clearInterval(id);
+                      i = 0;
+
+                      $( ".answer" ).each( function( index, element ){
+                         if ($( this ).text() == '{{ correct_answer }}') {
+                           this.style.background = "lime";
+                         } else {
+                           this.style.background = "OrangeRed";
+                         }
+                      });
+
+                      $.ajax({
+                          type : 'GET',
+                          url : "/correct",
+                          contentType: 'application/json;charset=UTF-8',
+                          data : {'data': "{{ correct_answer }}"}
+                        });
+
+                        location.reload();
+                    } else {
+                      width = width - 0.5;
+                      elem.style.width = width + "%";
+                    }
+                  }
                 }
-              }
-            }
-          });
-        </script>
-    </body>
-</html>
+              });
+            </script>
+        </div>
+    </div>
+</div>
+{% endblock %}
