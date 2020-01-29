@@ -54,9 +54,14 @@ def disp_question():
 @app.route("/categories", methods=["GET", "POST"])
 def categories():
     if request.method == 'POST':
+        # save relevant data
         session['category'] = request.form["Categories"]
         session['difficulty'] = request.form["Difficulty"]
+
+        # redirect to next page
         return redirect('type_game')
+
+    # render page
     return render_template("categories.html")
 
 
@@ -73,11 +78,11 @@ def classicgame():
         # save relevant data in session
         session["correct"] = 0
         session["username"] = request.form.get('username')
-
-        # makes sure to redirect to right high score database later
         session["gamemode"] = "standard"
+
         time.sleep(2)
         return redirect("/question")
+    # save relevant data
     session["correct"] = 0
     session["gamemode"] = "standard"
 
