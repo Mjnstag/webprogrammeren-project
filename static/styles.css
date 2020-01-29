@@ -227,13 +227,12 @@ body {
 }
 
 /* class for bootstrap, make text fit in mobile screen*/
-.container {
-    flex-direction: column;
-    display: inline-block;
-    width: auto;
-    overflow-x: auto;
-    text-align: center;
-}
+/*.container {*/
+/*    flex-direction: column;*/
+/*    width: auto;*/
+/*    overflow-x: auto;*/
+/*    text-align: center;*/
+/*}*/
 
 main .form-control
 {
@@ -291,3 +290,40 @@ main
     font-size: x-large;
 }
 
+serif {
+  font-family: "Times New Roman", Times, serif;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto;
+  grid-gap: 10px;
+  animation: bgcolor infinite 20s;
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  /*padding: 20px 0;*/
+  font-size: 30px;
+}
+
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+}
+
+#myBar {
+  width: 1%;
+  height: 30px;
+  background-color: #4CAF50;
+}
+
+.vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
