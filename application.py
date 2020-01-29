@@ -67,9 +67,10 @@ def type_game():
 
 
 # resets correct score, renders singleplayer page, redirect to question
-@app.route("/singleplayer", methods=["GET", "POST"])
-def singleplayer():
+@app.route("/classicgame", methods=["GET", "POST"])
+def classicgame():
     if request.method == "POST":
+        # save relevant data in session
         session["correct"] = 0
         session["username"] = request.form.get('username')
 
@@ -80,19 +81,24 @@ def singleplayer():
     session["correct"] = 0
     session["gamemode"] = "standard"
 
-    return render_template("singleplayer.html")
+    return render_template("classicgame.html")
 
 
 # handles start of custom game
 @app.route("/customgame", methods=["GET", "POST"])
 def rendercustomgame():
-
+    # if post:
     if request.method == "POST":
+        # delete?
         session["correct"] = 0
         session["gamemode"] = "custom"
+
+        # save username in session
         session["username"] = request.form.get('username')
         time.sleep(3)
         return redirect("/question")
+    # if get
+    # save relevant data in sessions
     session["correct"] = 0
     session["gamemode"] = "custom"
     return render_template("customgame.html")
@@ -101,32 +107,43 @@ def rendercustomgame():
 # handles custom game questions
 @app.route("/customgamequestions", methods=["GET", "POST"])
 def customgame():
+    # import function
     from customgame import get_question
 
+    # save relevant data
     session['username'] = str(request.args.get("username", ""))
     user_id = str(session["id"])
     category = session['category']
     difficulty = session['difficulty']
     session["amount"] = str(request.args.get("amount", ""))
 
+    # put questions in databse
     get_question(user_id, session['username'], category, difficulty, session["amount"])
+
+    # return
     return jsonify(True)
 
 
 # handles highscore data
 @app.route("/highscore")
 def highscores():
-
+    # import function
     from highscore import highscore
+
+    # save relevant data
     uuid = session["id"]
     username = session['username']
     score = session['correct']
     category = session['category']
 
+    # set amount of questions
     if session["gamemode"] == "custom":
         amount = session["amount"]
     else:
+        # classic game is 10 questions
         amount = 10
+
+    # return highscore data
     return highscore(uuid, username, score, category, amount)
 
 
@@ -159,5 +176,6 @@ def correct():
     if request.args.get("correct", "") == request.args.get("answer", ""):
         session["correct"] += 1
 
+    # delete question from database
     check_correct(session["gamemode"], request.args.get("correct", ""), session['id'])
     return jsonify(True)
