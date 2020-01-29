@@ -28,6 +28,7 @@ def highscore_sp(uuid, username, score, category, amount):
                                 amount=amount)
         highscoresnames = db.execute("SELECT username FROM custom_highscore WHERE amount = :amount ORDER BY score ASC",
                                      amount=amount)
+        highscorechanged = 0
 
         # if highscore database is empty insert user score into table
         if not highscoredata:
@@ -38,19 +39,7 @@ def highscore_sp(uuid, username, score, category, amount):
                        score=score,
                        category=category,
                        amount=amount)
-
-            # recollect highscore data
-            highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
-                                       amount=amount)
-
-            # enumerates high score rank
-            for place, player in enumerate(highscoredata, 1):
-                player['placement'] = place
-
-            # return user and database information to template
-            return render_template("highscore_sp.html", score=score, username=username,
-                                   category=category, amount=amount, highscoretext=1,
-                                   highscoredata=highscoredata, gamemode=1)
+            highschorechanged = 1
 
         # if number of high scores is less than 3, add high score
         elif len(highscoredata) < 3:
@@ -64,19 +53,7 @@ def highscore_sp(uuid, username, score, category, amount):
                            score=score,
                            category=category,
                            amount=amount)
-
-                # recollect highscore data
-                highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
-                                           amount=amount)
-
-                # enumerates high score rank
-                for place, player in enumerate(highscoredata, 1):
-                    player['placement'] = place
-
-                # return user and database information to template
-                return render_template("highscore_sp.html", score=score, username=username,
-                                       category=category, amount=amount, highscoretext=1,
-                                       highscoredata=highscoredata, gamemode=1)
+                highscorechanged = 1
 
             # checks if user has more answers than existing user highscore
             elif session['correct'] > scoreindatabase[0]["score"]:
@@ -87,25 +64,7 @@ def highscore_sp(uuid, username, score, category, amount):
                            category=category,
                            username=username,
                            amount=amount)
-
-                # recollects highscore data
-                highscoredata = db.execute("SELECT * FROM sp_highscore WHERE amount = :amount ORDER BY score DESC",
-                                           category=category)
-
-                # enumerates highscore rank
-                for place, player in enumerate(highscoredata, 1):
-                    player['placement'] = place
-
-                # return user and database information to template
-                return render_template("highscore_sp.html", score=score, username=username,
-                                       category=category, amount=amount, highscoretext=1,
-                                       highscoredata=highscoredata, gamemode=1)
-            # enumerates highscore rank
-            for place, player in enumerate(highscoredata, 1):
-                player['placement'] = place
-
-            # returns existing highscores
-            return render_template("highscore_sp.html", highscoredata=highscoredata, score=score, amount=amount, gamemode=1)
+                highscorechanged = 1
 
         # checks if user has more correct answers than lowest score in database
         elif session['correct'] > highscores[0]["score"]:
@@ -126,48 +85,39 @@ def highscore_sp(uuid, username, score, category, amount):
                            username=highscoresnames[0]["username"],
                            amount=amount)
 
-                # recollects highscore data
-                highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
-                                           amount=amount)
-
-                # enumerates high score rank
-                for place, player in enumerate(highscoredata, 1):
-                    player['placement'] = place
-
-                # return user and database information to template
-                return render_template("highscore_sp.html", score=score, username=username,
-                                       category=category, amount=amount, highscoretext=1,
-                                       highscoredata=highscoredata, gamemode=1)
+                highscorechanged = 1
 
             # checks if user beat own highscore
             elif session['correct'] > scoreindatabase[0]["score"]:
 
                 # updates existing user highscore
-                db.execute("UPDATE custom_highscore SET score = :score, category = :category WHERE username = :username",
+                db.execute("UPDATE custom_highscore SET score = :score, category = :category, amount = :amount WHERE username = :username",
                            score=score,
                            category=category,
                            username=username,
                            amount=amount)
+                highscorechanged = 1
 
-                # recollects highscore data
-                highscoredata = db.execute("SELECT * FROM sp_highscore WHERE amount = :amount ORDER BY score DESC",
-                                           category=category)
+        if highscorechanged == 1:
 
-                # enumerates highscore rank
-                for place, player in enumerate(highscoredata, 1):
-                    player['placement'] = place
+            # recollect highscore data
+            highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
+                                       amount=amount)
 
-                # return user and database information to template
-                return render_template("highscore_sp.html", score=score, username=username,
-                                       category=category, amount=amount, highscoretext=1, highscoredata=highscoredata, gamemode=1)
-
+            # enumerates high score rank
             for place, player in enumerate(highscoredata, 1):
                 player['placement'] = place
-            return render_template("highscore_sp.html", amount=amount, highscoredata=highscoredata, score=score, gamemode=1)
+
+            # return user and database information to template
+            return render_template("highscore_sp.html", score=score, username=username,
+                                   category=category, amount=amount, highscoretext=1,
+                                   highscoredata=highscoredata, gamemode=1)
 
         for place, player in enumerate(highscoredata, 1):
             player['placement'] = place
         return render_template("highscore_sp.html", amount=amount, highscoredata=highscoredata, score=score, gamemode=1)
+
+
 
     # if user selects classic game mode
     # collects necessary data from database
