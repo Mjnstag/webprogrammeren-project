@@ -2,7 +2,7 @@
 ## Robin van Beek, Suzanne Jacobsen en Marten Staghouwer
 
 ## Features van de website:
-* Verschillende trivia categoriën
+* Verschillende trivia categorieën
 * Geen inlog nodig
 * Verschillende moeilijkheidsniveaus
 * Classic mode: 10 vragen
@@ -23,10 +23,8 @@
 2. Pagina met een vraag, 4 geschuffelde antwoorden, een countdownbar, een progresscounter, aantal goede antwoorden.
 3. Highscorepagina met de top 3 scores bij het gekozen aantal vragen.
 
-## Technisch ontwerp:
-
 ### screenshots applicatie:
-![Schets ideeën van pagina's](/doc/schets.png)
+![Schets ideeën van pagina's](/doc/screenshot.png)
 ![links tussen pagina's](/doc/template_linking.png)
 
 ### helpfuncties en beschrijvingen:
