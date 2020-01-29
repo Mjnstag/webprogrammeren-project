@@ -14,14 +14,14 @@
         				username : $('#username').val(),
         			},
         			type : 'GET',
-        			url : '/sp_question'
+        			url : '/classic_question'
         		})
             };
         </script>
     </head>
     <body>
         <div class="middle">
-         <form onsubmit="doit()" action="/singleplayer" method="post">
+         <form onsubmit="doit()" action="/customgame" method="post">
         <div class="form-group">
             <input autocomplete="off" class="box2" autofocus class="form-control" name="username" placeholder="Username" type="text" id="username" maxlength="15" required>
         </div>
