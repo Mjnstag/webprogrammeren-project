@@ -15,7 +15,8 @@ def highscore(uuid, username, score, category, amount):
 
     # checks which game mode has been selected
     if session["gamemode"] == "custom":
-        amount = session['amount']
+
+        print(amount)
 
         # collects necessary data from database
         scoreindatabase = db.execute("SELECT score from custom_highscore WHERE username = :username AND amount = :amount",
@@ -39,7 +40,8 @@ def highscore(uuid, username, score, category, amount):
                        score=score,
                        category=category,
                        amount=amount)
-            highschorechanged = 1
+            highscorechanged = 1
+            print(highscorechanged)
 
         # if number of high scores is less than 3, add high score
         elif len(highscoredata) < 3:

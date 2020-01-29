@@ -94,18 +94,9 @@ def classicgame():
 def rendercustomgame():
     # if post:
     if request.method == "POST":
-        # delete?
-        session["correct"] = 0
-        session["gamemode"] = "custom"
-
-        # save username in session
-        session["username"] = request.form.get('username')
         time.sleep(3)
         return redirect("/question")
     # if get
-    # save relevant data in sessions
-    session["correct"] = 0
-    session["gamemode"] = "custom"
     return render_template("customgame.html")
 
 
@@ -120,8 +111,11 @@ def customgame():
     user_id = str(session["id"])
     category = session['category']
     difficulty = session['difficulty']
+    session["correct"] = 0
+    session["gamemode"] = "custom"
     session["amount"] = str(request.args.get("amount", ""))
     print(session["amount"])
+    print(session["username"])
 
     # put questions in databse
     get_question(user_id, session['username'], category, difficulty, session["amount"])
