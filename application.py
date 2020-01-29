@@ -113,6 +113,7 @@ def customgame():
     return jsonify(True)
 
 
+# handles highscore data
 @app.route("/highscore")
 def highscores():
 
@@ -130,10 +131,10 @@ def highscores():
 
 
 # calls on function to put questions in database
-@app.route("/sp_question", methods=["GET", "POST"])
+@app.route("/classic_question", methods=["GET", "POST"])
 def sp_question():
     # import function from .py file
-    from sp_question import get_question
+    from classic_question import get_question
 
     # get needed variables
     session['username'] = str(request.args.get("username", ""))
@@ -143,15 +144,18 @@ def sp_question():
 
     # call function to add questions in database
     get_question(user_id, session['username'],  category, difficulty)
+
     # return
     return jsonify(True)
 
 
-# checks and handles answers and time-outs for questions
+# handles answer checking and time-outs for questions
 @app.route("/correct", methods=["GET", "POST"])
 def correct():
+    # import function
     from correct import check_correct
-    # if answer is correct, add score point
+
+    # if answer is correct, update score
     if request.args.get("correct", "") == request.args.get("answer", ""):
         session["correct"] += 1
 
