@@ -2,6 +2,7 @@ import os
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 import requests
 import uuid
+import time
 
 
 # configure flask
@@ -36,7 +37,6 @@ def disp_question():
     else:
         # import function
         from disp_question import question
-
         # save relevant data
         gamemode = session["gamemode"]
         uuid = session["id"]
@@ -48,7 +48,6 @@ def disp_question():
         # if no remainging question, redirect to highscores
         if data == False:
             return redirect("/highscore_sp")
-
         # if question, renedr question with relevant data
         return render_template('question.html', progress = data[0],  answered = data[1], question = data[2], answers = data[3], correct_answer = data[4])
 
@@ -78,6 +77,7 @@ def singleplayer():
 
         # makes sure to redirect to right high score database later
         session["gamemode"] = "standard"
+        time.sleep(2)
         return redirect("/question")
     session["correct"] = 0
     session["gamemode"] = "standard"
@@ -92,6 +92,7 @@ def rendercustomgame():
         session["correct"] = 0
         session["gamemode"] = "custom"
         session["username"] = request.form.get('username')
+        time.sleep(3)
         return redirect("/question")
     session["correct"] = 0
     session["gamemode"] = "custom"
@@ -141,7 +142,6 @@ def sp_question():
 
     # call function to add questions in database
     get_question(user_id, session['username'],  category, difficulty)
-
     # return
     return jsonify(True)
 
