@@ -8,7 +8,7 @@
         <div class="col-12 col-md-9 my-auto">
             <!--enter username and put it in the database-->
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    		<script type=text/javascript>
+    		<script>
                 function getquestions() {
 
             		$.ajax({
@@ -25,9 +25,9 @@
                 <form onsubmit="getquestions()" action="/customgame" method="post">
                     <div class="form-group">
                         <input autocomplete="off" size="20" class="box2" autofocus class="form-control" name="username"
-                        placeholder="Username" type="text" id="username" maxlength="15"required>
+                        placeholder="Username" type="text" id="username" maxlength="15" required>
                         <br><br>
-                        <input autocomplete="off" size="20" class="box2" autofocus class="form-control" name="amount"
+                        <input autocomplete="off" size="20" class="box2" class="form-control" name="amount"
                         placeholder="Amount of Questions" type="text" id="amount" maxlength="2">
                     </div>
                     <br>
