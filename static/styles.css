@@ -157,6 +157,7 @@ body {
     text-align: center;
     border-color: black;
     border-style: solid;
+    width: auto;
     padding: 25px;
     font-family: serif;
     font-size: 25px;
