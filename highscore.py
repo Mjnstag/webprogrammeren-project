@@ -98,7 +98,7 @@ def highscore_sp(uuid, username, score, category, amount):
                            amount=amount)
                 highscorechanged = 1
         for place, player in enumerate(highscoredata, 1):
-                player['placement'] = place
+            player['placement'] = place
         if highscorechanged == 1:
 
             # recollect highscore data
