@@ -11,7 +11,7 @@
               <div id="myBar"></div>
             </div>
 
-            <p align="center"><h1 class="center", "serif">{{ question[0]["question"] }}</h1></p>
+            <p align="center"><h4 class="center", "serif">{{ question[0]["question"] }}</h4></p>
 
             <div class="grid-container" class="serif">
               <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</span></div>
@@ -21,8 +21,8 @@
 
             </div>
 
-            <p><h2 class="serif">Correct answers: <a id="correctly">{{ answered }}</a></h2></p>
-            <p><h2 align="center">Question {{ progress[0]['question_num'] }} out of {{ progress[-1]['question_num'] }}!</h2></p>
+            <p><h3 class="serif">Correct answers: <a id="correctly">{{ answered }}</a></h3></p>
+            <p><h3 align="center">Question {{ progress[0]['question_num'] }} out of {{ progress[-1]['question_num'] }}!</h3></p>
 
 
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
