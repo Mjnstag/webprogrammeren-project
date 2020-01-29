@@ -24,8 +24,7 @@
 3. Highscorepagina met de top 3 scores bij het gekozen aantal vragen.
 
 ### screenshots applicatie:
-![Schets ideeën van pagina's](/doc/screenshot.png)
-![links tussen pagina's](/doc/template_linking.png)
+![Screenshot van het spel](/doc/screenshot.png)
 
 ### helpfuncties en beschrijvingen:
 * classic_question.py: Stopt vragen voor de classic mode in een database.
