@@ -99,7 +99,6 @@ def highscore(uuid, username, score, category, amount):
                            username=username,
                            amount=amount)
                 highscorechanged = 1
-
         if highscorechanged == 1:
 
             # recollect highscore data
@@ -197,8 +196,6 @@ def highscore(uuid, username, score, category, amount):
                        category=category,
                        username=username)
             highscorechanged = 1
-
-
 
     if highscorechanged == 1:
 

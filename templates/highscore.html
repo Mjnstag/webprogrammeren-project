@@ -1,43 +1,42 @@
  <!--make sure game works on mobile phone-->
 {% extends "layout.html" %}
+{% block title %}High Scores{% endblock%}
+
 {% block main %}
-<!--define html page-->
-<html>
-    <head>
-        <title>High Scores</title>
-        <link href="/static/styles.css" rel="stylesheet">
-    </head>
-    <body>
-        <div class="center">
-            <h1 class="funtext" >High Scores
-            <br>
-            {% if gamemode == 0 %}
-            {{ highscoredata[0]["category"] }}
+<div class="container">
+    <div class="row justify-content-center align-items-center d-flex" style="height: 100vh">
+        <div class="col-12 col-md-9 my-auto">
+            <div class="center">
+                <h1 class="funtext" >High Scores
+                {% if gamemode == 0 %}
+                {{ highscoredata[0]["category"] }}
+                {% endif %}
+                </h1>
+            </div>
+            <h2 class="thick" class="serif">
+                {% if highscoretext == 1 %}
+                Congratulations! You made it into the High Scores!
+                {% endif %}<br>
+
+             Your Score is: {{ score }}!<br></h2>
+
+             {% if gamemode == 1 %}
+             <h2 class="thick" class="serif">Amount of Questions: {{ amount }}</h2>
+             {% endif %}
+
+    {% for scores in highscoredata %}
+            <h2 class="serif" class="center">{{ scores.placement }}.  <b>{{ scores.username }}</b> - {{ scores.score }} Points
+            {% if gamemode == 1 %}
+            - {{ scores.category }}
             {% endif %}
-            </h1>
+            </h2>
+    {% endfor %}
+
+            <div class="box">
+            <br>
+            <button class="button2" onclick="window.location.href = '/';">Return to Homepage!</button>
+            </div>
         </div>
-        <h2 class="thick" class="serif">
-            {% if highscoretext == 1 %}
-            Congratulations! You made it into the High Scores!
-            {% endif %}<br>
-
-         Your Score is: {{ score }}!<br></h2>
-
-         {% if gamemode == 1 %}
-         <h2 class="thick" class="serif">Amount of Questions: {{ amount }}</h2>
-         {% endif %}
-
-{% for scores in highscoredata %}
-        <h2 class="serif" class="center">{{ scores.placement }}.  <b>{{ scores.username }}</b> - {{ scores.score }} Points
-        {% if gamemode == 1 %}
-        - {{ scores.category }}
-        {% endif %}
-        </h2>
-{% endfor %}
-
-        <div class="box">
-        <button class="button2" onclick="window.location.href = '/';">Return to Homepage!</button>
-        </div>
-    </body>
-</html>
+    </div>
+</div>
 {% endblock %}

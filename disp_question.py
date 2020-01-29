@@ -11,7 +11,7 @@ def question(gamemode, uuid, correct_answered):
     if gamemode == "custom":
         # save question
         question = db.execute("SELECT question FROM customgame WHERE uuid = :uuid",
-        uuid = uuid)
+                              uuid=uuid)
 
         # if there are no remaining
         if not question:
@@ -20,7 +20,7 @@ def question(gamemode, uuid, correct_answered):
 
         # save answer data
         answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM customgame WHERE uuid = :uuid",
-                                uuid = uuid)
+                             uuid=uuid)
 
         # add current answers to list
         # kunnen we niet gewoon 'random.shuffle(answers[0])' doen?
@@ -34,10 +34,10 @@ def question(gamemode, uuid, correct_answered):
 
         # save correct answer
         correct_answer = db.execute("SELECT correct FROM customgame WHERE uuid = :uuid",
-                                        uuid = uuid)[0]['correct']
+                                    uuid=uuid)[0]['correct']
         # save question progress
         progress = db.execute("SELECT question_num FROM customgame WHERE uuid = :uuid",
-                                uuid = uuid)
+                              uuid=uuid)
 
         # return question data
         return [progress, correct_answered, question, answerlist, correct_answer]
@@ -45,7 +45,7 @@ def question(gamemode, uuid, correct_answered):
     # for classic game mode
     # save question
     question = db.execute("SELECT question FROM sp_questions WHERE uuid = :uuid",
-                            uuid = uuid)
+                          uuid=uuid)
     # if there are no remainging
     if not question:
         # return false
@@ -53,7 +53,7 @@ def question(gamemode, uuid, correct_answered):
 
     # save answer data
     answers = db.execute("SELECT correct, incorrect1, incorrect2, incorrect3 FROM sp_questions WHERE uuid = :uuid",
-                            uuid = uuid)
+                         uuid=uuid)
 
     # append answerdata to list
     answerlist = []
@@ -66,10 +66,10 @@ def question(gamemode, uuid, correct_answered):
 
     # save correct answer
     correct_answer = db.execute("SELECT correct FROM sp_questions WHERE uuid = :uuid",
-                                uuid = uuid)[0]["correct"]
+                                uuid=uuid)[0]["correct"]
 
     # save question progress
     progress = db.execute("SELECT question_num FROM sp_questions WHERE uuid = :uuid",
-                            uuid = uuid)
+                          uuid=uuid)
     # return question data
     return [progress, correct_answered, question, answerlist, correct_answer]
