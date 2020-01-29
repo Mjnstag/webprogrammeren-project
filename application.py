@@ -24,7 +24,7 @@ def catch_all(path):
 def show_rules():
     return render_template("gamerules.html")
 
-
+# handles question display
 @app.route("/question", methods=["GET", "POST"])
 def disp_question():
 
@@ -47,7 +47,7 @@ def disp_question():
         if data == False:
             return redirect("/highscore_sp")
         # if question, renedr question with relevant data
-        return render_template('question.html', progress = data[0],  answered = data[1], question = data[2], answers = data[3], correct_answer = data[4])
+        return render_template('question.html', progress=data[0],  answered=data[1], question=data[2], answers=data[3], correct_answer=data[4])
 
 
 # renders categories page or redirects to next page
@@ -83,6 +83,7 @@ def singleplayer():
     return render_template("singleplayer.html")
 
 
+# handles start of custom game
 @app.route("/customgame", methods=["GET", "POST"])
 def rendercustomgame():
 
@@ -96,6 +97,8 @@ def rendercustomgame():
     session["gamemode"] = "custom"
     return render_template("customgame.html")
 
+
+# handles custom game questions
 @app.route("/customgamequestions", methods=["GET", "POST"])
 def customgame():
     from customgame import get_question
