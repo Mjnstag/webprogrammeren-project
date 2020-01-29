@@ -14,10 +14,10 @@
             <p align="center"><h4 class="center", "serif">{{ question[0]["question"] }}</h4></p>
 
             <div class="grid-container" class="serif">
-              <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</span></div>
-              <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</span></div>
-              <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</span></div>
-              <div class=answer class="pointer" span style="cursor:pointer" onClick="myFunction('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</span></div>
+              <div class=answer class="pointer" span style="cursor:pointer" onClick="answerfeedback('{{ answers[0] }}', 0)" id=0 type="button">{{ answers[0] }}</span></div>
+              <div class=answer class="pointer" span style="cursor:pointer" onClick="answerfeedback('{{ answers[1] }}', 1)" id=1 type="button">{{ answers[1] }}</span></div>
+              <div class=answer class="pointer" span style="cursor:pointer" onClick="answerfeedback('{{ answers[2] }}', 2)" id=2 type="button">{{ answers[2] }}</span></div>
+              <div class=answer class="pointer" span style="cursor:pointer" onClick="answerfeedback('{{ answers[3] }}', 3)" id=3 type="button">{{ answers[3] }}</span></div>
 
             </div>
 
@@ -27,7 +27,7 @@
 
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
             <script>
-                function myFunction(answer, id) {
+                function answerfeedback(answer, id) {
                   if (answer != '{{ correct_answer }}') {
                     document.getElementById(id).style.background = "OrangeRed";
                   }
@@ -49,7 +49,7 @@
                     location.reload();
                     }, 500);
 
-                  };
+                  }
             </script>
 
             <script>
