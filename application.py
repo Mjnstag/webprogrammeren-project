@@ -24,6 +24,11 @@ def catch_all(path):
 def show_rules():
     return render_template("gamerules.html")
 
+# renders gamerules page
+@app.route("/vuurwerk", methods=["GET", "POST"])
+def show_firework():
+    return render_template("vuurwerk.html")
+
 # handles question display
 @app.route("/question", methods=["GET", "POST"])
 def disp_question():
