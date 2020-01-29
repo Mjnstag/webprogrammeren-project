@@ -23,10 +23,10 @@
 2. Pagina met een vraag, 4 geschuffelde antwoorden, een countdownbar, een progresscounter, aantal goede antwoorden.
 3. Highscorepagina met de top 3 scores bij het gekozen aantal vragen.
 
-### screenshots applicatie:
+### Screenshots applicatie:
 ![Screenshot van het spel](/doc/screenshot.png)
 
-### helpfuncties en beschrijvingen:
+### Helpfuncties en beschrijvingen:
 * classic_question.py: Stopt vragen voor de classic mode in een database.
 * correct.py: Verwijderd vragen uit de database als deze beantwoordt zijn.
 * highscore.py: Regelt de highscores en voegt deze toe aan de database als dit nodig is.
