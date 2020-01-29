@@ -11,7 +11,7 @@ db = SQL("sqlite:///sessions.db")
 # define highscore function
 
 
-def highscore_sp(uuid, username, score, category, amount):
+def highscore(uuid, username, score, category, amount):
 
     # checks which game mode has been selected
     if session["gamemode"] == "custom":
@@ -97,20 +97,24 @@ def highscore_sp(uuid, username, score, category, amount):
                            username=username,
                            amount=amount)
                 highscorechanged = 1
-        for place, player in enumerate(highscoredata, 1):
-            player['placement'] = place
+
         if highscorechanged == 1:
 
             # recollect highscore data
             highscoredata = db.execute("SELECT * FROM custom_highscore WHERE amount = :amount ORDER BY score DESC",
                                        amount=amount)
 
+            for place, player in enumerate(highscoredata, 1):
+                player['placement'] = place
+
             # return user and database information to template
-            return render_template("highscore_sp.html", score=score, username=username,
+            return render_template("highscore.html", score=score, username=username,
                                    category=category, amount=amount, highscoretext=1,
                                    highscoredata=highscoredata, gamemode=1)
 
-        return render_template("highscore_sp.html", amount=amount, highscoredata=highscoredata, score=score, gamemode=1)
+        for place, player in enumerate(highscoredata, 1):
+            player['placement'] = place
+        return render_template("highscore.html", amount=amount, highscoredata=highscoredata, score=score, gamemode=1)
 
     # if user selects classic game mode
     # collects necessary data from database
@@ -192,17 +196,20 @@ def highscore_sp(uuid, username, score, category, amount):
                        username=username)
             highscorechanged = 1
 
-    for place, player in enumerate(highscoredata, 1):
-        player['placement'] = place
+
 
     if highscorechanged == 1:
 
         # recollects data
         highscoredata = db.execute("SELECT * FROM sp_highscore WHERE category = :category ORDER BY score DESC",
                                    category=category)
+        for place, player in enumerate(highscoredata, 1):
+            player['placement'] = place
 
-        return render_template("highscore_sp.html", score=score, username=username,
+        return render_template("highscore.html", score=score, username=username,
                                category=category, highscoretext=1,
                                highscoredata=highscoredata, gamemode=0)
 
-    return render_template("highscore_sp.html", highscoredata=highscoredata, score=score, gamemode=0)
+    for place, player in enumerate(highscoredata, 1):
+        player['placement'] = place
+    return render_template("highscore.html", highscoredata=highscoredata, score=score, gamemode=0)

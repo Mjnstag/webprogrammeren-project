@@ -45,7 +45,7 @@ def disp_question():
 
         # if no remainging question, redirect to highscores
         if data == False:
-            return redirect("/highscore_sp")
+            return redirect("/highscore")
         # if question, renedr question with relevant data
         return render_template('question.html', progress = data[0],  answered = data[1], question = data[2], answers = data[3], correct_answer = data[4])
 
@@ -110,10 +110,10 @@ def customgame():
     return jsonify(True)
 
 
-@app.route("/highscore_sp")
+@app.route("/highscore")
 def highscores():
 
-    from highscore import highscore_sp
+    from highscore import highscore
     uuid = session["id"]
     username = session['username']
     score = session['correct']
@@ -123,7 +123,7 @@ def highscores():
         amount = session["amount"]
     else:
         amount = 10
-    return highscore_sp(uuid, username, score, category, amount)
+    return highscore(uuid, username, score, category, amount)
 
 
 # calls on function to put questions in database
