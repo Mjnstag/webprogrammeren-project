@@ -7,7 +7,7 @@
         <!--enter username and put it in the database-->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script type=text/javascript>
-            function doit() {
+            function getquestions() {
 
         		$.ajax({
         			data : {
@@ -21,7 +21,7 @@
     </head>
     <body>
         <div class="middle">
-         <form onsubmit="doit()" action="/classicgame" method="post">
+         <form onsubmit="getquestions()" action="/classicgame" method="post">
         <div class="form-group">
             <input autocomplete="off" class="box2" autofocus class="form-control" name="username" placeholder="Username" type="text" id="username" maxlength="15" required>
         </div>

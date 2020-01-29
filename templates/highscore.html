@@ -20,22 +20,19 @@
             {% if highscoretext == 1 %}
             Congratulations! You made it into the High Scores!
             {% endif %}<br>
+
          Your Score is: {{ score }}!<br></h2>
+
          {% if gamemode == 1 %}
          <h2 class="thick" class="serif">Amount of Questions: {{ amount }}</h2>
          {% endif %}
 
 {% for scores in highscoredata %}
-
         <h2 class="serif" class="center">{{ scores.placement }}.  <b>{{ scores.username }}</b> - {{ scores.score }} Points
         {% if gamemode == 1 %}
         - {{ scores.category }}
         {% endif %}
         </h2>
-
-
-
-
 {% endfor %}
 
         <div class="box">
