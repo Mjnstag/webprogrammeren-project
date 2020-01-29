@@ -1,23 +1,19 @@
  <!--make sure game works on mobile phone-->
 {% extends "layout.html" %}
+{% block title %}Super Trivia{% endblock%}
+
 {% block main %}
 <!--define html page-->
-<html lang="en">
 <div class="container">
-    <head>
-        <title class="center">Super Trivia</title>
-        <link href="static/styles.css" rel="stylesheet">
-
-    </head>
-    <full2>
-        <body>
+    <div class="row" style= "height: 100vh">
+        <div class="col-12 col-md-6 my-auto">
             <!--homepage of the game with link to gamerules en categories-->
-            <div class="middle">
-              <h1 class="funtext" class="text-center", "serif">Super Trivia</h1>
-              <h3 style="text-align:center", "serif">Click <a href="categories"><u style="color: black"> Here</u></a> to Start the Game!</h3>
-              <h4 style="text-align:center", "serif">Click <a href="gamerules"><u style="color: black"> Here</u></a> for the Game Rules</h4>
-            </div>
-        </body>
-    </full2>
+          <marquee><h1 class="funtext" class="serif">Super Trivia</h1></marquee>
+          <br><br>
+          <h3 style="text-align:center", "serif">Click <a href="categories"><u style="color: black"> Here</u></a> to Start the Game!</h3>
+          <br>
+          <h4 style="text-align:center", "serif">Click <a href="gamerules"><u style="color: black"> Here</u></a> for the Game Rules</h4>
+        </div>
+    </div>
 </div>
 {% endblock %}
