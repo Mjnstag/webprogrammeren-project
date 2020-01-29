@@ -357,6 +357,7 @@ serif {
 	50% {opacity : 1;}
 	100% {opacity : 0;}
 }
+
 .fireWorkBatch {
 	z-index : 999;
 	position: absolute;
