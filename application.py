@@ -121,6 +121,7 @@ def customgame():
     category = session['category']
     difficulty = session['difficulty']
     session["amount"] = str(request.args.get("amount", ""))
+    print(session["amount"])
 
     # put questions in databse
     get_question(user_id, session['username'], category, difficulty, session["amount"])
