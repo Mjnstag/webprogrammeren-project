@@ -1,38 +1,30 @@
  <!--make sure game works on mobile phone-->
 {% extends "layout.html" %}
+{% block title %}Game Rules{% endblock%}
 {% block main %}
-<!--define html page-->
-<html lang="en">
 <div class="container">
-    <head>
-        <title class="center">Game Rules</title>
-        <link href="static/styles.css" rel="stylesheet">
-
-    </head>
-    <full2>
-        <body>
-            <!--explain gamerules-->
-            <div class="middle">
-              <h1 class="text-center", "serif">Super Trivia Explained</h1>
-              <br>
-              <h3 style="text-align:center", "serif">Welcome to Super Trivia! The goal of this game is to test your knowledge and compete
-              with your friends. You start the game with a choice of categories. You have six different themes and three levels of
-              difficulty to choose from. After that, you can choose your username.</h3>
-              <br>
-              <h4 style="text-align:center", "serif">Classic Mode: Once you have entered your username, you can start the game right away. No need to wait for your friends.
-              You will receive ten questions. For every correct answer you will receive a point. If you score enough points, you'll be awarded a spot in the top 10!
-              <br>
-              Can you make it in there?
-              <br>
-              <br>
-              Custom Mode: In this game mode you can pick the amount of questions you want to play!
-              What's cool about this game mode is that each amount of questions has their own high score.
-              If you're feeling lucky, pick a high amount of questions and go for the top spot!
-              <br>
-              </h4>
-              <h4 style="text-align:center", "serif"> <a href="/"><u style="color: black"> Back to Homepage</u></a></h4>
-            </div>
-        </body>
-    </full2>
+    <div class="row" style= "height: 100vh">
+        <div class="col-12 col-md-6 my-auto">
+        <!--explain gamerules-->
+            <h1 class="funtext" class="serif">Super Trivia Explained</h1>
+                <br>
+            <h3 style="text-align:center", "serif">Welcome to Super Trivia! The goal of this game is to test your knowledge and compete
+            with your friends. You start the game with a choice of categories. You have six different themes and three levels of
+            difficulty to choose from. After that, you can choose your username.</h3>
+                <br>
+            <h4 style="text-align:center", "serif">Classic Mode: Once you have entered your username, you can start the game right away. No need to wait for your friends.
+            You will receive ten questions. For every correct answer you will receive a point. If you score enough points, you'll be awarded a spot in the top 10!
+                <br>
+            Can you make it in there?
+                <br>
+                <br>
+            Custom Mode: In this game mode you can pick the amount of questions you want to play!
+            What's cool about this game mode is that each amount of questions has their own high score.
+            If you're feeling lucky, pick a high amount of questions and go for the top spot!
+                <br>
+            </h4>
+            <h4 style="text-align:center", "serif"> <a href="/"><u style="color: black"> Back to Homepage</u></a></h4>
+        </div>
+    </div>
 </div>
 {% endblock %}

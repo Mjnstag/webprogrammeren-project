@@ -64,14 +64,6 @@
     font-size: x-large;
 }
 
-/*.hidden {*/
-/*    display: none;*/
-/*}*/
-
-/*#firstname {*/
-/*  background-color: yellow;*/
-/*}*/
-
 /* background */
 body {
     margin: 0;
@@ -234,10 +226,6 @@ body {
     font-size: x-large;
 }
 
-/*.wrapper {*/
-/*    text-align: center;*/
-/*}*/
-
 /* class for bootstrap, make text fit in mobile screen*/
 .container {
     flex-direction: column;
@@ -302,5 +290,4 @@ main
     font-weight: bold;
     font-size: x-large;
 }
-
 
