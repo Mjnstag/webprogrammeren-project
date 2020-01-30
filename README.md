@@ -26,6 +26,9 @@
 ### Screenshots applicatie:
 ![Screenshot van het spel](/doc/screenshot.png)
 
+### Video van de applicatie:
+* https://youtu.be/qV_kolSqfc8
+
 ### Helpfuncties en beschrijvingen:
 * classic_question.py: Stopt vragen voor de classic mode in een database.
 * correct.py: Verwijderd vragen uit de database als deze beantwoordt zijn.
